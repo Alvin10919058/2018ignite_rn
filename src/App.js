@@ -2,19 +2,16 @@ import React, { Component } from 'react';
 import {
   View
 } from 'react-native';
+import SceneRouter from './components/SceneRouter';
 
 class App extends Component {
   render() {
     return (
-      <View style={styles.container} />
+      <View style={{ flex: 1 }}>
+        <SceneRouter />
+      </View>
     );
   }
 }
-
-const styles = {
-  container: {
-    flex: 1
-  }
-};
 
 export default App;
