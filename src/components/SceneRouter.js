@@ -7,9 +7,11 @@ class RouterComponent extends Component {
   render() {
     return (
       <Router>
-        <Stack key="root">
-          <Scene key="login" component={Login} title="Login" />
-          <Scene key="teamInfo" component={TeamInfo} title="Team" />
+        <Stack>
+          <Scene key="root">
+            <Scene key="login" component={Login} hideNavBar />
+          </Scene>
+          <Scene key="teamInfo" component={TeamInfo} hideNavBar />
         </Stack>
       </Router>
     );

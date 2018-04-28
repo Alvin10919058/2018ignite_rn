@@ -13,7 +13,7 @@ class Login extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text onPress={this.onClick}>TeamInfo</Text>
+        <Text style={styles.textStyle} onPress={this.onClick}>TeamInfo</Text>
       </View>
     );
   }
@@ -22,6 +22,9 @@ class Login extends Component {
 const styles = {
   container: {
     flex: 1
+  },
+  textStyle: {
+    padding: 50
   }
 };
 
