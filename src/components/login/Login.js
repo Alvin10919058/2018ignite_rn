@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {
-  View,
   Text
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { BackgroundImage } from '../common';
 
 class Login extends Component {
   onClick() {
@@ -12,9 +12,9 @@ class Login extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <BackgroundImage style={styles.container}>
         <Text style={styles.textStyle} onPress={this.onClick}>TeamInfo</Text>
-      </View>
+      </BackgroundImage>
     );
   }
 }
@@ -24,6 +24,7 @@ const styles = {
     flex: 1
   },
   textStyle: {
+    color: 'green',
     padding: 50
   }
 };

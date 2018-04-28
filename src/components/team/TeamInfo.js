@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import {
   View
 } from 'react-native';
+import { BackgroundImage } from '../common';
 
 class TeamInfo extends Component {
   render() {
     return (
-      <View style={styles.container} />
+      <BackgroundImage>
+        <View style={styles.container} />      
+     </BackgroundImage>
     );
   }
 }
