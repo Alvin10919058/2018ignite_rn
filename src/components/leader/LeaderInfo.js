@@ -4,11 +4,11 @@ import {
 } from 'react-native';
 import { BackgroundImage } from '../common';
 
-class TeamInfo extends Component {
+class LeaderInfo extends Component {
   render() {
     return (
       <BackgroundImage>
-        <View style={styles.container} />      
+        <View style={styles.container} />
      </BackgroundImage>
     );
   }
@@ -20,4 +20,4 @@ const styles = {
   }
 };
 
-export default TeamInfo;
+export default LeaderInfo;

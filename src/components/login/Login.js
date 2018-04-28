@@ -13,7 +13,7 @@ class Login extends Component {
   render() {
     return (
       <BackgroundImage style={styles.container}>
-        <Text style={styles.textStyle} onPress={this.onClick}>TeamInfo</Text>
+        <Text style={styles.textStyle} onPress={this.onClick}>LeaderInfo</Text>
       </BackgroundImage>
     );
   }
