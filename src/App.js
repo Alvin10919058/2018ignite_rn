@@ -4,10 +4,24 @@ import {
   StatusBar,
   Platform
 } from 'react-native';
+import firebase from 'firebase';
+import data from './Setting.json';
 import SceneRouter from './components/SceneRouter';
 import { ifIphoneX } from './components/IphoneXDetector';
 
 class App extends Component {
+  componentWillMount() {
+    const config = {
+      apiKey: data.apiKey,
+      authDomain: data.authDomain,
+      databaseURL: data.databaseURL,
+      storageBucket: data.storageBucket,
+      messagingSenderId: data.messagingSenderId
+    };
+
+    firebase.initializeApp(config);
+  }
+
   render() {
     return (
       <View style={{ flex: 1 }}>
