@@ -30,19 +30,23 @@ const styles = {
     backgroundColor: 'white'
   },
   textStyle: {
+    flex: 1,
     color: 'green',
     padding: 50
   },
   circle: {
+    flex: 1,
     marginRight: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 28,
-    height: 28,
-    backgroundColor: '#f76260',
-    borderColor: 'green',
+    width: 300,
+    height: 300,
+    backgroundColor: '#DDDDDD',
+    borderColor: 'gray',
     borderStyle: 'solid',
-    borderRadius: 15,
+    borderBottomRightRadius: 350,
+    //borderTopRightRadius: 5,
+    //borderBottomLeftRadius: 30,
     paddingBottom: 2
   }
 };
