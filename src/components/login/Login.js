@@ -1,62 +1,84 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text
-} from 'react-native';
-import { Actions } from 'react-native-router-flux';
-//import { BackgroundImage } from '../common';
+import { Text } from 'react-native';
+import { connect } from 'react-redux';
+import { emailChanged, passwordChanged, loginUser } from '../../actions';
+import { Card, CardSection, Input, Button, Spinner } from '../common';
 
 class Login extends Component {
-  onClick() {
-    Actions.teamInfo();
+  onEmailChange(text) {
+    this.props.emailChanged(text);
+  }
+
+  onPasswordChange(text) {
+    this.props.passwordChanged(text);
+  }
+
+  onButtonPress() {
+    const { email, password } = this.props;
+
+    this.props.loginUser({ email, password });
+  }
+
+  renderButton() {
+    if (this.props.loading) {
+      return <Spinner size="large" />;
+    }
+
+    return (
+      <Button onPress={this.onButtonPress.bind(this)}>
+        Login
+      </Button>
+    );
   }
 
   render() {
-    const {
-      container,
-      textStyle,
-      circleContainer,
-      InfoContainer
-    } = styles;
     return (
-      <View style={container}>
-        <View style={circleContainer}>
-          <Text>1</Text>
-        </View>
-        <View style={InfoContainer}>
-          <Text style={textStyle} onPress={this.onClick}>LeaderInfo</Text>
-        </View>
-      </View>
+      <Card>
+        <CardSection>
+          <Input
+            label="Email"
+            placeholder="email@gmail.com"
+            onChangeText={this.onEmailChange.bind(this)}
+            value={this.props.email}
+          />
+        </CardSection>
+
+        <CardSection>
+          <Input
+            secureTextEntry
+            label="Password"
+            placeholder="password"
+            onChangeText={this.onPasswordChange.bind(this)}
+            value={this.props.password}
+          />
+        </CardSection>
+
+        <Text style={styles.errorTextStyle}>
+          {this.props.error}
+        </Text>
+
+        <CardSection>
+          {this.renderButton()}
+        </CardSection>
+      </Card>
     );
   }
 }
 
 const styles = {
-  container: {
-    flex: 1,
-    backgroundColor: 'white'
-  },
-  textStyle: {
-    color: 'green',
-    padding: 50
-  },
-  circleContainer: {
-    flex: 1,
-    marginRight: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 350,
-    backgroundColor: '#DDDDDD',
-    borderColor: 'gray',
-    borderStyle: 'solid',
-    borderBottomRightRadius: 350,
-    //borderTopRightRadius: 5,
-    //borderBottomLeftRadius: 30,
-    paddingBottom: 2
-  },
-  InfoContainer: {
-    flex: 1
+  errorTextStyle: {
+    fontSize: 20,
+    alignSelf: 'center',
+    color: 'red'
   }
 };
 
-export default Login;
+const mapStateToProps = ({ auth }) => {
+  const { email, password, error, loading } = auth;
+
+  return { email, password, error, loading };
+};
+
+export default connect(mapStateToProps, {
+  emailChanged, passwordChanged, loginUser
+})(Login);
