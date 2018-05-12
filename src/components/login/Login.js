@@ -26,7 +26,8 @@ class Login extends Component {
 
 const styles = {
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: 'white'
   },
   textStyle: {
     color: 'green',
