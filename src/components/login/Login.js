@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import {
+  View,
   Text
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { BackgroundImage } from '../common';
+//import { BackgroundImage } from '../common';
 
 class Login extends Component {
   onClick() {
@@ -11,10 +12,14 @@ class Login extends Component {
   }
 
   render() {
+    const { container, textStyle, circle } = styles;
     return (
-      <BackgroundImage style={styles.container}>
-        <Text style={styles.textStyle} onPress={this.onClick}>LeaderInfo</Text>
-      </BackgroundImage>
+      <View style={container}>
+        <View style={circle}>
+          <Text>1</Text>
+        </View>
+        <Text style={textStyle} onPress={this.onClick}>LeaderInfo</Text>
+      </View>
     );
   }
 }
@@ -26,6 +31,18 @@ const styles = {
   textStyle: {
     color: 'green',
     padding: 50
+  },
+  circle: {
+    marginRight: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 28,
+    height: 28,
+    backgroundColor: '#f76260',
+    borderColor: 'green',
+    borderStyle: 'solid',
+    borderRadius: 15,
+    paddingBottom: 2
   }
 };
 
