@@ -46,7 +46,6 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     width: 350,
-    height: 150,
     backgroundColor: '#DDDDDD',
     borderColor: 'gray',
     borderStyle: 'solid',
