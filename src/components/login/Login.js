@@ -12,13 +12,20 @@ class Login extends Component {
   }
 
   render() {
-    const { container, textStyle, circle } = styles;
+    const {
+      container,
+      textStyle,
+      circleContainer,
+      InfoContainer
+    } = styles;
     return (
       <View style={container}>
-        <View style={circle}>
+        <View style={circleContainer}>
           <Text>1</Text>
         </View>
-        <Text style={textStyle} onPress={this.onClick}>LeaderInfo</Text>
+        <View style={InfoContainer}>
+          <Text style={textStyle} onPress={this.onClick}>LeaderInfo</Text>
+        </View>
       </View>
     );
   }
@@ -30,17 +37,16 @@ const styles = {
     backgroundColor: 'white'
   },
   textStyle: {
-    flex: 1,
     color: 'green',
     padding: 50
   },
-  circle: {
+  circleContainer: {
     flex: 1,
     marginRight: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 300,
-    height: 300,
+    width: 350,
+    height: 150,
     backgroundColor: '#DDDDDD',
     borderColor: 'gray',
     borderStyle: 'solid',
@@ -48,6 +54,9 @@ const styles = {
     //borderTopRightRadius: 5,
     //borderBottomLeftRadius: 30,
     paddingBottom: 2
+  },
+  InfoContainer: {
+    flex: 1
   }
 };
 
