@@ -12,7 +12,7 @@ class RouterComponent extends Component {
             <Scene key="login" component={Login} hideNavBar />
           </Scene>
           <Scene key="main">
-            <Scene key="teamInfo" component={LeaderInfo} hideNavBar />
+            <Scene key="teamInfo" initial component={LeaderInfo} hideNavBar />
           </Scene>
         </Stack>
       </Router>
