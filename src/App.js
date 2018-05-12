@@ -4,10 +4,14 @@ import {
   StatusBar,
   Platform
 } from 'react-native';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import ReduxThunk from 'redux-thunk';
 import firebase from 'firebase';
 import data from './Setting.json';
 import SceneRouter from './components/SceneRouter';
 import { ifIphoneX } from './components/IphoneXDetector';
+import reducers from './reducers';
 
 class App extends Component {
   componentWillMount() {
@@ -23,15 +27,18 @@ class App extends Component {
   }
 
   render() {
+    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
     return (
-      <View style={{ flex: 1 }}>
-        <StatusBar
-            backgroundColor="white"
-            barStyle="dark-content"
-        />
-        <View style={styles.statusBarStyle} />
-        <SceneRouter />
-      </View>
+      <Provider store={store}>
+        <View style={{ flex: 1 }}>
+          <StatusBar
+              backgroundColor="white"
+              barStyle="dark-content"
+          />
+          <View style={styles.statusBarStyle} />
+          <SceneRouter />
+        </View>
+      </Provider>
     );
   }
 }
