@@ -8,7 +8,7 @@ import { Actions } from 'react-native-router-flux';
 
 class LeaderInfo extends Component {
   onClick() {
-    Actions.teamInfo();
+    //Actions.teamInfo();
   }
 
   render() {
