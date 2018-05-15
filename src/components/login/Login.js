@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { emailChanged, passwordChanged, loginUser } from '../../actions';
 import { Card, CardSection, Input, Button, Spinner } from '../common';
@@ -34,6 +34,10 @@ class Login extends Component {
   render() {
     return (
       <View style={styles.backgroundStyle}>
+        <Image
+          style={{width: 120, height: 120, alignSelf:'center',marginBottom:20}}
+          source={require('../../images/Logo.jpg')}
+        />
         <Card>
           <CardSection>
             <Input
@@ -75,6 +79,8 @@ const styles = {
   },
   backgroundStyle: {
     backgroundColor: "white",
+    //justifyContent:'center',
+    paddingTop:80,
     flex:1,
   }
 };
