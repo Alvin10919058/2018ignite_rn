@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Scene, Router, Stack } from 'react-native-router-flux';
 import Login from './login/Login';
-import LeaderInfo from './leader/LeaderInfo';
+import LeaderInfo from './player/LeaderInfo';
 
 class RouterComponent extends Component {
   render() {

@@ -1,23 +1,26 @@
 import React, { Component } from 'react';
 import {
+  View,
   Text
 } from 'react-native';
 //import { Actions } from 'react-native-router-flux';
-import { BackgroundImage } from '../common';
 
-class LeaderInfo extends Component {
+class Rank extends Component {
 
   render() {
+    const { container } = styles;
     return (
-      <BackgroundImage>
-        <Text>test</Text>
-      </BackgroundImage>
+      <View style={container}>
+        <Text>Rank</Text>
+      </View>
     );
   }
 }
 
 const styles = {
-  
+  container: {
+      flex: 1
+  }
 };
 
-export default LeaderInfo;
+export default Rank;
