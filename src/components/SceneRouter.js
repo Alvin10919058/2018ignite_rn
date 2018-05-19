@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Platform } from 'react-native';
 import { Scene, Router, Stack } from 'react-native-router-flux';
+import TabIcon from './TabIcon';
 import Login from './login/Login';
 import LeaderInfo from './player/LeaderInfo';
 import SettingPage from './player/SettingPage';
@@ -20,19 +21,19 @@ class RouterComponent extends Component {
           <Scene key="main" initial>
             <Scene key="tabbar" tabs tabBarStyle={styles.tabBarStyle}>
 
-              <Scene key="tab0" title="排名">
+              <Scene key="tab0" title="排名" icon={TabIcon}>
                 <Scene key="rank" initial component={Rank} hideNavBar />
               </Scene>
-              <Scene key="tab1" title="配點">
+              <Scene key="tab1" title="配點" icon={TabIcon}>
                 <Scene key="skills" initial component={Skills} hideNavBar />
               </Scene>
-              <Scene key="tab2" initial title="首頁">
+              <Scene key="tab2" initial title="首頁" icon={TabIcon}>
                 <Scene key="teamInfo" initial component={LeaderInfo} hideNavBar />
               </Scene>
-              <Scene key="tab3" title="支線任務">
+              <Scene key="tab3" title="支線任務" icon={TabIcon}>
                 <Scene key="mission" initial component={Mission} hideNavBar />
               </Scene>
-              <Scene key="tab4" title="設定">
+              <Scene key="tab4" title="設定" icon={TabIcon}>
                 <Scene key="settingPage" initial component={SettingPage} hideNavBar />
               </Scene>        
 
