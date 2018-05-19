@@ -56,7 +56,7 @@ const styles = {
         {
           paddingBottom: 0
         }),
-        shadowColor: '#ED2A67',
+        shadowColor: '#CBD4E4',
         shadowOpacity: 0.3,
         shadowOffset: { width: 0, height: 2 } // 左右不要有陰影
       },
