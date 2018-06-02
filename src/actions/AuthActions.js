@@ -1,3 +1,5 @@
+import { AsyncStorage } from 'react-native';
+import Parse from 'parse/react-native';
 import { Actions } from 'react-native-router-flux';
 import {
   EMAIL_CHANGED,
@@ -24,11 +26,20 @@ export const passwordChanged = (text) => {
 export const loginUser = ({ email, password }) => {
   return (dispatch) => {
     dispatch({ type: LOGIN_USER });
-    /*
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(user => loginUserSuccess(dispatch, user))
-      .catch(() => loginUserFail(dispatch));
-    */
+    Parse.User.logIn(email, password)
+      .then(async user => {
+        console.log(user);
+        const sessionToken = user.getSessionToken();
+        await AsyncStorage.setItem('sessionToken', sessionToken);
+        await AsyncStorage.setItem('userID', user.id);
+
+        loginUserSuccess(dispatch, user);
+        //installation(user.id, sessionToken);
+      })
+      .catch((error) => {
+          console.log(error);
+          loginUserFail(dispatch);
+      });
   };
 };
 
