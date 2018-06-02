@@ -1,7 +1,5 @@
 {
-  "apiKey": "AIzaSyCfvQg-SSqBRj3bkhEr5HAnPVIG3khXgNc",
-  "authDomain": "ignite-74a53.firebaseapp.com",
-  "databaseURL": "https://ignite-74a53.firebaseio.com",
-  "storageBucket": "ignite-74a53.appspot.com",
-  "messagingSenderId": "218197012925"
+  "parseAppId": "igniteisgreat",
+  "parseServerURL": "https://ignite-app-test.herokuapp.com/parse",
+  "paresApiKey": "undefined"
 }

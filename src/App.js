@@ -7,7 +7,7 @@ import {
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
-import firebase from 'firebase';
+import Parse from 'parse/react-native';
 import data from './Setting.json';
 import SceneRouter from './components/SceneRouter';
 import { ifIphoneX } from './components/IphoneXDetector';
@@ -15,15 +15,8 @@ import reducers from './reducers';
 
 class App extends Component {
   componentWillMount() {
-    const config = {
-      apiKey: data.apiKey,
-      authDomain: data.authDomain,
-      databaseURL: data.databaseURL,
-      storageBucket: data.storageBucket,
-      messagingSenderId: data.messagingSenderId
-    };
-
-    firebase.initializeApp(config);
+    Parse.initialize(data.parseAppId);
+    Parse.serverURL = data.parseServerURL;
   }
 
   render() {

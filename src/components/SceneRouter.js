@@ -15,10 +15,10 @@ class RouterComponent extends Component {
     return (
       <Router>
         <Stack>
-          <Scene key="root">
+          <Scene key="root" initial>
             <Scene key="login" component={Login} hideNavBar />
           </Scene>
-          <Scene key="main" initial>
+          <Scene key="main">
             <Scene key="tabbar" tabs tabBarStyle={styles.tabBarStyle}>
 
               <Scene key="tab0" title="排名" icon={TabIcon}>
