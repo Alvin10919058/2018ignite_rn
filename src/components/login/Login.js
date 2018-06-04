@@ -90,7 +90,7 @@ const styles = {
     //justifyContent:'center',
     alignItems: 'center',
     paddingTop: 80,
-    flex: 1,
+    flex: 1
   },
   loginInputStyle: {
     justifyContent: 'center',
