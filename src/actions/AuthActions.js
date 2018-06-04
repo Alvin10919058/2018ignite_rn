@@ -23,10 +23,10 @@ export const passwordChanged = (text) => {
   };
 };
 
-export const loginUser = ({ email, password }) => {
+export const loginUser = ({ username, password }) => {
   return (dispatch) => {
     dispatch({ type: LOGIN_USER });
-    Parse.User.logIn(email, password)
+    Parse.User.logIn(username, password)
       .then(async user => {
         console.log(user);
         const sessionToken = user.getSessionToken();

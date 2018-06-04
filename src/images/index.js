@@ -1,5 +1,5 @@
 import Background from './Background.png';
-import Logo from './Logo.jpg';
+import Logo from './Logo.png';
 import User from './User.png';
 import Password from './Lock.png';
 import RankTab from './Rank.png';

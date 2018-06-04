@@ -1,5 +1,5 @@
 {
   "parseAppId": "igniteisgreat",
-  "parseServerURL": "https://ignite-app-test.herokuapp.com/parse",
+  "parseServerURL": "https://ignite-server.herokuapp.com/parse",
   "paresApiKey": "undefined"
 }

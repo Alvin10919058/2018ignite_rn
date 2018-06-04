@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, Image, KeyboardAvoidingView } from 'react-native';
 import { connect } from 'react-redux';
 import { emailChanged, passwordChanged, loginUser } from '../../actions';
 import { CardSection, Input, Button, Spinner } from '../common';
@@ -15,9 +15,9 @@ class Login extends Component {
   }
 
   onButtonPress() {
-    const { email, password } = this.props;
+    const { username, password } = this.props;
 
-    this.props.loginUser({ email, password });
+    this.props.loginUser({ username, password });
   }
 
   renderButton() {
@@ -27,7 +27,7 @@ class Login extends Component {
 
     return (
       <Button onPress={this.onButtonPress.bind(this)}>
-        Login
+        LOGIN
       </Button>
     );
   }
@@ -35,9 +35,9 @@ class Login extends Component {
   render() {
     const { backgroundStyle, loginInputStyle, errorTextStyle } = styles;
     return (
-      <View style={backgroundStyle}>
+      <KeyboardAvoidingView style={backgroundStyle} behavior="padding" enabled>
         <Image
-          style={{ width: 120, height: 120, alignSelf: 'center', marginBottom: 20 }}
+          style={{ width: 170, height: 170, alignSelf: 'center', marginBottom: 20 }}
           source={Logo}
         />
         
@@ -47,9 +47,10 @@ class Login extends Component {
             source={User}
             />
             <Input
-              placeholder="team@ignite.app"
+              placeholder="username"
               onChangeText={this.onEmailChange.bind(this)}
-              value={this.props.email}
+              value={this.props.username}
+              placeholderTextColor='#9d9d9d'
             />
           </CardSection>
 
@@ -63,6 +64,7 @@ class Login extends Component {
               placeholder="password"
               onChangeText={this.onPasswordChange.bind(this)}
               value={this.props.password}
+              placeholderTextColor='#9d9d9d'
             />
           </CardSection>
 
@@ -74,7 +76,7 @@ class Login extends Component {
             {this.renderButton()}
           </CardSection>
       
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -86,13 +88,14 @@ const styles = {
     color: 'red'
   },
   backgroundStyle: {
-    backgroundColor: 'white',
+    backgroundColor: '#ecf5ff',
     //justifyContent:'center',
     alignItems: 'center',
     paddingTop: 80,
-    flex: 1,
+    flex: 1
   },
   loginInputStyle: {
+    backgroundColor: '#ecf5ff',
     justifyContent: 'center',
     alignItems: 'center',
     width: 250,
@@ -100,9 +103,9 @@ const styles = {
 };
 
 const mapStateToProps = ({ auth }) => {
-  const { email, password, error, loading } = auth;
+  const { username, password, error, loading } = auth;
 
-  return { email, password, error, loading };
+  return { username, password, error, loading };
 };
 
 export default connect(mapStateToProps, {
