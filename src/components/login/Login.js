@@ -37,7 +37,7 @@ class Login extends Component {
     return (
       <View style={backgroundStyle}>
         <Image
-          style={{ width: 120, height: 120, alignSelf: 'center', marginBottom: 20 }}
+          style={{ width: 170, height: 170, alignSelf: 'center', marginBottom: 20 }}
           source={Logo}
         />
         
@@ -50,6 +50,7 @@ class Login extends Component {
               placeholder="team@ignite.app"
               onChangeText={this.onEmailChange.bind(this)}
               value={this.props.email}
+              placeholderTextColor='#9d9d9d'
             />
           </CardSection>
 
@@ -63,6 +64,7 @@ class Login extends Component {
               placeholder="password"
               onChangeText={this.onPasswordChange.bind(this)}
               value={this.props.password}
+              placeholderTextColor='#9d9d9d'
             />
           </CardSection>
 
@@ -86,13 +88,14 @@ const styles = {
     color: 'red'
   },
   backgroundStyle: {
-    backgroundColor: 'white',
+    backgroundColor: '#ecf5ff',
     //justifyContent:'center',
     alignItems: 'center',
     paddingTop: 80,
     flex: 1
   },
   loginInputStyle: {
+    backgroundColor: '#ecf5ff',
     justifyContent: 'center',
     alignItems: 'center',
     width: 250,
