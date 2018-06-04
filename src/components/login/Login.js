@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, Image, KeyboardAvoidingView } from 'react-native';
 import { connect } from 'react-redux';
 import { emailChanged, passwordChanged, loginUser } from '../../actions';
 import { CardSection, Input, Button, Spinner } from '../common';
@@ -27,7 +27,7 @@ class Login extends Component {
 
     return (
       <Button onPress={this.onButtonPress.bind(this)}>
-        Login
+        LOGIN
       </Button>
     );
   }
@@ -35,7 +35,7 @@ class Login extends Component {
   render() {
     const { backgroundStyle, loginInputStyle, errorTextStyle } = styles;
     return (
-      <View style={backgroundStyle}>
+      <KeyboardAvoidingView style={backgroundStyle} behavior="padding" enabled>
         <Image
           style={{ width: 170, height: 170, alignSelf: 'center', marginBottom: 20 }}
           source={Logo}
@@ -76,7 +76,7 @@ class Login extends Component {
             {this.renderButton()}
           </CardSection>
       
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
