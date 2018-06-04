@@ -15,9 +15,9 @@ class Login extends Component {
   }
 
   onButtonPress() {
-    const { email, password } = this.props;
+    const { username, password } = this.props;
 
-    this.props.loginUser({ email, password });
+    this.props.loginUser({ username, password });
   }
 
   renderButton() {
@@ -47,9 +47,9 @@ class Login extends Component {
             source={User}
             />
             <Input
-              placeholder="team@ignite.app"
+              placeholder="username"
               onChangeText={this.onEmailChange.bind(this)}
-              value={this.props.email}
+              value={this.props.username}
               placeholderTextColor='#9d9d9d'
             />
           </CardSection>
@@ -103,9 +103,9 @@ const styles = {
 };
 
 const mapStateToProps = ({ auth }) => {
-  const { email, password, error, loading } = auth;
+  const { username, password, error, loading } = auth;
 
-  return { email, password, error, loading };
+  return { username, password, error, loading };
 };
 
 export default connect(mapStateToProps, {
