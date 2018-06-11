@@ -23,8 +23,9 @@ class LeaderInfo extends Component {
   }
 
   render() {
+    const { containerStyle } = styles;
     return (
-      <BackgroundImage>
+      <BackgroundImage style={containerStyle}>
         <Text onPress={this.logout.bind(this)}>LogOut</Text>
       </BackgroundImage>
     );
@@ -32,7 +33,10 @@ class LeaderInfo extends Component {
 }
 
 const styles = {
-  
+  containerStyle: {
+    flex: 1,
+    backgroundColor: 'white'
+  }
 };
 
 export default LeaderInfo;

@@ -6,8 +6,9 @@ class BackgroundImage extends Component {
 
   render() {
     const { backgroundImage } = styles;
+    const { style } = this.props;
     return (
-      <ImageBackground source={Background} style={backgroundImage}>
+      <ImageBackground source={Background} style={[backgroundImage, style]}>
         {this.props.children}
       </ImageBackground>
     );
