@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import {
   View,
   StatusBar,
-  Platform
+  Platform,
+  AsyncStorage
 } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+import { Actions } from 'react-native-router-flux';
 import ReduxThunk from 'redux-thunk';
 import Parse from 'parse/react-native';
 import data from './Setting.json';
@@ -17,6 +19,21 @@ class App extends Component {
   componentWillMount() {
     Parse.initialize(data.parseAppId);
     Parse.serverURL = data.parseServerURL;
+    this.renderScene();
+  }
+
+  renderScene() {
+    Parse.User.currentAsync()
+    .then(async (currentUser) => {
+      if (currentUser) {
+        const sessionToken = currentUser.getSessionToken();
+        await AsyncStorage.setItem('sessionToken', sessionToken);
+        await AsyncStorage.setItem('userID', currentUser.id);
+        Actions.main();
+      } else {
+        Actions.root();
+      }
+    });
   }
 
   render() {
