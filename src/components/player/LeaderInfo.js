@@ -15,6 +15,7 @@ class LeaderInfo extends Component {
         await AsyncStorage.removeItem('sessionToken');
         await AsyncStorage.removeItem('userID');
         Actions.pop();
+        Actions.login();
         Parse.User.current();
       })
       .catch((error) => {

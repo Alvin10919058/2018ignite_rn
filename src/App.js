@@ -31,7 +31,7 @@ class App extends Component {
         await AsyncStorage.setItem('userID', currentUser.id);
         Actions.main();
       } else {
-        Actions.root();
+        Actions.login();
       }
     });
   }
