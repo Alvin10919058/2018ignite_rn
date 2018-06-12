@@ -1,7 +1,8 @@
 
 import {
     GET_TEAM_DATA,
-    GET_TEAM_DATA_SUCCESS
+    GET_TEAM_DATA_JUNIOR_SUCCESS,
+    GET_TEAM_DATA_COLLEGE_SUCCESS
   } from '../actions/types';
   
   const INITIAL_STATE = {
@@ -32,8 +33,40 @@ import {
     switch (action.type) {
       case GET_TEAM_DATA:
         return { ...state };
-      case GET_TEAM_DATA_SUCCESS:
-        return { ...state };
+      case GET_TEAM_DATA_JUNIOR_SUCCESS:
+        return { 
+            ...state,
+            batch: action.payload.batch,
+            camp: action.payload.camp,
+            name: action.payload.name,
+            done_submission: action.payload.done_submission,
+            completed: action.payload.completed,
+            team_total_score: action.payload.team_total_score,
+            free_point: action.payload.free_point,
+            //能力值
+            strength: action.payload.strength,
+            wisdom: action.payload.wisdom,
+            vitality: action.payload.vitality,
+            faith: action.payload.faith,
+            agility: action.payload.agility
+        };
+        case GET_TEAM_DATA_COLLEGE_SUCCESS:
+        return { 
+            ...state,
+            batch: action.payload.batch,
+            camp: action.payload.camp,
+            name: action.payload.name,
+            done_submission: action.payload.done_submission,
+            completed: action.payload.completed,
+            team_total_score: action.payload.team_total_score,
+            free_point: action.payload.free_point,
+            //能力值
+            passion: action.payload.passion,
+            creativity: action.payload.creativity,
+            intelligence: action.payload.intelligence,
+            love: action.payload.love,
+            patience: action.payload.patience
+        };
       default:
         return state;
     }

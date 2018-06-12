@@ -3,7 +3,8 @@ import data from '../Setting.json';
 
 import {
     GET_TEAM_DATA,
-    GET_TEAM_DATA_SUCCESS
+    GET_TEAM_DATA_JUNIOR_SUCCESS,
+    GET_TEAM_DATA_COLLEGE_SUCCESS
   } from './types';
 
 export const getTeamData = () => {
@@ -38,7 +39,15 @@ export const getTeamData = () => {
         .then((response) => response.json())
         .then((responseData) => {
             console.log(responseData);
-            getTeamDataSuccess(dispatch, responseData);
+            if (responseData.results[0].batch === '國高') {
+                console.log('國高');
+                getTeamDataJuniorSuccess(dispatch, responseData.results[0]);
+            } else if (responseData.results[0].batch === '大專') {
+                console.log('大專');
+                getTeamDataCollegeSuccess(dispatch, responseData.results[0]);
+            } else {
+                console.log('no batch show up');
+            }
         })
         .catch((error) => {
             console.log(error);
@@ -46,9 +55,16 @@ export const getTeamData = () => {
     };
 };
 
-const getTeamDataSuccess = (dispatch, responseData) => {
+const getTeamDataJuniorSuccess = (dispatch, responseData) => {
     dispatch({
-      type: GET_TEAM_DATA_SUCCESS,
+      type: GET_TEAM_DATA_JUNIOR_SUCCESS,
+      payload: responseData
+    });
+};
+
+const getTeamDataCollegeSuccess = (dispatch, responseData) => {
+    dispatch({
+      type: GET_TEAM_DATA_COLLEGE_SUCCESS,
       payload: responseData
     });
 };
