@@ -8,14 +8,18 @@ import SettingPage from './player/SettingPage';
 import Rank from './player/Rank';
 import Mission from './player/Mission';
 import Skills from './player/Skills';
+import Begin from './Begin';
 import { ifIphoneX } from './IphoneXDetector';
 
 class RouterComponent extends Component {
   render() {
     return (
       <Router>
-        <Stack>
+        <Stack
+          duration={0}
+        >
           <Scene key="root" initial>
+            <Scene key="begin" component={Begin} hideNavBar initial />
             <Scene key="login" component={Login} hideNavBar />
           </Scene>
           <Scene key="main">
