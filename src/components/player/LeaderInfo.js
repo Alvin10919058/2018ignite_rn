@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
 import {
-  Text,
-  AsyncStorage
+  //Text,
+  AsyncStorage,
+  Dimensions,
+  Image
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Parse from 'parse/react-native';
 import { connect } from 'react-redux';
 import { getTeamData } from '../../actions';
 import { BackgroundImage } from '../common';
+import { Biochemical, Defense, Sniper, Special, Soldier, Assault } from '../../images';
 //import data from '../../Setting.json';
+
+const { height, width } = Dimensions.get('window');
 
 class LeaderInfo extends Component {
 
@@ -31,10 +36,13 @@ class LeaderInfo extends Component {
   }
 
   render() {
-    const { containerStyle } = styles;
+    const { containerStyle, careerStyle } = styles;
     return (
       <BackgroundImage style={containerStyle}>
-        <Text onPress={this.logout.bind(this)}>LogOut</Text>
+         <Image
+            source={Soldier}
+            style={careerStyle}
+         />
       </BackgroundImage>
     );
   }
@@ -44,6 +52,11 @@ const styles = {
   containerStyle: {
     flex: 1,
     backgroundColor: 'white'
+  },
+  careerStyle: {
+    height: height / 1.1,
+    width: width / 1.1,
+    resizeMode: Image.resizeMode.contain
   }
 };
 
