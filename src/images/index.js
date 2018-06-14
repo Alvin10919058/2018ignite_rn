@@ -7,12 +7,12 @@ import SettingTab from './Setting.png';
 import MisionTab from './Mission.png';
 import HomePageTab from './HomePage.png';
 import SkillsTab from './Skills.png';
-import Biochemical from './Biochemical.jpg';
-import Defense from './Defense.jpg';
-import Sniper from './Sniper.jpg';
-import Special from './Special.jpg';
-import Soldier from './Soldier.jpg';
-import Assault from './Assault.jpg';
+import Biochemical from './Biochemical.png';
+import Defense from './Defense.png';
+import Sniper from './Sniper.png';
+import Special from './Special.png';
+import Soldier from './Soldier.png';
+import Assault from './Assault.png';
 
 export {
   Background, Logo, User, Password,
