@@ -35,14 +35,58 @@ class LeaderInfo extends Component {
       });
   }
 
+  renderCareer() {
+    const { careerStyle } = styles;
+    if (this.props.career.name === '戰士') {
+      return (
+        <Image
+        source={Soldier}
+        style={careerStyle}
+        />
+      );
+    } else if (this.props.career.name === '特勤部隊') {
+        return (
+          <Image
+          source={Special}
+          style={careerStyle}
+          />
+        );
+    } else if (this.props.career.name === '急襲部隊') {
+        return (
+          <Image
+          source={Assault}
+          style={careerStyle}
+          />
+        );
+    } else if (this.props.career.name === '狙擊部隊') {
+      return (
+        <Image
+        source={Sniper}
+        style={careerStyle}
+        />
+      );
+    } else if (this.props.career.name === '防禦部隊') {
+      return (
+        <Image
+        source={Defense}
+        style={careerStyle}
+        />
+      );
+    } else if (this.props.career.name === '生化小組') {
+      return (
+        <Image
+        source={Biochemical}
+        style={careerStyle}
+        />
+      );
+    } 
+  }
+
   render() {
-    const { containerStyle, careerStyle } = styles;
+    const { containerStyle } = styles;
     return (
       <BackgroundImage style={containerStyle}>
-         <Image
-            source={Soldier}
-            style={careerStyle}
-         />
+        {this.renderCareer()}
       </BackgroundImage>
     );
   }
@@ -61,7 +105,14 @@ const styles = {
 };
 
 const mapStateToProps = ({ player }) => {
-  const {  //國高能力值
+  const {  
+    batch, //國高or大專
+    camp, //陣營
+    name, //第幾小隊
+    team_total_score, //總分
+    career, //職業
+
+    //國高能力值
     strength, //力量
     wisdom, //智慧
     vitality, //體力
@@ -77,6 +128,12 @@ const mapStateToProps = ({ player }) => {
    } = player;
 
   return { 
+    batch, //國高or大專
+    camp, //陣營
+    name, //第幾小隊
+    team_total_score, //總分
+    career, //職業
+
     strength, //力量
     wisdom, //智慧
     vitality, //體力

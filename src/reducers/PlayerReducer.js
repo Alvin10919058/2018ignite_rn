@@ -13,6 +13,7 @@ import {
     completed: false, //是否完成支線任務
     team_total_score: 0, //總分
     free_point: 0, //自由點數
+    career: [], //職業
 
     //國高能力值
     strength: 0, //力量
@@ -43,6 +44,7 @@ import {
             completed: action.payload.completed,
             team_total_score: action.payload.team_total_score,
             free_point: action.payload.free_point,
+            career: action.payload.career,
             //能力值
             strength: action.payload.strength,
             wisdom: action.payload.wisdom,
@@ -60,6 +62,7 @@ import {
             completed: action.payload.completed,
             team_total_score: action.payload.team_total_score,
             free_point: action.payload.free_point,
+            career: action.payload.career,
             //能力值
             passion: action.payload.passion,
             creativity: action.payload.creativity,
