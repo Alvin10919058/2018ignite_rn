@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
-  //Text,
+  View,
+  Text,
   AsyncStorage,
   Dimensions,
   Image
@@ -83,10 +84,25 @@ class LeaderInfo extends Component {
   }
 
   render() {
-    const { containerStyle } = styles;
+    const { 
+      containerStyle, 
+      teamTextStyle, 
+      scoreTextStyle, 
+      infoStyle,
+      infoStyle2 
+    } = styles;
     return (
       <BackgroundImage style={containerStyle}>
         {this.renderCareer()}
+        <View 
+          style={
+            (this.props.career.name === '戰士' || this.props.career.name === '生化小組')
+            ? infoStyle2 : infoStyle
+          }
+        >
+          <Text style={teamTextStyle}>TEAM 01</Text>
+          <Text style={scoreTextStyle}>{this.props.team_total_score} POINT</Text>
+        </View>
       </BackgroundImage>
     );
   }
@@ -101,6 +117,29 @@ const styles = {
     height: height / 1.1,
     width: width / 1.1,
     resizeMode: Image.resizeMode.contain
+  },
+  infoStyle: {
+    position: 'absolute',
+    left: width / 2.5,
+    top: height / 8.5,
+  },
+  infoStyle2: {
+    position: 'absolute',
+    left: width / 2.9,
+    top: height / 8.5,
+  },
+  teamTextStyle: {
+    color: '#69AEB2',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 16
+    //fontFamily: 'GillSans-SemiBold'
+  },
+  scoreTextStyle: {
+    color: '#69AEB2',
+    fontWeight: 'bold',
+    fontSize: 23,
+    //fontFamily: 'GillSans-SemiBold'
   }
 };
 
