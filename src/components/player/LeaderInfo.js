@@ -83,26 +83,35 @@ class LeaderInfo extends Component {
     } 
   }
 
-  render() {
+  renderInfo() {
     const { 
-      containerStyle, 
       teamTextStyle, 
       scoreTextStyle, 
       infoStyle,
       infoStyle2 
     } = styles;
+
+    return (
+      <View 
+        style={
+          (this.props.career.name === '戰士' || this.props.career.name === '生化小組')
+          ? infoStyle2 : infoStyle
+        }
+      >
+        <Text style={teamTextStyle}>TEAM {this.props.name}</Text>
+        <Text style={scoreTextStyle}>{this.props.team_total_score} POINT</Text>
+      </View>
+    );
+  }
+
+  render() {
+    const { 
+      containerStyle
+    } = styles;
     return (
       <BackgroundImage style={containerStyle}>
         {this.renderCareer()}
-        <View 
-          style={
-            (this.props.career.name === '戰士' || this.props.career.name === '生化小組')
-            ? infoStyle2 : infoStyle
-          }
-        >
-          <Text style={teamTextStyle}>TEAM {this.props.name}</Text>
-          <Text style={scoreTextStyle}>{this.props.team_total_score} POINT</Text>
-        </View>
+        {this.renderInfo()}
       </BackgroundImage>
     );
   }
