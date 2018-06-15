@@ -100,7 +100,7 @@ class LeaderInfo extends Component {
             ? infoStyle2 : infoStyle
           }
         >
-          <Text style={teamTextStyle}>TEAM 01</Text>
+          <Text style={teamTextStyle}>TEAM {this.props.name}</Text>
           <Text style={scoreTextStyle}>{this.props.team_total_score} POINT</Text>
         </View>
       </BackgroundImage>
