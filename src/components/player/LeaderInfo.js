@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  AsyncStorage,
   Dimensions,
   Image
 } from 'react-native';
-import { Actions } from 'react-native-router-flux';
-import Parse from 'parse/react-native';
 import { connect } from 'react-redux';
 import { getTeamData } from '../../actions';
 import { BackgroundImage } from '../common';
@@ -20,20 +17,6 @@ class LeaderInfo extends Component {
 
   componentWillMount() {
     this.props.getTeamData();
-  }
-
-  logout() {
-    Parse.User.logOut()
-      .then(async () => {
-        await AsyncStorage.removeItem('sessionToken');
-        await AsyncStorage.removeItem('userID');
-        Actions.pop();
-        Actions.login();
-        Parse.User.current();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   }
 
   renderCareer() {
@@ -113,7 +96,9 @@ class LeaderInfo extends Component {
         {this.renderCareer()}
         {this.renderInfo()}
         <View style={styles.circle}>
-      	  <Text onPress={this.logout.bind(this)} style={{ textAlign: 'center' }}>test</Text>
+      	  <Text style={{ textAlign: 'center' }}>
+            test
+          </Text>
         </View>
       </BackgroundImage>
     );
