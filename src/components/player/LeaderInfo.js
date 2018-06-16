@@ -6,7 +6,7 @@ import {
   Image,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { getTeamData } from '../../actions';
+import { getTeamData, careerCodeChanged } from '../../actions';
 import { BackgroundImage, InputModal } from '../common';
 import { Biochemical, Defense, Sniper, Special, Soldier, Assault } from '../../images';
 //import data from '../../Setting.json';
@@ -16,12 +16,15 @@ const { height, width } = Dimensions.get('window');
 class LeaderInfo extends Component {
 
   state = {
-    showModal: false,
-    text: '',
+    showModal: false
   };
 
   componentWillMount() {
     this.props.getTeamData();
+  }
+
+  onCareerCodeChange(text) {
+    this.props.careerCodeChanged(text);
   }
 
   renderCareer() {
@@ -102,8 +105,8 @@ class LeaderInfo extends Component {
         <InputModal
           visible={this.state.showModal}
           onPress={() => { this.setState({ showModal: false }); }}
-          value={this.state.text}
-          onChangeText={(text) => { this.setState({ text }); }}
+          value={this.props.careerCode}
+          onChangeText={(text) => { this.onCareerCodeChange(text); }}
         />
         {this.renderCareer()}
         {this.renderInfo()}
@@ -191,7 +194,10 @@ const mapStateToProps = ({ player }) => {
     creativity, //創意
     intelligence, //智慧
     love, //愛心
-    patience//耐力
+    patience, //耐力
+
+    //
+    careerCode
    } = player;
 
   return { 
@@ -212,10 +218,14 @@ const mapStateToProps = ({ player }) => {
     creativity, //創意
     intelligence, //智慧
     love, //愛心
-    patience//耐力
+    patience, //耐力
+
+    //
+    careerCode
   };
 };
 
 export default connect(mapStateToProps, {
-  getTeamData
+  getTeamData,
+  careerCodeChanged
 })(LeaderInfo);

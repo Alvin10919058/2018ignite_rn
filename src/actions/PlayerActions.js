@@ -4,8 +4,16 @@ import data from '../Setting.json';
 import {
     GET_TEAM_DATA,
     GET_TEAM_DATA_JUNIOR_SUCCESS,
-    GET_TEAM_DATA_COLLEGE_SUCCESS
+    GET_TEAM_DATA_COLLEGE_SUCCESS,
+    CAREER_CODE_CHANGED
   } from './types';
+
+export const careerCodeChanged = (text) => {
+    return {
+        type: CAREER_CODE_CHANGED,
+        payload: text
+    };
+};
 
 export const getTeamData = () => {
     return async (dispatch) => {

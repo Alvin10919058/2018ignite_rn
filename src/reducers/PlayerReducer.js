@@ -2,7 +2,8 @@
 import {
     GET_TEAM_DATA,
     GET_TEAM_DATA_JUNIOR_SUCCESS,
-    GET_TEAM_DATA_COLLEGE_SUCCESS
+    GET_TEAM_DATA_COLLEGE_SUCCESS,
+    CAREER_CODE_CHANGED
   } from '../actions/types';
   
   const INITIAL_STATE = {
@@ -27,7 +28,10 @@ import {
     creativity: 0, //創意
     intelligence: 0, //智慧
     love: 0, //愛心
-    patience: 0//耐力
+    patience: 0, //耐力
+
+    //
+    careerCode: ''
   };
   
   export default (state = INITIAL_STATE, action) => {
@@ -52,7 +56,7 @@ import {
             faith: action.payload.faith,
             agility: action.payload.agility
         };
-        case GET_TEAM_DATA_COLLEGE_SUCCESS:
+      case GET_TEAM_DATA_COLLEGE_SUCCESS:
         return { 
             ...state,
             batch: action.payload.batch,
@@ -70,6 +74,8 @@ import {
             love: action.payload.love,
             patience: action.payload.patience
         };
+      case CAREER_CODE_CHANGED:
+        return { ...state, careerCode: action.payload  }
       default:
         return state;
     }
