@@ -7,7 +7,8 @@ import {
     CAREER_CODE_CHANGED,
     CAREER_GROW_UP,
     CAREER_GROW_UP_FINISHED,
-    CLOSE_ERROR_MODAL
+    CLOSE_ERROR_MODAL,
+    CAREER_GROW_UP_SUCCESS
   } from '../actions/types';
   
   const INITIAL_STATE = {
@@ -95,9 +96,24 @@ import {
       case CAREER_GROW_UP:
         return { ...state, showCodeModal: false, loading: true };
       case CAREER_GROW_UP_FINISHED:
-        return { ...state, showErrorModal: true, errorText: action.payload, careerCode: '', loading: false };
+        return { 
+          ...state, 
+          showErrorModal: true, 
+          errorText: action.payload, 
+          careerCode: '', 
+          loading: false 
+        };
       case CLOSE_ERROR_MODAL:
         return { ...state, showErrorModal: false, errorText: '' };
+      case CAREER_GROW_UP_SUCCESS:
+         return { 
+           ...state, 
+           showErrorModal: true, 
+           errorText: action.payload.text, 
+           career: action.payload.responseData,
+           careerCode: '', 
+           loading: false 
+          };
       default:
         return state;
     }

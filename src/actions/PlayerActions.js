@@ -9,7 +9,8 @@ import {
     CAREER_CODE_CHANGED,
     CAREER_GROW_UP,
     CAREER_GROW_UP_FINISHED,
-    CLOSE_ERROR_MODAL
+    CLOSE_ERROR_MODAL,
+    CAREER_GROW_UP_SUCCESS    
   } from './types';
 
 export const codeModalType = (type) => {
@@ -43,11 +44,11 @@ export const getTeamData = () => {
             include: 'career',
             //limit: 1000,
             where: {
-            user: {
-                __type: 'Pointer',
-                className: '_User',
-                objectId: userID
-            },
+                user: {
+                    __type: 'Pointer',
+                    className: '_User',
+                    objectId: userID
+                },
             }
         };
         const esc = encodeURIComponent;
@@ -99,9 +100,6 @@ const getTeamDataCollegeSuccess = (dispatch, responseData) => {
 export const careerGrowUp = (code) => {
     return async (dispatch) => {
         dispatch({ type: CAREER_GROW_UP });
-        const sessionToken = await AsyncStorage.getItem('sessionToken');
-        const userID = await AsyncStorage.getItem('userID');
-        const teamID = await AsyncStorage.getItem('teamID');
 
         const params = {
             where: {
@@ -125,8 +123,9 @@ export const careerGrowUp = (code) => {
            console.log(responseData);
            if (responseData.results[0] !== undefined) {
                console.log('yes');
+               changeTeamCareer(dispatch, responseData);
            } else {
-               careerGrowUpFailed(dispatch, '序號輸入錯誤或已被使用！');
+               careerGrowUpFinished(dispatch, '序號輸入錯誤或已被使用！');
            }
         })
         .catch((error) => {
@@ -135,9 +134,71 @@ export const careerGrowUp = (code) => {
     };
 };
 
-const careerGrowUpFailed = (dispatch, text) => {
+const careerGrowUpFinished = (dispatch, text) => {
     dispatch({
       type: CAREER_GROW_UP_FINISHED,
       payload: text
+    });
+};
+
+//至Team Class更改職業的pointer
+const changeTeamCareer = async (dispatch, responseData) => {
+    const sessionToken = await AsyncStorage.getItem('sessionToken');
+    const teamID = await AsyncStorage.getItem('teamID');  
+
+    const params = {
+        career: {
+            __type: 'Pointer',
+            className: 'Career',
+            objectId: responseData.results[0].objectId
+        },
+    };
+    
+    fetch(`${data.parseServerURL}/classes/Team/${teamID}`, {
+    method: 'PUT',
+    headers: {
+        'X-Parse-Application-Id': data.parseAppId,
+        'X-Parse-REST-API-Key': data.paresApiKey,
+        'X-Parse-Session-Token': sessionToken
+    },
+    body: JSON.stringify(params)
+    })
+    .then((success) => {
+    console.log(success);
+    changeCareerType(dispatch, responseData);
+    })
+    .catch((err) => {
+    console.log(err);// error handling ..
+    });
+};
+
+//再將Career的used改成true代表已使用過
+const changeCareerType = (dispatch, responseData) => {
+    const params = {
+        used: true
+    };
+    
+    fetch(`${data.parseServerURL}/classes/Career/${responseData.results[0].objectId}`, {
+    method: 'PUT',
+    headers: {
+        'X-Parse-Application-Id': data.parseAppId,
+        'X-Parse-REST-API-Key': data.paresApiKey
+    },
+    body: JSON.stringify(params)
+    })
+    .then((success) => {
+    console.log(success);
+    careerGrowUpSuccess(dispatch, '恭喜您成功轉職！', responseData.results[0]);
+    })
+    .catch((err) => {
+    console.log(err);// error handling ..
+    });
+};
+
+const careerGrowUpSuccess = (dispatch, text, responseData) => {
+    console.log(responseData);
+    dispatch({
+      type: CAREER_GROW_UP_SUCCESS,
+      payload: { text, responseData }
     });
 };
