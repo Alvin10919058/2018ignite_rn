@@ -112,6 +112,9 @@ class LeaderInfo extends Component {
       <BackgroundImage style={containerStyle}>
         {this.renderCareer()}
         {this.renderInfo()}
+        <View style={styles.circle}>
+      	  <Text onPress={this.logout.bind(this)} style={{ textAlign: 'center' }}>test</Text>
+        </View>
       </BackgroundImage>
     );
   }
@@ -149,7 +152,16 @@ const styles = {
     fontWeight: 'bold',
     fontSize: 23,
     //fontFamily: 'GillSans-SemiBold'
-  }
+  },
+  circle: {
+    position: 'absolute',
+    left: width / 20,
+    top: height / 2,
+    borderRadius: 60,
+    width: 120,
+    height: 120,
+    backgroundColor: '#BBC3DC',
+  },
 };
 
 const mapStateToProps = ({ player }) => {

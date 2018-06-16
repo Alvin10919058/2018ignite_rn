@@ -34,7 +34,11 @@ class App extends Component {
         const sessionToken = currentUser.getSessionToken();
         await AsyncStorage.setItem('sessionToken', sessionToken);
         await AsyncStorage.setItem('userID', currentUser.id);
-        Actions.main();
+        if (currentUser.attributes.character === 'gm') {
+          Actions.gm();
+        } else {
+          Actions.main();
+        }
       } else {
         Actions.login();
       }
