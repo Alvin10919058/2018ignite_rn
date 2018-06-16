@@ -104,7 +104,7 @@ class LeaderInfo extends Component {
       <BackgroundImage style={containerStyle}>
         <InputModal
           visible={this.state.showModal}
-          onPress={() => { this.setState({ showModal: false }); }}
+          Cancel={() => { this.setState({ showModal: false }); }}
           value={this.props.careerCode}
           onChangeText={(text) => { this.onCareerCodeChange(text); }}
         />

@@ -3,9 +3,11 @@
 
 <InputModal
   visible={顯示modal與否}
-  onPress={按下ok按鈕後觸發的function}
+  onPress={按下確定按鈕後觸發的function}
+  Cancel={按下取消後觸發的function}
   value={儲存文字的變數}
-  onChangeText={當文字改變的function}>
+  onChangeText={當文字改變的function}
+/>
 */
 
 import React from 'react';
@@ -21,12 +23,13 @@ import {
 
 const { width } = Dimensions.get('window');
 
-const InputModal = ({ value, onChangeText, visible, onPress }) => {
+const InputModal = ({ value, onChangeText, visible, onPress, Cancel }) => {
   const {
     containerStyle,
     textStyle,
     checkArea,
-    checkStyle,
+    sureTextStyle,
+    cancelTextStyle,
     cardSectionStyle,
     inputStyle,
     inputContainerStyle
@@ -64,7 +67,8 @@ const InputModal = ({ value, onChangeText, visible, onPress }) => {
             </View>
           </View>
           <TouchableOpacity style={checkArea} onPress={onPress}>
-            <Text style={checkStyle}>確定</Text>
+            <Text style={cancelTextStyle} onPress={Cancel}>取消</Text>
+            <Text style={sureTextStyle} onPress={onPress}>確定</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -101,9 +105,16 @@ const styles = {
     justifyContent: 'center',
     flexDirection: 'row'
   },
-  checkStyle: {
+  sureTextStyle: {
+    flex: 1,
     fontSize: 16,
     textAlign: 'center'
+  },
+  cancelTextStyle: {
+    flex: 1,
+    fontSize: 16,
+    textAlign: 'center',
+    color: '#FF0000'
   },
   inputStyle: {
     flex: 1,
