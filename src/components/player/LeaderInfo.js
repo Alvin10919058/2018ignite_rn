@@ -3,17 +3,22 @@ import {
   View,
   Text,
   Dimensions,
-  Image
+  Image,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { getTeamData } from '../../actions';
-import { BackgroundImage } from '../common';
+import { BackgroundImage, InputModal } from '../common';
 import { Biochemical, Defense, Sniper, Special, Soldier, Assault } from '../../images';
 //import data from '../../Setting.json';
 
 const { height, width } = Dimensions.get('window');
 
 class LeaderInfo extends Component {
+
+  state = {
+    showModal: false,
+    text: '',
+  };
 
   componentWillMount() {
     this.props.getTeamData();
@@ -89,15 +94,25 @@ class LeaderInfo extends Component {
 
   render() {
     const { 
-      containerStyle
+      containerStyle,
+      careerTextStyle
     } = styles;
     return (
       <BackgroundImage style={containerStyle}>
+        <InputModal
+          visible={this.state.showModal}
+          onPress={() => { this.setState({ showModal: false }); }}
+          value={this.state.text}
+          onChangeText={(text) => { this.setState({ text }); }}
+        />
         {this.renderCareer()}
         {this.renderInfo()}
         <View style={styles.circle}>
-      	  <Text style={{ textAlign: 'center' }}>
-            test
+          <Text 
+            onPress={() => { this.setState({ showModal: true }); }} 
+            style={careerTextStyle}
+          >
+            轉職
           </Text>
         </View>
       </BackgroundImage>
@@ -147,6 +162,13 @@ const styles = {
     height: 120,
     backgroundColor: '#BBC3DC',
   },
+  careerTextStyle: {
+    paddingTop: 50,
+    textAlign: 'center',
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  }
 };
 
 const mapStateToProps = ({ player }) => {
