@@ -38,13 +38,14 @@ import {
     careerCode: '',
     showCodeModal: false,
     showErrorModal: false,
-    errorText: ''
+    errorText: '',
+    loading: false
   };
   
   export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
       case GET_TEAM_DATA:
-        return { ...state };
+        return { ...state, loading: true };
       case GET_TEAM_DATA_JUNIOR_SUCCESS:
         return { 
             ...state,
@@ -61,7 +62,10 @@ import {
             wisdom: action.payload.wisdom,
             vitality: action.payload.vitality,
             faith: action.payload.faith,
-            agility: action.payload.agility
+            agility: action.payload.agility,
+
+            //
+            loading: false
         };
       case GET_TEAM_DATA_COLLEGE_SUCCESS:
         return { 
@@ -79,18 +83,21 @@ import {
             creativity: action.payload.creativity,
             intelligence: action.payload.intelligence,
             love: action.payload.love,
-            patience: action.payload.patience
+            patience: action.payload.patience,
+
+            //
+            loading: false
         };
       case CODE_MODAL_TYPE:
       return { ...state, showCodeModal: action.payload };
       case CAREER_CODE_CHANGED:
         return { ...state, careerCode: action.payload };
       case CAREER_GROW_UP:
-        return { ...state, showCodeModal: false };
+        return { ...state, showCodeModal: false, loading: true };
       case CAREER_GROW_UP_FINISHED:
-        return { ...state, showErrorModal: true, errorText: action.payload, careerCode: '' };
+        return { ...state, showErrorModal: true, errorText: action.payload, careerCode: '', loading: false };
       case CLOSE_ERROR_MODAL:
-      return { ...state, showErrorModal: false, errorText: '' };
+        return { ...state, showErrorModal: false, errorText: '' };
       default:
         return state;
     }

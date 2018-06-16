@@ -13,7 +13,7 @@ import {
   codeModalType, 
   closeErrorModal 
 } from '../../actions';
-import { BackgroundImage, InputModal } from '../common';
+import { BackgroundImage, InputModal, Spinner } from '../common';
 import { Biochemical, Defense, Sniper, Special, Soldier, Assault } from '../../images';
 //import data from '../../Setting.json';
 
@@ -102,39 +102,44 @@ class LeaderInfo extends Component {
   }
 
   render() {
-    const { 
-      containerStyle,
-      careerTextStyle
-    } = styles;
-    return (
-      <BackgroundImage style={containerStyle}>
-        <InputModal
-          titleText={'請輸入序號以驗證是否正確:'}
-          visible={this.props.showCodeModal}
-          cancelButton
-          cancel={() => { this.props.codeModalType(false); }}
-          onPress={() => { this.onCareerGrowUp(this.props.careerCode); }}
-          inputText
-          value={this.props.careerCode}
-          onChangeText={(text) => { this.onCareerCodeChange(text); }}
-        />
-        <InputModal
-          titleText={this.props.errorText}
-          visible={this.props.showErrorModal}
-          onPress={() => { this.props.closeErrorModal(); }}
-        />
-        {this.renderCareer()}
-        {this.renderInfo()}
-        <View style={styles.circle}>
-          <Text 
-            onPress={() => { this.props.codeModalType(true); }} 
-            style={careerTextStyle}
-          >
-            轉職
-          </Text>
-        </View>
-      </BackgroundImage>
-    );
+    if (this.props.loading) {
+      return (
+        <Spinner />
+      );
+    } 
+      const { 
+        containerStyle,
+        careerTextStyle
+      } = styles;
+      return (
+        <BackgroundImage style={containerStyle}>
+          <InputModal
+            titleText={'請輸入序號以驗證是否正確:'}
+            visible={this.props.showCodeModal}
+            cancelButton
+            cancel={() => { this.props.codeModalType(false); }}
+            onPress={() => { this.onCareerGrowUp(this.props.careerCode); }}
+            inputText
+            value={this.props.careerCode}
+            onChangeText={(text) => { this.onCareerCodeChange(text); }}
+          />
+          <InputModal
+            titleText={this.props.errorText}
+            visible={this.props.showErrorModal}
+            onPress={() => { this.props.closeErrorModal(); }}
+          />
+          {this.renderCareer()}
+          {this.renderInfo()}
+          <View style={styles.circle}>
+            <Text 
+              onPress={() => { this.props.codeModalType(true); }} 
+              style={careerTextStyle}
+            >
+              轉職
+            </Text>
+          </View>
+        </BackgroundImage>
+      );   
   }
 }
 
@@ -215,7 +220,8 @@ const mapStateToProps = ({ player }) => {
     careerCode,
     showCodeModal,
     showErrorModal,
-    errorText
+    errorText,
+    loading
    } = player;
 
   return { 
@@ -242,7 +248,8 @@ const mapStateToProps = ({ player }) => {
     careerCode,
     showCodeModal,
     showErrorModal,
-    errorText
+    errorText,
+    loading
   };
 };
 
