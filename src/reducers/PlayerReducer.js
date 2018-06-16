@@ -3,7 +3,11 @@ import {
     GET_TEAM_DATA,
     GET_TEAM_DATA_JUNIOR_SUCCESS,
     GET_TEAM_DATA_COLLEGE_SUCCESS,
-    CAREER_CODE_CHANGED
+    CODE_MODAL_TYPE,
+    CAREER_CODE_CHANGED,
+    CAREER_GROW_UP,
+    CAREER_GROW_UP_FINISHED,
+    CLOSE_ERROR_MODAL
   } from '../actions/types';
   
   const INITIAL_STATE = {
@@ -31,7 +35,10 @@ import {
     patience: 0, //耐力
 
     //
-    careerCode: ''
+    careerCode: '',
+    showCodeModal: false,
+    showErrorModal: false,
+    errorText: ''
   };
   
   export default (state = INITIAL_STATE, action) => {
@@ -74,8 +81,16 @@ import {
             love: action.payload.love,
             patience: action.payload.patience
         };
+      case CODE_MODAL_TYPE:
+      return { ...state, showCodeModal: action.payload };
       case CAREER_CODE_CHANGED:
-        return { ...state, careerCode: action.payload  }
+        return { ...state, careerCode: action.payload };
+      case CAREER_GROW_UP:
+        return { ...state, showCodeModal: false };
+      case CAREER_GROW_UP_FINISHED:
+        return { ...state, showErrorModal: true, errorText: action.payload, careerCode: '' };
+      case CLOSE_ERROR_MODAL:
+      return { ...state, showErrorModal: false, errorText: '' };
       default:
         return state;
     }

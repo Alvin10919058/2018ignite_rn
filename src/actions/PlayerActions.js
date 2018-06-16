@@ -5,8 +5,26 @@ import {
     GET_TEAM_DATA,
     GET_TEAM_DATA_JUNIOR_SUCCESS,
     GET_TEAM_DATA_COLLEGE_SUCCESS,
-    CAREER_CODE_CHANGED
+    CODE_MODAL_TYPE,
+    CAREER_CODE_CHANGED,
+    CAREER_GROW_UP,
+    CAREER_GROW_UP_FINISHED,
+    CLOSE_ERROR_MODAL
   } from './types';
+
+export const codeModalType = (type) => {
+    return {
+        type: CODE_MODAL_TYPE,
+        payload: type
+    };
+};
+
+export const closeErrorModal = () => {
+    return {
+        type: CLOSE_ERROR_MODAL,
+        payload: null
+    };
+};
 
 export const careerCodeChanged = (text) => {
     return {
@@ -77,3 +95,47 @@ const getTeamDataCollegeSuccess = (dispatch, responseData) => {
     });
 };
 
+export const careerGrowUp = (code) => {
+    return async (dispatch) => {
+        dispatch({ type: CAREER_GROW_UP });
+        const sessionToken = await AsyncStorage.getItem('sessionToken');
+        const userID = await AsyncStorage.getItem('userID');
+
+        const params = {
+            where: {
+              code_number: code,
+              used: false
+            }
+        };
+        const esc = encodeURIComponent;
+        const query = Object.keys(params)
+            .map(k => `${esc(k)}=${esc(JSON.stringify(params[k]))}`)
+            .join('&');
+        fetch(`${data.parseServerURL}/classes/Career?${query}`, {
+        method: 'GET',
+        headers: {
+            'X-Parse-Application-Id': data.parseAppId,
+            'X-Parse-REST-API-Key': data.paresApiKey
+        }
+        })
+        .then((response) => response.json())
+        .then((responseData) => {
+           console.log(responseData);
+           if (responseData.results[0] !== undefined) {
+               console.log('yes');
+           } else {
+               careerGrowUpFailed(dispatch, '序號輸入錯誤或已被使用！');
+           }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    };
+};
+
+const careerGrowUpFailed = (dispatch, text) => {
+    dispatch({
+      type: CAREER_GROW_UP_FINISHED,
+      payload: text
+    });
+};

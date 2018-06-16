@@ -2,9 +2,12 @@
 使用教學
 
 <InputModal
+  titleText={標題文字}
   visible={顯示modal與否}
   onPress={按下確定按鈕後觸發的function}
-  Cancel={按下取消後觸發的function}
+  cancelButton={是否要顯示cancel按鈕}
+  cancel={按下取消後觸發的function}
+  inputText={是否要顯示textInput欄位}
   value={儲存文字的變數}
   onChangeText={當文字改變的function}
 />
@@ -23,7 +26,16 @@ import {
 
 const { width } = Dimensions.get('window');
 
-const InputModal = ({ value, onChangeText, visible, onPress, Cancel }) => {
+const InputModal = ({
+   titleText,
+   inputText,
+   value, 
+   onChangeText, 
+   visible, 
+   onPress, 
+   cancel, 
+   cancelButton,
+  }) => {
   const {
     containerStyle,
     textStyle,
@@ -47,27 +59,35 @@ const InputModal = ({ value, onChangeText, visible, onPress, Cancel }) => {
           <View style={{ flex: 5 }}>
             <View style={{ flex: 1, justifyContent: 'center' }}>
               <Text style={textStyle}>
-                請輸入序號以驗證是否正確:
+                {titleText}
               </Text>
             </View>
-            <View style={{ flex: 2, justifyContent: 'center' }}>
-              <View style={inputContainerStyle}>
-                <TextInput
-                  placeholder={'請輸入你所得到的序號'}
-                  placeholderTextColor={'#ccc'}
-                  autoCorrect={false}
-                  style={inputStyle}
-                  value={value}
-                  autoCapitalize='none'
-                  onChangeText={onChangeText}
-                  returnKeyType={'done'}
-                  underlineColorAndroid={'transparent'}
-                />
+            {
+              inputText
+              &&
+              <View style={{ flex: 2, justifyContent: 'center' }}>
+                <View style={inputContainerStyle}>
+                  <TextInput
+                    placeholder={'請輸入你所得到的序號'}
+                    placeholderTextColor={'#ccc'}
+                    autoCorrect={false}
+                    style={inputStyle}
+                    value={value}
+                    autoCapitalize='none'
+                    onChangeText={onChangeText}
+                    returnKeyType={'done'}
+                    underlineColorAndroid={'transparent'}
+                  />
+                </View>
               </View>
-            </View>
+            }
           </View>
           <TouchableOpacity style={checkArea} onPress={onPress}>
-            <Text style={cancelTextStyle} onPress={Cancel}>取消</Text>
+            {
+              cancelButton
+              &&
+              <Text style={cancelTextStyle} onPress={cancel}>取消</Text>
+            }
             <Text style={sureTextStyle} onPress={onPress}>確定</Text>
           </TouchableOpacity>
         </View>
