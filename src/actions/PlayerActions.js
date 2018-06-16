@@ -63,8 +63,9 @@ export const getTeamData = () => {
         }
         })
         .then((response) => response.json())
-        .then((responseData) => {
+        .then(async (responseData) => {
             console.log(responseData);
+            await AsyncStorage.setItem('teamID', responseData.results[0].objectId);
             if (responseData.results[0].batch === '國高') {
                 console.log('國高');
                 getTeamDataJuniorSuccess(dispatch, responseData.results[0]);
@@ -100,6 +101,7 @@ export const careerGrowUp = (code) => {
         dispatch({ type: CAREER_GROW_UP });
         const sessionToken = await AsyncStorage.getItem('sessionToken');
         const userID = await AsyncStorage.getItem('userID');
+        const teamID = await AsyncStorage.getItem('teamID');
 
         const params = {
             where: {

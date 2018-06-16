@@ -14,6 +14,7 @@ class SettingPage extends Component {
       .then(async () => {
         await AsyncStorage.removeItem('sessionToken');
         await AsyncStorage.removeItem('userID');
+        await AsyncStorage.removeItem('teamID');
         Actions.pop();
         Actions.login();
         Parse.User.current();
