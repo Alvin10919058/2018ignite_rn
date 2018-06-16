@@ -27,13 +27,13 @@ class RouterComponent extends Component {
           <Scene key="main">
             <Scene key="tabbar" tabs tabBarStyle={styles.tabBarStyle}>
 
-              <Scene key="tab0" title="排名" icon={TabIcon}>
+              <Scene key="tab0" initial title="排名" icon={TabIcon}>
                 <Scene key="rank" initial component={Rank} hideNavBar />
               </Scene>
               <Scene key="tab1" title="配點" icon={TabIcon}>
                 <Scene key="skills" initial component={Skills} hideNavBar />
               </Scene>
-              <Scene key="tab2" initial title="首頁" icon={TabIcon}>
+              <Scene key="tab2" title="首頁" icon={TabIcon}>
                 <Scene key="teamInfo" initial component={LeaderInfo} hideNavBar />
               </Scene>
               <Scene key="tab3" title="支線任務" icon={TabIcon}>
