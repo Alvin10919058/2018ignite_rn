@@ -4,11 +4,8 @@
 <InputModal
   visible={顯示modal與否}
   onPress={按下ok按鈕後觸發的function}
->
-  {訊息文字}
-</InputModal>
-
-
+  value={儲存文字的變數}
+  onChangeText={當文字改變的function}>
 */
 
 import React from 'react';
