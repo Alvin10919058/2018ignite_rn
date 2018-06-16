@@ -10,8 +10,8 @@ import {
   getTeamData, 
   careerCodeChanged, 
   careerGrowUp, 
-  codeModalType, 
-  closeErrorModal 
+  codeModalType,
+  errorModalType 
 } from '../../actions';
 import { BackgroundImage, InputModal, Spinner } from '../common';
 import { Biochemical, Defense, Sniper, Special, Soldier, Assault } from '../../images';
@@ -101,6 +101,36 @@ class LeaderInfo extends Component {
     );
   }
 
+  renderChangeCareer() {
+    const { 
+      careerTextStyle
+    } = styles;
+
+    if (this.props.career.name === '戰士') {
+      return (
+        <View style={styles.circle}>
+          <Text 
+            onPress={() => { this.props.codeModalType(true); }} 
+            style={careerTextStyle}
+          >
+            轉職
+        </Text>
+       </View>
+      );
+    } else {
+      return (
+        <View style={styles.circle}>
+          <Text 
+            onPress={() => { this.props.errorModalType(true, this.props.career.description); }} 
+            style={careerTextStyle}
+          >
+            職業介紹
+        </Text>
+       </View>
+      );
+    }
+  }
+
   render() {
     if (this.props.loading) {
       return (
@@ -108,8 +138,7 @@ class LeaderInfo extends Component {
       );
     } 
       const { 
-        containerStyle,
-        careerTextStyle
+        containerStyle
       } = styles;
       return (
         <BackgroundImage style={containerStyle}>
@@ -126,18 +155,11 @@ class LeaderInfo extends Component {
           <InputModal
             titleText={this.props.errorText}
             visible={this.props.showErrorModal}
-            onPress={() => { this.props.closeErrorModal(); }}
+            onPress={() => { this.props.errorModalType(false, ''); }}
           />
           {this.renderCareer()}
           {this.renderInfo()}
-          <View style={styles.circle}>
-            <Text 
-              onPress={() => { this.props.codeModalType(true); }} 
-              style={careerTextStyle}
-            >
-              轉職
-            </Text>
-          </View>
+          {this.renderChangeCareer()}
         </BackgroundImage>
       );   
   }
@@ -258,5 +280,5 @@ export default connect(mapStateToProps, {
   careerCodeChanged,
   careerGrowUp,
   codeModalType,
-  closeErrorModal
+  errorModalType
 })(LeaderInfo);

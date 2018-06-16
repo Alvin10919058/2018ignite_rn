@@ -5,9 +5,9 @@ import {
     GET_TEAM_DATA_COLLEGE_SUCCESS,
     CODE_MODAL_TYPE,
     CAREER_CODE_CHANGED,
+    ERROR_MODAL_TYPE,
     CAREER_GROW_UP,
     CAREER_GROW_UP_FINISHED,
-    CLOSE_ERROR_MODAL,
     CAREER_GROW_UP_SUCCESS
   } from '../actions/types';
   
@@ -90,7 +90,13 @@ import {
             loading: false
         };
       case CODE_MODAL_TYPE:
-      return { ...state, showCodeModal: action.payload };
+        return { ...state, showCodeModal: action.payload };
+      case ERROR_MODAL_TYPE:
+        return { 
+          ...state, 
+          showErrorModal: action.payload.type, 
+          errorText: action.payload.text
+        };
       case CAREER_CODE_CHANGED:
         return { ...state, careerCode: action.payload };
       case CAREER_GROW_UP:
@@ -103,8 +109,6 @@ import {
           careerCode: '', 
           loading: false 
         };
-      case CLOSE_ERROR_MODAL:
-        return { ...state, showErrorModal: false, errorText: '' };
       case CAREER_GROW_UP_SUCCESS:
          return { 
            ...state, 

@@ -7,23 +7,23 @@ import {
     GET_TEAM_DATA_COLLEGE_SUCCESS,
     CODE_MODAL_TYPE,
     CAREER_CODE_CHANGED,
+    ERROR_MODAL_TYPE,
     CAREER_GROW_UP,
     CAREER_GROW_UP_FINISHED,
-    CLOSE_ERROR_MODAL,
     CAREER_GROW_UP_SUCCESS    
   } from './types';
+
+export const errorModalType = (type, text) => {
+    return {
+        type: ERROR_MODAL_TYPE,
+        payload: { type, text }
+    };
+};
 
 export const codeModalType = (type) => {
     return {
         type: CODE_MODAL_TYPE,
         payload: type
-    };
-};
-
-export const closeErrorModal = () => {
-    return {
-        type: CLOSE_ERROR_MODAL,
-        payload: null
     };
 };
 
