@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+import logger from 'redux-logger';
 import { Actions } from 'react-native-router-flux';
 import ReduxThunk from 'redux-thunk';
 import Parse from 'parse/react-native';
@@ -15,6 +16,10 @@ import SceneRouter from './components/SceneRouter';
 import { ifIphoneX } from './components/IphoneXDetector';
 import reducers from './reducers';
 
+const middleware = [
+  ReduxThunk,
+  __DEV__ && logger,
+].filter(Boolean); // filter(Boolean) 會過濾掉false，但true會留著
 class App extends Component {
   componentWillMount() {
     Parse.initialize(data.parseAppId);
@@ -29,7 +34,11 @@ class App extends Component {
         const sessionToken = currentUser.getSessionToken();
         await AsyncStorage.setItem('sessionToken', sessionToken);
         await AsyncStorage.setItem('userID', currentUser.id);
-        Actions.main();
+        if (currentUser.attributes.character === 'gm') {
+          Actions.gm();
+        } else {
+          Actions.main();
+        }
       } else {
         Actions.login();
       }
@@ -37,7 +46,7 @@ class App extends Component {
   }
 
   render() {
-    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+    const store = createStore(reducers, {}, applyMiddleware(...middleware));
     return (
       <Provider store={store}>
         <View style={{ flex: 1 }}>

@@ -8,6 +8,7 @@ import SettingPage from './player/SettingPage';
 import Rank from './player/Rank';
 import Mission from './player/Mission';
 import Skills from './player/Skills';
+import GiveScore from './gm/GiveScore';
 import Begin from './Begin';
 import { ifIphoneX } from './IphoneXDetector';
 
@@ -22,6 +23,7 @@ class RouterComponent extends Component {
             <Scene key="begin" component={Begin} hideNavBar initial />
             <Scene key="login" component={Login} hideNavBar />
           </Scene>
+
           <Scene key="main">
             <Scene key="tabbar" tabs tabBarStyle={styles.tabBarStyle}>
 
@@ -43,6 +45,23 @@ class RouterComponent extends Component {
 
             </Scene>
           </Scene>
+
+          <Scene key="gm">
+            <Scene key="tabbar2" tabs tabBarStyle={styles.tabBarStyle}>
+
+              <Scene key="tab5" title="排名" icon={TabIcon}>
+                <Scene key="rank2" initial component={Rank} hideNavBar />
+              </Scene>
+              <Scene key="tab6" inital title="配點" icon={TabIcon}>
+                <Scene key="giveScore" initial component={GiveScore} hideNavBar />
+              </Scene>
+              <Scene key="tab7" title="設定" icon={TabIcon}>
+                <Scene key="settingPage2" initial component={SettingPage} hideNavBar />
+              </Scene>        
+
+            </Scene>
+          </Scene>
+
         </Stack>
       </Router>
     );
