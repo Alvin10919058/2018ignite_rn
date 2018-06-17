@@ -146,6 +146,7 @@ class LeaderInfo extends Component {
             titleText={'請輸入序號以驗證是否正確:'}
             visible={this.props.showCodeModal}
             cancelButton
+            scrollable={false}
             cancel={() => { this.props.codeModalType(false); }}
             onPress={() => { this.onCareerGrowUp(this.props.careerCode); }}
             inputText
@@ -154,6 +155,11 @@ class LeaderInfo extends Component {
           />
           <InputModal
             titleText={this.props.errorText}
+            textCustomStyle={
+              (this.props.career.name === '戰士') 
+              ? { textAlign: 'center' } : { textAlign: 'left' }
+            }
+            scrollable={(this.props.career.name !== '戰士')}
             visible={this.props.showErrorModal}
             onPress={() => { this.props.errorModalType(false, ''); }}
           />

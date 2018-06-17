@@ -3,6 +3,8 @@
 
 <InputModal
   titleText={標題文字}
+  textCustomStyle={客製化的textStyle}
+  scrollable={文字是否捲動}
   visible={顯示modal與否}
   onPress={按下確定按鈕後觸發的function}
   cancelButton={是否要顯示cancel按鈕}
@@ -17,6 +19,7 @@ import React from 'react';
 import { 
   Text, 
   TextInput, 
+  ScrollView,
   View, 
   Modal,
   Dimensions, 
@@ -35,6 +38,8 @@ const InputModal = ({
    onPress, 
    cancel, 
    cancelButton,
+   textCustomStyle,
+   scrollable
   }) => {
   const {
     containerStyle,
@@ -57,15 +62,29 @@ const InputModal = ({
       <View style={containerStyle}>
         <View style={cardSectionStyle}>
           <View style={{ flex: 5 }}>
-            <View style={{ flex: 1, justifyContent: 'center' }}>
-              <Text style={textStyle}>
-                {titleText}
-              </Text>
-            </View>
+            {
+              scrollable === true
+              &&
+              <ScrollView style={{ flex: 1 }}>
+                <Text style={[textStyle, textCustomStyle]}>
+                  {titleText}
+                </Text>     
+              </ScrollView>
+            }
+            { 
+              scrollable === false
+              &&
+              <View style={{ flex: 1, justifyContent: 'center' }}>
+                <Text style={[textStyle, textCustomStyle]}>
+                  {titleText}
+                </Text>  
+              </View>
+            }
+            
             {
               inputText
               &&
-              <View style={{ flex: 2, justifyContent: 'center' }}>
+              <View style={{ flex: 3, justifyContent: 'center' }}>
                 <View style={inputContainerStyle}>
                   <TextInput
                     placeholder={'請輸入你所得到的序號'}
@@ -112,8 +131,8 @@ const styles = {
     position: 'relative',
     borderColor: '#fff',
     borderRadius: 15,
-    height: 200,
-    width: width * 0.8
+    height: 220,
+    width: width * 0.9
   },
   textStyle: {
     padding: 15,
@@ -128,7 +147,8 @@ const styles = {
   sureTextStyle: {
     flex: 1,
     fontSize: 16,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontWeight: 'bold'
   },
   cancelTextStyle: {
     flex: 1,

@@ -143,7 +143,6 @@ const careerGrowUpFinished = (dispatch, text) => {
 
 //至Team Class更改職業的pointer
 const changeTeamCareer = async (dispatch, responseData) => {
-    const sessionToken = await AsyncStorage.getItem('sessionToken');
     const teamID = await AsyncStorage.getItem('teamID');  
 
     const params = {
@@ -158,8 +157,7 @@ const changeTeamCareer = async (dispatch, responseData) => {
     method: 'PUT',
     headers: {
         'X-Parse-Application-Id': data.parseAppId,
-        'X-Parse-REST-API-Key': data.paresApiKey,
-        'X-Parse-Session-Token': sessionToken
+        'X-Parse-REST-API-Key': data.paresApiKey
     },
     body: JSON.stringify(params)
     })
