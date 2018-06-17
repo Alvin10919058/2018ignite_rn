@@ -45,7 +45,7 @@ class SettingPage extends Component {
               cardText={'隱私權政策'} 
             />
             <CardList 
-              onPress={null} 
+              onPress={this.logout.bind(this)} 
               cardText={'登出'} 
             />
         </ScrollView>
