@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  ScrollView,
   AsyncStorage
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Parse from 'parse/react-native';
+import { CardList } from '../common';
 
 class SettingPage extends Component {
 
@@ -27,8 +29,26 @@ class SettingPage extends Component {
   render() {
     const { container } = styles;
     return (
+     
       <View style={container}>
-        <Text onPress={this.logout.bind(this)}>Logout</Text>
+        <ScrollView>
+            <CardList 
+              onPress={null} 
+              cardText={'各類職業介紹'} 
+            />
+            <CardList 
+              onPress={null} 
+              cardText={'關於作者'} 
+            />
+            <CardList 
+              onPress={null} 
+              cardText={'隱私權政策'} 
+            />
+            <CardList 
+              onPress={null} 
+              cardText={'登出'} 
+            />
+        </ScrollView>
       </View>
     );
   }
@@ -36,7 +56,8 @@ class SettingPage extends Component {
 
 const styles = {
   container: {
-      flex: 1
+      flex: 1,
+      backgroundColor: 'white'
   }
 };
 
