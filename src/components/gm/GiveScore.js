@@ -1,6 +1,7 @@
 import React from 'react';
-import { Alert, Text, StyleSheet, View, Switch } from 'react-native';
+import { Alert, Text, StyleSheet, View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
+import SwitchButton from '../common/SwitchButton';
 
 class GiveScore extends React.Component {
   constructor(props) {
@@ -9,7 +10,7 @@ class GiveScore extends React.Component {
     this.inputRefs = {};
 
     this.state = {
-        switchType: true,
+        activeSwitch: 1,
         favColor: undefined,
         items: [
             {
@@ -40,45 +41,59 @@ class GiveScore extends React.Component {
                 value: 'hockey',
             },
         ],
+        favthing: undefined,
+        items3: [
+            {
+                label: 'Football',
+                value: 'football',
+            },
+            {
+                label: 'Baseball',
+                value: 'baseball',
+            },
+            {
+                label: 'Hockey',
+                value: 'hockey',
+            },
+        ]
     };
 }
 
 componentDidMount() {
     // if the component is using the optional `value` prop, the parent
     // has the abililty to both set the initial value and also update it
-    setTimeout(() => {
-        this.setState({
-            favColor: 'red',
-        });
-    }, 1000);
+    // setTimeout(() => {
+    //     this.setState({
+    //         favColor: 'red',
+    //     });
+    // }, 1000);
 
-    // parent can also update the `items` prop
-    setTimeout(() => {
-        this.setState({
-            items: this.state.items.concat([{ value: 'purple', label: 'Purple' }]),
-        });
-    }, 2000);
+    // // parent can also update the `items` prop
+    // setTimeout(() => {
+    //     this.setState({
+    //         items: this.state.items.concat([{ value: 'purple', label: 'Purple' }]),
+    //     });
+    // }, 2000);
 }
 
 render() {
     return (
         <View style={styles.container}>
-              {
-                this.state.switchType === true
-                &&
-                <Text>國高</Text>
-              }
-               {
-                this.state.switchType === false
-                &&
-                <Text>大專</Text>
-              }
-            <Switch
-              onValueChange={(value) => {
-                this.setState({ switchType: value });
-              }}
-              style={styles.switchButton}
-              value={this.state.switchType}
+            <SwitchButton
+                    onValueChange={(val) => this.setState({ activeSwitch: val })}     
+                    text1='國高'                      
+                    text2='大專'                      
+                    switchWidth={200}                  
+                    switchHeight={44}              
+                    switchdirection='ltr'            
+                    switchBorderRadius={100}       
+                    switchSpeedChange={500}           
+                    switchBorderColor='#d4d4d4'       
+                    switchBackgroundColor='#fff'   
+                    btnBorderColor='#00a4b9'          
+                    btnBackgroundColor='#00bcd4'     
+                    fontColor='#b1b1b1'             
+                    activeFontColor='#fff'
             />
             <Text>小隊</Text>
             <RNPickerSelect
@@ -92,9 +107,6 @@ render() {
                         favColor: value,
                     });
                 }}
-                onUpArrow={() => {
-                    this.inputRefs.name.focus();
-                }}
                 onDownArrow={() => {
                     this.inputRefs.picker2.togglePicker();
                 }}
@@ -104,7 +116,7 @@ render() {
                     this.inputRefs.picker = el;
                 }}
             />
-
+                {console.log()}
             <View style={{ paddingVertical: 5 }} />
 
             <Text>種類</Text>
@@ -113,22 +125,22 @@ render() {
                     label: '請選擇配點種類',
                     value: null,
                 }}
-                items={this.state.items}
+                items={this.state.items2}
                 onValueChange={(value) => {
                     this.setState({
-                        favColor: value,
+                      favSport: value,
                     });
                 }}
                 onUpArrow={() => {
-                    this.inputRefs.name.focus();
+                    this.inputRefs.picker.togglePicker();
                 }}
                 onDownArrow={() => {
-                    this.inputRefs.picker2.togglePicker();
+                    this.inputRefs.picker3.togglePicker();
                 }}
                 style={{ ...pickerSelectStyles }}
-                value={this.state.favColor}
+                value={this.state.favSport}
                 ref={(el) => {
-                    this.inputRefs.picker = el;
+                    this.inputRefs.picker2 = el;
                 }}
             />
 
@@ -140,20 +152,18 @@ render() {
                     label: '請選擇給予點數',
                     value: null,
                 }}
-                items={this.state.items2}
+                items={this.state.items3}
                 onValueChange={(value) => {
                     this.setState({
-                        favSport: value,
+                      favthing: value,
                     });
                 }}
                 onUpArrow={() => {
-                    this.inputRefs.picker.togglePicker();
+                    this.inputRefs.picker2.togglePicker();
                 }}
-                onDownArrow={() => {
-                    this.inputRefs.company.focus();
-                }}
+                
                 style={{ ...pickerSelectStyles }}
-                value={this.state.favSport}
+                value={this.state.favthing}
                 ref={(el) => {
                     this.inputRefs.picker2 = el;
                 }}
