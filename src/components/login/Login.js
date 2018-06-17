@@ -51,6 +51,7 @@ class Login extends Component {
               onChangeText={this.onEmailChange.bind(this)}
               value={this.props.username}
               placeholderTextColor='#9d9d9d'
+              underlineColorAndroid={'transparent'}
             />
           </CardSection>
 
@@ -65,6 +66,7 @@ class Login extends Component {
               onChangeText={this.onPasswordChange.bind(this)}
               value={this.props.password}
               placeholderTextColor='#9d9d9d'
+              underlineColorAndroid={'transparent'}
             />
           </CardSection>
 
