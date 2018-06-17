@@ -6,7 +6,8 @@ const Input = ({
   onChangeText, 
   placeholder, 
   secureTextEntry,
-  placeholderTextColor
+  placeholderTextColor,
+  underlineColorAndroid
 }) => {
   const { inputStyle, containerStyle } = styles;
 
@@ -21,6 +22,7 @@ const Input = ({
         style={inputStyle}
         value={value}
         onChangeText={onChangeText}
+        underlineColorAndroid={underlineColorAndroid}
       />
     </View>
   );

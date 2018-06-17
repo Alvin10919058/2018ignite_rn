@@ -19,13 +19,20 @@ class RouterComponent extends Component {
         <Stack
           duration={0}
         >
-          <Scene key="root" initial>
+          <Scene key="root" initial gesturesEnabled={false}>
             <Scene key="begin" component={Begin} hideNavBar initial />
             <Scene key="login" component={Login} hideNavBar />
           </Scene>
 
-          <Scene key="main">
-            <Scene key="tabbar" tabs tabBarStyle={styles.tabBarStyle}>
+          <Scene key="main" gesturesEnabled={false}>
+            <Scene 
+              key="tabbar" 
+              tabs 
+              tabBarPosition={'bottom'} 
+              swipeEnabled={false} 
+              animationEnabled={false}
+              tabBarStyle={styles.tabBarStyle}
+            >
 
               <Scene key="tab0" title="排名" icon={TabIcon}>
                 <Scene key="rank" initial component={Rank} hideNavBar />
@@ -33,7 +40,7 @@ class RouterComponent extends Component {
               <Scene key="tab1" title="配點" icon={TabIcon}>
                 <Scene key="skills" initial component={Skills} hideNavBar />
               </Scene>
-              <Scene key="tab2" title="首頁" icon={TabIcon}>
+              <Scene key="tab2" initial title="首頁" icon={TabIcon}>
                 <Scene key="teamInfo" initial component={LeaderInfo} hideNavBar />
               </Scene>
               <Scene key="tab3" title="支線任務" icon={TabIcon}>
@@ -46,8 +53,15 @@ class RouterComponent extends Component {
             </Scene>
           </Scene>
 
-          <Scene key="gm">
-            <Scene key="tabbar2" tabs tabBarStyle={styles.tabBarStyle}>
+          <Scene key="gm" gesturesEnabled={false}>
+            <Scene 
+              key="tabbar2" 
+              tabs 
+              tabBarPosition={'bottom'} 
+              swipeEnabled={false} 
+              animationEnabled={false}
+              tabBarStyle={styles.tabBarStyle}
+            >
 
               <Scene key="tab5" title="排名" icon={TabIcon}>
                 <Scene key="rank2" initial component={Rank} hideNavBar />

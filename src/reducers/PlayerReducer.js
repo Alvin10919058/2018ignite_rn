@@ -2,7 +2,13 @@
 import {
     GET_TEAM_DATA,
     GET_TEAM_DATA_JUNIOR_SUCCESS,
-    GET_TEAM_DATA_COLLEGE_SUCCESS
+    GET_TEAM_DATA_COLLEGE_SUCCESS,
+    CODE_MODAL_TYPE,
+    CAREER_CODE_CHANGED,
+    ERROR_MODAL_TYPE,
+    CAREER_GROW_UP,
+    CAREER_GROW_UP_FINISHED,
+    CAREER_GROW_UP_SUCCESS
   } from '../actions/types';
   
   const INITIAL_STATE = {
@@ -27,13 +33,20 @@ import {
     creativity: 0, //創意
     intelligence: 0, //智慧
     love: 0, //愛心
-    patience: 0//耐力
+    patience: 0, //耐力
+
+    //
+    careerCode: '',
+    showCodeModal: false,
+    showErrorModal: false,
+    errorText: '',
+    loading: false
   };
   
   export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
       case GET_TEAM_DATA:
-        return { ...state };
+        return { ...state, loading: true };
       case GET_TEAM_DATA_JUNIOR_SUCCESS:
         return { 
             ...state,
@@ -50,9 +63,12 @@ import {
             wisdom: action.payload.wisdom,
             vitality: action.payload.vitality,
             faith: action.payload.faith,
-            agility: action.payload.agility
+            agility: action.payload.agility,
+
+            //
+            loading: false
         };
-        case GET_TEAM_DATA_COLLEGE_SUCCESS:
+      case GET_TEAM_DATA_COLLEGE_SUCCESS:
         return { 
             ...state,
             batch: action.payload.batch,
@@ -68,8 +84,40 @@ import {
             creativity: action.payload.creativity,
             intelligence: action.payload.intelligence,
             love: action.payload.love,
-            patience: action.payload.patience
+            patience: action.payload.patience,
+
+            //
+            loading: false
         };
+      case CODE_MODAL_TYPE:
+        return { ...state, showCodeModal: action.payload };
+      case ERROR_MODAL_TYPE:
+        return { 
+          ...state, 
+          showErrorModal: action.payload.type, 
+          errorText: action.payload.text
+        };
+      case CAREER_CODE_CHANGED:
+        return { ...state, careerCode: action.payload };
+      case CAREER_GROW_UP:
+        return { ...state, showCodeModal: false, loading: true };
+      case CAREER_GROW_UP_FINISHED:
+        return { 
+          ...state, 
+          showErrorModal: true, 
+          errorText: action.payload, 
+          careerCode: '', 
+          loading: false 
+        };
+      case CAREER_GROW_UP_SUCCESS:
+         return { 
+           ...state, 
+           showErrorModal: true, 
+           errorText: action.payload.text, 
+           career: action.payload.responseData,
+           careerCode: '', 
+           loading: false 
+          };
       default:
         return state;
     }
