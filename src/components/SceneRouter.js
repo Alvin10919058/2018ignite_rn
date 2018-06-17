@@ -25,7 +25,14 @@ class RouterComponent extends Component {
           </Scene>
 
           <Scene key="main" gesturesEnabled={false}>
-            <Scene key="tabbar" tabs tabBarPosition={'bottom'} tabBarStyle={styles.tabBarStyle}>
+            <Scene 
+              key="tabbar" 
+              tabs 
+              tabBarPosition={'bottom'} 
+              swipeEnabled={false} 
+              animationEnabled={false}
+              tabBarStyle={styles.tabBarStyle}
+            >
 
               <Scene key="tab0" title="排名" icon={TabIcon}>
                 <Scene key="rank" initial component={Rank} hideNavBar />
@@ -47,7 +54,14 @@ class RouterComponent extends Component {
           </Scene>
 
           <Scene key="gm" gesturesEnabled={false}>
-            <Scene key="tabbar2" tabs tabBarPosition={'bottom'} tabBarStyle={styles.tabBarStyle}>
+            <Scene 
+              key="tabbar2" 
+              tabs 
+              tabBarPosition={'bottom'} 
+              swipeEnabled={false} 
+              animationEnabled={false}
+              tabBarStyle={styles.tabBarStyle}
+            >
 
               <Scene key="tab5" title="排名" icon={TabIcon}>
                 <Scene key="rank2" initial component={Rank} hideNavBar />
