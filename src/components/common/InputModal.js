@@ -101,11 +101,29 @@ const InputModal = ({
               </View>
             }
           </View>
+          <View
+          style={{ 
+            borderBottomWidth: 1.5, 
+            borderBottomColor: '#DDDDDD',
+            }}
+          />
           <TouchableOpacity style={checkArea} onPress={onPress}>
             {
               cancelButton
               &&
               <Text style={cancelTextStyle} onPress={cancel}>取消</Text>
+            }
+            {
+              cancelButton
+              &&
+              <View 
+                style={{  
+                  borderRightWidth: 1.5, 
+                  borderRightColor: '#DDDDDD',
+                  }}
+              >
+              <Text>{'\n'}{'\n'}</Text>
+              </View>
             }
             <Text style={sureTextStyle} onPress={onPress}>確定</Text>
           </TouchableOpacity>
@@ -140,21 +158,22 @@ const styles = {
     textAlign: 'center'
   },
   checkArea: {
-    flex: 1,
+    flex: 1.5,
     justifyContent: 'center',
+    alignItems: 'center',
     flexDirection: 'row'
   },
   sureTextStyle: {
     flex: 1,
     fontSize: 16,
     textAlign: 'center',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   cancelTextStyle: {
     flex: 1,
     fontSize: 16,
     textAlign: 'center',
-    color: '#FF0000'
+    color: '#FF0000',
   },
   inputStyle: {
     flex: 1,
