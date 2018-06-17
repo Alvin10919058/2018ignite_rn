@@ -4,6 +4,8 @@ import {
   Text,
   Dimensions,
   Image,
+  WebView,
+  Linking
 } from 'react-native';
 import { connect } from 'react-redux';
 import { 
@@ -32,6 +34,17 @@ class LeaderInfo extends Component {
   onCareerGrowUp(code) {
     this.props.careerGrowUp(code);
   }
+
+  openExternalLink(req) {
+    const isLocal = req.url.search('http://localhost') !== -1;
+    if (isLocal) {
+      return true;
+    } else if (req.url.startsWith('https://')) {
+     return true;
+    }
+      Linking.openURL(req.url);
+      return false;
+   }
 
   renderCareer() {
     const { careerStyle } = styles;
@@ -103,32 +116,78 @@ class LeaderInfo extends Component {
 
   renderChangeCareer() {
     const { 
-      careerTextStyle
+      careerTextStyle,
+      circle,
+      circleContainerStyle
     } = styles;
 
     if (this.props.career.name === '戰士') {
       return (
-        <View style={styles.circle}>
-          <Text 
-            onPress={() => { this.props.codeModalType(true); }} 
-            style={careerTextStyle}
-          >
-            轉職
-        </Text>
+        <View style={circleContainerStyle}>
+          <View style={circle}>
+            <Text 
+              onPress={() => { this.props.codeModalType(true); }} 
+              style={careerTextStyle}
+            >
+              轉職
+           </Text>
+         </View>
        </View>
       );
-    } else {
+    } 
       return (
-        <View style={styles.circle}>
-          <Text 
-            onPress={() => { this.props.errorModalType(true, this.props.career.description); }} 
-            style={careerTextStyle}
-          >
-            職業介紹
-        </Text>
+        <View style={circleContainerStyle}>
+          <View style={circle}>
+            <Text 
+              onPress={() => { this.props.errorModalType(true, this.props.career.description); }} 
+              style={careerTextStyle}
+            >
+              職業介紹
+           </Text>
+         </View>
        </View>
+      );
+  }
+
+  renderRadar() {
+    const {
+      //國高能力值
+      strength, //力量
+      wisdom, //智慧
+      vitality, //體力
+      faith, //信心
+      agility, //敏捷
+
+      //大專能力值
+      passion, //熱情
+      creativity, //創意
+      intelligence, //智慧
+      love, //愛心
+      patience, //耐力
+    } = this.props;
+
+    if (this.props.batch === '大專') {
+      return (
+        <View style={{ flex: 2 }}>
+          <WebView
+              source={{ uri: `https://hsiangyu.com/RadarHTML/index.html?a=${passion}&b=${creativity}&c=${intelligence}&d=${love}&e=${patience}&f=1` }}
+              style={{ marginTop: 1 }}
+              onShouldStartLoadWithRequest={this.openExternalLink}
+              scrollEnabled={false}
+          />
+      </View>
       );
     }
+    return (
+      <View style={{ flex: 2 }}>
+        <WebView
+            source={{ uri: `https://hsiangyu.com/RadarHTML/index.html?a=${strength}&b=${wisdom}&c=${vitality}&d=${faith}&e=${agility}&f=2` }}
+            style={{ marginTop: 1 }}
+            onShouldStartLoadWithRequest={this.openExternalLink}
+            scrollEnabled={false}
+        />
+    </View>
+    );
   }
 
   render() {
@@ -163,9 +222,15 @@ class LeaderInfo extends Component {
             visible={this.props.showErrorModal}
             onPress={() => { this.props.errorModalType(false, ''); }}
           />
-          {this.renderCareer()}
-          {this.renderInfo()}
-          {this.renderChangeCareer()}
+          <View style={{ flex: 1 }}>
+            {this.renderCareer()}
+            {this.renderInfo()}
+          </View>
+          <View style={{ flex: 1, flexDirection: 'row' }}>
+            {this.renderChangeCareer()}
+            {this.renderRadar()}
+        </View>  
+          
         </BackgroundImage>
       );   
   }
@@ -174,6 +239,7 @@ class LeaderInfo extends Component {
 const styles = {
   containerStyle: {
     flex: 1,
+    flexDirection: 'column',
     backgroundColor: 'white'
   },
   careerStyle: {
@@ -195,26 +261,27 @@ const styles = {
     color: '#69AEB2',
     textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: 16
-    //fontFamily: 'GillSans-SemiBold'
+    fontSize: 16,
   },
   scoreTextStyle: {
     color: '#69AEB2',
     fontWeight: 'bold',
     fontSize: 23,
-    //fontFamily: 'GillSans-SemiBold'
+  },
+  circleContainerStyle: {
+    flex: 1,
+    paddingBottom: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   circle: {
-    position: 'absolute',
-    left: width / 20,
-    top: height / 2,
-    borderRadius: 60,
-    width: 120,
-    height: 120,
+    borderRadius: 50,
+    width: 100,
+    height: 100,
     backgroundColor: '#BBC3DC',
   },
   careerTextStyle: {
-    paddingTop: 50,
+    paddingTop: 40,
     textAlign: 'center',
     color: '#fff',
     fontWeight: 'bold',
@@ -259,6 +326,7 @@ const mapStateToProps = ({ player }) => {
     team_total_score, //總分
     career, //職業
 
+    //國高能力值
     strength, //力量
     wisdom, //智慧
     vitality, //體力
