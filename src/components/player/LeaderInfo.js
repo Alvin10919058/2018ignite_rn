@@ -3,11 +3,19 @@ import {
   View,
   Text,
   Dimensions,
-  Image
+  Image,
+  WebView,
+  Linking
 } from 'react-native';
 import { connect } from 'react-redux';
-import { getTeamData } from '../../actions';
-import { BackgroundImage } from '../common';
+import { 
+  getTeamData, 
+  careerCodeChanged, 
+  careerGrowUp, 
+  codeModalType,
+  errorModalType 
+} from '../../actions';
+import { BackgroundImage, InputModal, Spinner } from '../common';
 import { Biochemical, Defense, Sniper, Special, Soldier, Assault } from '../../images';
 //import data from '../../Setting.json';
 
@@ -18,6 +26,25 @@ class LeaderInfo extends Component {
   componentWillMount() {
     this.props.getTeamData();
   }
+
+  onCareerCodeChange(text) {
+    this.props.careerCodeChanged(text);
+  }
+
+  onCareerGrowUp(code) {
+    this.props.careerGrowUp(code);
+  }
+
+  openExternalLink(req) {
+    const isLocal = req.url.search('http://localhost') !== -1;
+    if (isLocal) {
+      return true;
+    } else if (req.url.startsWith('https://')) {
+     return true;
+    }
+      Linking.openURL(req.url);
+      return false;
+   }
 
   renderCareer() {
     const { careerStyle } = styles;
@@ -87,27 +114,131 @@ class LeaderInfo extends Component {
     );
   }
 
-  render() {
+  renderChangeCareer() {
     const { 
-      containerStyle
+      careerTextStyle,
+      circle,
+      circleContainerStyle
     } = styles;
+
+    if (this.props.career.name === '戰士') {
+      return (
+        <View style={circleContainerStyle}>
+          <View style={circle}>
+            <Text 
+              onPress={() => { this.props.codeModalType(true); }} 
+              style={careerTextStyle}
+            >
+              轉職
+           </Text>
+         </View>
+       </View>
+      );
+    } 
+      return (
+        <View style={circleContainerStyle}>
+          <View style={circle}>
+            <Text 
+              onPress={() => { this.props.errorModalType(true, this.props.career.description); }} 
+              style={careerTextStyle}
+            >
+              職業介紹
+           </Text>
+         </View>
+       </View>
+      );
+  }
+
+  renderRadar() {
+    const {
+      //國高能力值
+      strength, //力量
+      wisdom, //智慧
+      vitality, //體力
+      faith, //信心
+      agility, //敏捷
+
+      //大專能力值
+      passion, //熱情
+      creativity, //創意
+      intelligence, //智慧
+      love, //愛心
+      patience, //耐力
+    } = this.props;
+
+    if (this.props.batch === '大專') {
+      return (
+        <View style={{ flex: 2 }}>
+          <WebView
+              source={{ uri: `https://hsiangyu.com/RadarHTML/index.html?a=${passion}&b=${creativity}&c=${intelligence}&d=${love}&e=${patience}&f=1` }}
+              style={{ marginTop: 1 }}
+              onShouldStartLoadWithRequest={this.openExternalLink}
+              scrollEnabled={false}
+          />
+      </View>
+      );
+    }
     return (
-      <BackgroundImage style={containerStyle}>
-        {this.renderCareer()}
-        {this.renderInfo()}
-        <View style={styles.circle}>
-      	  <Text style={{ textAlign: 'center' }}>
-            test
-          </Text>
-        </View>
-      </BackgroundImage>
+      <View style={{ flex: 2 }}>
+        <WebView
+            source={{ uri: `https://hsiangyu.com/RadarHTML/index.html?a=${strength}&b=${wisdom}&c=${vitality}&d=${faith}&e=${agility}&f=2` }}
+            style={{ marginTop: 1 }}
+            onShouldStartLoadWithRequest={this.openExternalLink}
+            scrollEnabled={false}
+        />
+    </View>
     );
+  }
+
+  render() {
+    if (this.props.loading) {
+      return (
+        <Spinner />
+      );
+    } 
+      const { 
+        containerStyle
+      } = styles;
+      return (
+        <BackgroundImage style={containerStyle}>
+          <InputModal
+            titleText={'請輸入序號以驗證是否正確:'}
+            visible={this.props.showCodeModal}
+            cancelButton
+            scrollable={false}
+            cancel={() => { this.props.codeModalType(false); }}
+            onPress={() => { this.onCareerGrowUp(this.props.careerCode); }}
+            inputText
+            value={this.props.careerCode}
+            onChangeText={(text) => { this.onCareerCodeChange(text); }}
+          />
+          <InputModal
+            titleText={this.props.errorText}
+            textCustomStyle={
+              (this.props.career.name === '戰士') 
+              ? { textAlign: 'center' } : { textAlign: 'left' }
+            }
+            scrollable={(this.props.career.name !== '戰士')}
+            visible={this.props.showErrorModal}
+            onPress={() => { this.props.errorModalType(false, ''); }}
+          />
+          <View style={{ flex: 1 }}>
+            {this.renderCareer()}
+            {this.renderInfo()}
+          </View>
+          <View style={{ flex: 1, flexDirection: 'row' }}>
+            {this.renderChangeCareer()}
+            {this.renderRadar()}
+          </View>       
+        </BackgroundImage>
+      );   
   }
 }
 
 const styles = {
   containerStyle: {
     flex: 1,
+    flexDirection: 'column',
     backgroundColor: 'white'
   },
   careerStyle: {
@@ -129,24 +260,32 @@ const styles = {
     color: '#69AEB2',
     textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: 16
-    //fontFamily: 'GillSans-SemiBold'
+    fontSize: 16,
   },
   scoreTextStyle: {
     color: '#69AEB2',
     fontWeight: 'bold',
     fontSize: 23,
-    //fontFamily: 'GillSans-SemiBold'
+  },
+  circleContainerStyle: {
+    flex: 1,
+    paddingBottom: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   circle: {
-    position: 'absolute',
-    left: width / 20,
-    top: height / 2,
-    borderRadius: 60,
-    width: 120,
-    height: 120,
+    borderRadius: 50,
+    width: 100,
+    height: 100,
     backgroundColor: '#BBC3DC',
   },
+  careerTextStyle: {
+    paddingTop: 40,
+    textAlign: 'center',
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  }
 };
 
 const mapStateToProps = ({ player }) => {
@@ -169,7 +308,14 @@ const mapStateToProps = ({ player }) => {
     creativity, //創意
     intelligence, //智慧
     love, //愛心
-    patience//耐力
+    patience, //耐力
+
+    //
+    careerCode,
+    showCodeModal,
+    showErrorModal,
+    errorText,
+    loading
    } = player;
 
   return { 
@@ -179,6 +325,7 @@ const mapStateToProps = ({ player }) => {
     team_total_score, //總分
     career, //職業
 
+    //國高能力值
     strength, //力量
     wisdom, //智慧
     vitality, //體力
@@ -190,10 +337,21 @@ const mapStateToProps = ({ player }) => {
     creativity, //創意
     intelligence, //智慧
     love, //愛心
-    patience//耐力
+    patience, //耐力
+
+    //
+    careerCode,
+    showCodeModal,
+    showErrorModal,
+    errorText,
+    loading
   };
 };
 
 export default connect(mapStateToProps, {
-  getTeamData
+  getTeamData,
+  careerCodeChanged,
+  careerGrowUp,
+  codeModalType,
+  errorModalType
 })(LeaderInfo);

@@ -43,7 +43,7 @@ const styles = {
       },
       android: {
         elevation: 3,
-        top: height - 135
+        //top: height - 135
       }
     })
   }
