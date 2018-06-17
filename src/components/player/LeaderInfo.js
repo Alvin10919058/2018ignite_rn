@@ -229,8 +229,7 @@ class LeaderInfo extends Component {
           <View style={{ flex: 1, flexDirection: 'row' }}>
             {this.renderChangeCareer()}
             {this.renderRadar()}
-        </View>  
-          
+          </View>       
         </BackgroundImage>
       );   
   }
