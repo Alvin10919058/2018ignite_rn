@@ -173,7 +173,7 @@ const styles = {
     })    
   },
   inputContainerStyle: {
-    height: 30,
+    height: 40,
     flexDirection: 'row',
     justifyContent: 'center',
     alignSelf: 'stretch',
