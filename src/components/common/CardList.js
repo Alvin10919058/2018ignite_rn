@@ -14,7 +14,7 @@ const styles = {
   cardText: {
     marginTop: 15,
     marginBottom: 15,
-    fontSize: 15
+    fontSize: 16
   }
 };
 
