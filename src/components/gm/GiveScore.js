@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Text, TextInput, StyleSheet, View, Switch } from 'react-native';
+import { Alert, Text, StyleSheet, View, Switch } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
 class GiveScore extends React.Component {
@@ -80,10 +80,10 @@ render() {
               style={styles.switchButton}
               value={this.state.switchType}
             />
-            <Text>Name?</Text>
+            <Text>小隊</Text>
             <RNPickerSelect
                 placeholder={{
-                    label: 'Select a color...',
+                    label: '請選擇小隊',
                     value: null,
                 }}
                 items={this.state.items}
@@ -107,10 +107,10 @@ render() {
 
             <View style={{ paddingVertical: 5 }} />
 
-            <Text>What&rsquo;s your favorite color?</Text>
+            <Text>種類</Text>
             <RNPickerSelect
                 placeholder={{
-                    label: 'Select a color...',
+                    label: '請選擇配點種類',
                     value: null,
                 }}
                 items={this.state.items}
@@ -134,10 +134,10 @@ render() {
 
             <View style={{ paddingVertical: 5 }} />
 
-            <Text>What&rsquo;s your favorite sport?</Text>
+            <Text>點數</Text>
             <RNPickerSelect
                 placeholder={{
-                    label: 'Select a sport...',
+                    label: '請選擇給予點數',
                     value: null,
                 }}
                 items={this.state.items2}
