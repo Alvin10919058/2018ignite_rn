@@ -1,11 +1,11 @@
 import React from 'react';
-import { Alert, Text, StyleSheet, View, ScrollView, AsyncStorage } from 'react-native';
+import { Text, StyleSheet, View, ScrollView, AsyncStorage } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { Table, Row } from 'react-native-table-component';
-import { Button, Spinner } from '../common';
+import { Button } from '../common';
 import SwitchButton from '../common/SwitchButton';
 import data from '../../Setting.json';
-
+import PickerData from '../../pickerData.json';
 
 class GiveScore extends React.Component {
   constructor(props) {
@@ -16,282 +16,25 @@ class GiveScore extends React.Component {
     this.state = {
         activeSwitch: 1,
         selecTeam: undefined,
-
+        //history table setting data
         TeamData: {},
         tableHead: ['梯次', '小隊', '種類', '點數'],
         tableData: [],
         widthArr: [80, 85, 120, 85],
-
-        teams: [
-            {
-                label: 'Team01',
-                value: '01',
-            },
-            {
-                label: 'Team02',
-                value: '02',
-            },
-            {
-                label: 'Team03',
-                value: '03',
-            },
-            {
-                label: 'Team04',
-                value: '04',
-            },
-            {
-                label: 'Team05',
-                value: '05',
-            },
-            {
-                label: 'Team06',
-                value: '06',
-            },
-            {
-                label: 'Team07',
-                value: '07',
-            },
-            {
-                label: 'Team08',
-                value: '08',
-            },
-            {
-                label: 'Team09',
-                value: '09',
-            },
-            {
-                label: 'Team10',
-                value: '10',
-            },
-            {
-                label: 'Team11',
-                value: '11',
-            },
-            {
-                label: 'Team12',
-                value: '12',
-            },
-            {
-                label: 'Team13',
-                value: '13',
-            },
-            {
-                label: 'Team14',
-                value: '14',
-            },
-            {
-                label: 'Team15',
-                value: '15',
-            },
-            {
-                label: 'Team16',
-                value: '16',
-            },
-            {
-                label: 'Team17',
-                value: '17',
-            },
-            {
-                label: 'Team18',
-                value: '18',
-            },
-            {
-                label: 'Team19',
-                value: '19',
-            },
-            {
-                label: 'Team20',
-                value: '20',
-            },
-            {
-                label: 'Team21',
-                value: '21',
-            },
-            {
-                label: 'Team22',
-                value: '22',
-            },
-            {
-                label: 'Team23',
-                value: '23',
-            },
-            {
-                label: 'Team24',
-                value: '24',
-            }
-        ],
+        //Picker setting data
+        selectTeam: undefined,
+        teams: PickerData.teamSelection,
         selecT1Kinds: '',
-        T1kinds: [
-            {
-                label: '自由點數',
-                value: 'free_point',
-            },
-            {
-                label: '力量',
-                value: 'strength',
-            },
-            {
-                label: '信心',
-                value: 'faith',
-            },
-            {
-                label: '智慧',
-                value: 'wisdom',
-            },
-            {
-                label: '敏捷',
-                value: 'agility',
-            },
-            {
-                label: '體力',
-                value: 'vitality',
-            }
-        ],
-        selecT2Kinds: undefined,
-        T2kinds: [
-            {
-                label: '自由點數',
-                value: 'free_point',
-            },
-            {
-                label: '智慧',
-                value: 'intelligence',
-            },
-            {
-                label: '創意',
-                value: 'creativity',
-            },
-            {
-                label: '耐力',
-                value: 'patience',
-            },
-            {
-                label: '愛心',
-                value: 'love',
-            },
-            {
-                label: '熱情',
-                value: 'passion',
-            }
-        ],
+        T1kinds: PickerData.T1teamSelection,
+        selecT2Kinds: '',
+        T2kinds: PickerData.T2teamSelection,
         selecNumber: undefined,
-        number: [
-            {
-                label: '5',
-                value: '5',
-            },
-            {
-                label: '10',
-                value: '10',
-            },
-            {
-                label: '15',
-                value: '15',
-            },
-            {
-                label: '20',
-                value: '20',
-            },
-            {
-                label: '25',
-                value: '25',
-            },
-            {
-                label: '30',
-                value: '30',
-            },
-            {
-                label: '35',
-                value: '35',
-            },
-            {
-                label: '40',
-                value: '40',
-            },
-            {
-                label: '45',
-                value: '45',
-            },
-            {
-                label: '50',
-                value: '50',
-            },
-            {
-                label: '55',
-                value: '55',
-            },
-            {
-                label: '60',
-                value: '60',
-            },
-            {
-                label: '-5',
-                value: '-5',
-            },
-            {
-                label: '-10',
-                value: '-10',
-            },
-            {
-                label: '-15',
-                value: '-15',
-            },
-            {
-                label: '-20',
-                value: '-20',
-            },
-            {
-                label: '-25',
-                value: '-25',
-            },
-            {
-                label: '-30',
-                value: '-30',
-            },
-            {
-                label: '-35',
-                value: '-35',
-            },
-            {
-                label: '-40',
-                value: '-40',
-            },
-            {
-                label: '-45',
-                value: '-45',
-            },
-            {
-                label: '-50',
-                value: '-50',
-            },
-            {
-                label: '-55',
-                value: '-55',
-            },
-            {
-                label: '-60',
-                value: '-60',
-            }
-        ]
+        number: PickerData.numberSelection
     };
 }
 
 componentDidMount() {
   this.getGMdata();
-    // if the component is using the optional `value` prop, the parent
-    // has the abililty to both set the initial value and also update it
-    // setTimeout(() => {
-    //     this.setState({
-    //         favColor: 'red',
-    //     });
-    // }, 1000);
-
-    // // parent can also update the `items` prop
-    // setTimeout(() => {
-    //     this.setState({
-    //         items: this.state.items.concat([{ value: 'purple', label: 'Purple' }]),
-    //     });
-    // }, 2000);
 }
 
   //GET這個GM寫了幾筆資料
@@ -300,6 +43,9 @@ componentDidMount() {
     const userID = await AsyncStorage.getItem('userID');
 
     const params = {
+      //將此物件依據更新時間由近到遠的順序來排序
+      order: '-updatedAt',
+      //將to_team pointer 指向的資料也include進來
       include: 'to_team',
       limit: 1000,
       where: {
@@ -326,9 +72,6 @@ componentDidMount() {
     .then(async (responseData) => {
          //將取得的物件資料複製一份到obj
          const CopyRes = [...responseData.results];
-        
-         //將此物件依據小隊總分由大到小(b-a)的順序來排序
-         CopyRes.sort((a, b) => b.updatedAt - a.updatedAt);
         
          this.setState({ PointData: CopyRes });
 
@@ -493,7 +236,6 @@ render() {
                     this.inputRefs.picker = el;
                 }}
             />
-                {console.log()}
             <View style={{ paddingVertical: 5 }} />
 
             <Text style={{ fontSize: 20, fontWeight: '400', marginBottom: 5 }}>種類</Text>
@@ -582,7 +324,7 @@ render() {
         </View>
     </View>
     );
-}
+  }
 }
 
 const styles = StyleSheet.create({
@@ -635,23 +377,3 @@ const pickerSelectStyles = StyleSheet.create({
 
 export default GiveScore;
 
-
-// import React, { Component } from 'react';
-// import { View } from 'react-native';
-
-// class GiveScore extends Component {
-//   render() {
-//     return (
-//       <View style={styles.containerStyle} />
-//     );
-//   }
-// }
-
-// const styles = {
-//   containerStyle: {
-//     flex: 1,
-//     backgroundColor: 'white'
-//   }
-// };
-
-// export default GiveScore;
