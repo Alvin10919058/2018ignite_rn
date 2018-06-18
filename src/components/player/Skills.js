@@ -185,11 +185,7 @@ class Skills extends Component {
         <View style={styles.skillRowStyle}>
          
           {/* 能力值文字 */}
-          <Text 
-            style={{ 
-              fontSize: 25,
-            }}
-          >
+          <Text style={styles.skillTextStyle}>
             信心 
           </Text>
 
@@ -214,11 +210,7 @@ class Skills extends Component {
             
           {/* 能力值數值 */}
           <View style={{ width: width * 0.15, alignItems: 'center' }}>
-            <Text
-              style={{ 
-                fontSize: 25,
-              }}
-            >
+            <Text style={styles.skillTextStyle}>
               {this.state.tmpFaith}
             </Text>
           </View>
@@ -247,11 +239,7 @@ class Skills extends Component {
         <View style={styles.skillRowStyle}>
             
           {/* 能力值文字 */}
-          <Text 
-          style={{ 
-            fontSize: 25,
-          }}
-          >
+          <Text style={styles.skillTextStyle}>
             敏捷 
           </Text>
 
@@ -276,11 +264,7 @@ class Skills extends Component {
 
           {/* 能力值數值 */}
           <View style={{ width: width * 0.15, alignItems: 'center' }}>
-            <Text
-              style={{ 
-                fontSize: 25,
-              }}
-            >
+            <Text style={styles.skillTextStyle}>
               {this.state.tmpAgility}
             </Text>
           </View>
@@ -309,11 +293,7 @@ class Skills extends Component {
         <View style={styles.skillRowStyle}>
          
           {/* 能力值文字 */}
-          <Text 
-          style={{ 
-            fontSize: 25,
-          }}
-          >
+          <Text style={styles.skillTextStyle}>
             力量 
           </Text>
 
@@ -338,11 +318,7 @@ class Skills extends Component {
 
           {/* 能力值數值 */}
           <View style={{ width: width * 0.15, alignItems: 'center' }}>
-            <Text
-              style={{ 
-                fontSize: 25,
-              }}
-            >
+            <Text style={styles.skillTextStyle}>
               {this.state.tmpStrength}
             </Text>
           </View>
@@ -371,11 +347,7 @@ class Skills extends Component {
         <View style={styles.skillRowStyle}>
          
           {/* 能力值文字 */}
-          <Text 
-          style={{ 
-            fontSize: 25,
-          }}
-          >
+          <Text style={styles.skillTextStyle}>
             智慧 
           </Text>
 
@@ -400,11 +372,7 @@ class Skills extends Component {
 
           {/* 能力值數值 */}
           <View style={{ width: width * 0.15, alignItems: 'center' }}>
-            <Text
-              style={{ 
-                fontSize: 25,
-              }}
-            >
+            <Text style={styles.skillTextStyle}>
               {this.state.tmpWisdom}
             </Text>
           </View>
@@ -433,11 +401,7 @@ class Skills extends Component {
         <View style={styles.skillRowStyle}>
          
           {/* 中間文字 */}
-          <Text 
-          style={{ 
-            fontSize: 25,
-          }}
-          >
+          <Text style={styles.skillTextStyle}>
             體力
           </Text>
           
@@ -462,11 +426,7 @@ class Skills extends Component {
             
           {/* 能力值數值 */}
           <View style={{ width: width * 0.15, alignItems: 'center' }}>
-            <Text
-              style={{ 
-                fontSize: 25,
-              }}
-            >
+            <Text style={styles.skillTextStyle}>
               {this.state.tmpVitality}
             </Text>
           </View>
@@ -533,15 +493,22 @@ const styles = {
     height: 40, 
     backgroundColor: '#d2e9ff' 
   },
-  iconStyle: {
-    width: 35, 
-    height: 35
-  },
   skillRowStyle: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
     marginTop: height * 0.045
+  },
+  skillTextStyle: {
+    fontSize: 25
+  },
+  skillValueStyle: {
+    width: width * 0.15, 
+    alignItems: 'center'
+  },
+  iconStyle: {
+    width: 35, 
+    height: 35
   },
   btnAreaStyle: {
     flexDirection: 'row',
