@@ -13,7 +13,8 @@ import {
     CAREER_GROW_UP_SUCCESS,
     MISSION_CODE_CHANGED,
     MISSION_CODING,
-    MISSION_CODE_FINISHED  
+    MISSION_CODE_FINISHED,
+    MISSION_CODE_FAILED  
   } from './types';
 
 export const errorModalType = (type, text) => {
@@ -270,7 +271,6 @@ const careerGrowUpSuccess = (dispatch, text, responseData) => {
 export const missionCoding = (code, missionId, missionName, mission) => {
     return async (dispatch) => {
         dispatch({ type: MISSION_CODING });
-
         const params = {
             where: {
                 name: missionName,
@@ -297,7 +297,7 @@ export const missionCoding = (code, missionId, missionName, mission) => {
                 temp[missionId - 1].finished = true;
                 missionCodeFinished(dispatch, '恭喜完成任務！', temp);
             } else {
-                //careerGrowUpFinished(dispatch, '序號輸入錯誤或已被使用！');
+                missionCodeFailed(dispatch, '序號輸入錯誤或已被使用！');
             }
         })
         .catch((error) => {
@@ -310,5 +310,12 @@ const missionCodeFinished = (dispatch, text, mission) => {
     dispatch({
       type: MISSION_CODE_FINISHED,
       payload: { text, mission }
+    });
+};
+
+const missionCodeFailed = (dispatch, text) => {
+    dispatch({
+      type: MISSION_CODE_FAILED,
+      payload: text
     });
 };

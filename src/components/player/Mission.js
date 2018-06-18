@@ -83,7 +83,7 @@ class Mission extends Component {
           }}
            onPress={() => { 
             this.props.missionCoding(
-              this.props.code, 
+              this.props.missionCode, 
               this.state.missionId, 
               this.state.missionName,
               this.props.mission

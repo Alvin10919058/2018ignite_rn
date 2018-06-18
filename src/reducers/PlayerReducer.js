@@ -11,7 +11,8 @@ import {
     CAREER_GROW_UP_SUCCESS,
     MISSION_CODE_CHANGED,
     MISSION_CODING,
-    MISSION_CODE_FINISHED
+    MISSION_CODE_FINISHED,
+    MISSION_CODE_FAILED
   } from '../actions/types';
   
   const INITIAL_STATE = {
@@ -133,6 +134,14 @@ import {
           showErrorModal: true, 
           errorText: action.payload.text, 
           mission: action.payload.mission,
+          missionCode: '', 
+          loading: false 
+        };
+      case MISSION_CODE_FAILED:
+        return { 
+          ...state, 
+          showErrorModal: true, 
+          errorText: action.payload, 
           missionCode: '', 
           loading: false 
         };
