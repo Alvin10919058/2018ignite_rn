@@ -9,7 +9,8 @@ import {
   getTeamData,
   codeModalType,
   errorModalType,
-  missionCodeChanged
+  missionCodeChanged,
+  missionCoding
 } from '../../actions';
 import { ifIphoneX } from '../IphoneXDetector';
 import { MissionDeatail, Spinner, InputModal } from '../common';
@@ -17,6 +18,11 @@ import { PicDefault, Pass } from '../../images';
 //import { Actions } from 'react-native-router-flux';
 
 class Mission extends Component {
+
+  state = {
+    missionId: null,
+    missionName: ''
+  };
 
   componentWillMount() {
     this.props.getTeamData();
@@ -41,6 +47,10 @@ class Mission extends Component {
           onPress={() => {
             if (mission.finished === false) {
               this.props.codeModalType(true);
+              this.setState({ 
+                missionId: mission.id,
+                missionName: mission.missionName
+              });
             }
           }}
         />
@@ -64,8 +74,25 @@ class Mission extends Component {
            visible={this.props.showCodeModal}
            cancelButton
            scrollable={false}
-           cancel={() => { this.props.codeModalType(false); }}
-           onPress={() => { }}
+           cancel={() => { 
+             this.props.codeModalType(false); 
+             this.setState({ 
+              missionId: null,
+              missionName: ''
+            });
+          }}
+           onPress={() => { 
+            this.props.missionCoding(
+              this.props.code, 
+              this.state.missionId, 
+              this.state.missionName,
+              this.props.mission
+            );
+            this.setState({ 
+              missionId: null,
+              missionName: ''
+            });
+           }}
            inputText
            value={this.props.missionCode}
            onChangeText={(text) => { this.onMissionCodeChange(text); }}
@@ -151,5 +178,6 @@ export default connect(mapStateToProps, {
   getTeamData,
   codeModalType,
   errorModalType,
-  missionCodeChanged
+  missionCodeChanged,
+  missionCoding
 })(Mission);

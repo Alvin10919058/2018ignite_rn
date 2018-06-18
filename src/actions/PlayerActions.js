@@ -11,7 +11,9 @@ import {
     CAREER_GROW_UP,
     CAREER_GROW_UP_FINISHED,
     CAREER_GROW_UP_SUCCESS,
-    MISSION_CODE_CHANGED    
+    MISSION_CODE_CHANGED,
+    MISSION_CODING,
+    MISSION_CODE_FINISHED  
   } from './types';
 
 export const errorModalType = (type, text) => {
@@ -262,5 +264,51 @@ const careerGrowUpSuccess = (dispatch, text, responseData) => {
     dispatch({
       type: CAREER_GROW_UP_SUCCESS,
       payload: { text, responseData }
+    });
+};
+
+export const missionCoding = (code, missionId, missionName, mission) => {
+    return async (dispatch) => {
+        dispatch({ type: MISSION_CODING });
+
+        const params = {
+            where: {
+                name: missionName,
+                code_number: code
+            }
+        };
+        const esc = encodeURIComponent;
+        const query = Object.keys(params)
+            .map(k => `${esc(k)}=${esc(JSON.stringify(params[k]))}`)
+            .join('&');
+        fetch(`${data.parseServerURL}/classes/Submission?${query}`, {
+        method: 'GET',
+        headers: {
+            'X-Parse-Application-Id': data.parseAppId,
+            'X-Parse-REST-API-Key': data.paresApiKey
+        }
+        })
+        .then((response) => response.json())
+        .then((responseData) => {
+            console.log(responseData);
+            if (responseData.results[0] !== undefined) {
+                console.log('yes');
+                const temp = mission;
+                temp[missionId - 1].finished = true;
+                missionCodeFinished(dispatch, '恭喜完成任務！', temp);
+            } else {
+                //careerGrowUpFinished(dispatch, '序號輸入錯誤或已被使用！');
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    };
+};
+
+const missionCodeFinished = (dispatch, text, mission) => {
+    dispatch({
+      type: MISSION_CODE_FINISHED,
+      payload: { text, mission }
     });
 };

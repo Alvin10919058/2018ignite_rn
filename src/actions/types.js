@@ -20,3 +20,5 @@ export const CAREER_GROW_UP_SUCCESS = 'career_grow_up_success';
 //Mission
 
 export const MISSION_CODE_CHANGED = 'mission_code_changed';
+export const MISSION_CODING = 'mission_coding';
+export const MISSION_CODE_FINISHED = 'mission_code_finished';
