@@ -191,14 +191,16 @@ class LeaderInfo extends Component {
   }
 
   render() {
-    if (this.props.loading) {
-      return (
-        <Spinner />
-      );
-    } 
       const { 
         containerStyle
       } = styles;
+
+      if (this.props.loading) {
+        return (
+          <Spinner />
+        );
+      } 
+      
       return (
         <BackgroundImage style={containerStyle}>
           <InputModal

@@ -9,7 +9,7 @@ import {
   getTeamData
 } from '../../actions';
 import { ifIphoneX } from '../IphoneXDetector';
-import { MissionDeatail } from '../common';
+import { MissionDeatail, Spinner } from '../common';
 import { PicDefault, Pass } from '../../images';
 //import { Actions } from 'react-native-router-flux';
 
@@ -41,6 +41,13 @@ class Mission extends Component {
 
   render() {
     const { container, headerContainer, listContainer, titleStyle } = styles;
+
+    if (this.props.loading) {
+      return (
+        <Spinner />
+      );
+    } 
+    
     return (
       <View style={container}>
         <View style={headerContainer}>
