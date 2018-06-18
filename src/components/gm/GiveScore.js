@@ -297,6 +297,10 @@ render() {
 
             <View style={{ paddingVertical: 5 }} />
             <Button 
+              //  btnCustomStyle={{ 
+              //     backgroundColor: '#69aeb2',
+              //     borderColor: '#69aeb2' 
+              //   }}
               onPress={() => {
                 console.log(this.state.selectBatch, this.state.selectTeam, this.state.selectNumber, this.state.selecT1Kinds);
                 this.getTeam(this.state.selectBatch, this.state.selectTeam, this.state.selectNumber, this.state.selecT1Kinds);

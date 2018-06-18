@@ -5,7 +5,7 @@ import {
   AsyncStorage,
   Dimensions,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Table, Row, Rows } from 'react-native-table-component';
@@ -159,16 +159,23 @@ class Skills extends Component {
         {/* 自由點數 row */}
         <View 
           style={{ 
-            alignItems: 'center', 
-            marginTop: height * 0.07,
-            marginBottom: height * 0.03  
+            flex: 2,
+            alignItems: 'center',
+            justifyContent: 'center' 
             }}
         >
-          <Text style={{ fontWeight: 'bold', fontSize: 27 }}>自由點數: {this.state.free_point}</Text>
+          <Text style={{ fontWeight: 'bold', fontSize: 22, marginBottom: height * 0.01 }}>自由點數</Text>
+          <Text style={{ fontWeight: 'bold', fontSize: 25 }}>{this.state.free_point}</Text>
+            
         </View>
 
         {/* 目前能力值table */}
-        <Table borderStyle={{ borderWidth: 2, borderColor: '#f0f0f0' }}>
+        <Table 
+          borderStyle={{ 
+            borderWidth: 2, 
+            borderColor: '#ffffff' }}
+          style={{ flex: 2 }}
+        >
             <Row 
               data={this.state.tableHead} 
               style={styles.head} 
@@ -453,13 +460,17 @@ class Skills extends Component {
         <View style={styles.btnAreaStyle}>
           <Button 
           btnCustomStyle={{ 
-            backgroundColor: '#FF0000', 
+            backgroundColor: '#E63F00', 
             marginRight: width * 0.12, 
-            borderColor: '#FF0000' }}
+            borderColor: '#E63F00' }}
           >
             重置
           </Button>
-          <Button >
+          <Button 
+            btnCustomStyle={{ 
+              backgroundColor: '#69aeb2',
+              borderColor: '#69aeb2' }}
+          >
             確定
           </Button>
         </View>
@@ -494,26 +505,27 @@ const styles = {
     backgroundColor: '#d2e9ff' 
   },
   skillRowStyle: {
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    marginTop: height * 0.045
   },
   skillTextStyle: {
-    fontSize: 25
+    fontSize: 20
   },
   skillValueStyle: {
     width: width * 0.15, 
     alignItems: 'center'
   },
   iconStyle: {
-    width: 35, 
-    height: 35
+    width: 30, 
+    height: 30
   },
   btnAreaStyle: {
+    flex: 2,
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
-    marginTop: height * 0.05
   }
 };
 
