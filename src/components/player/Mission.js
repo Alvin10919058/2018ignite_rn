@@ -4,10 +4,40 @@ import {
   Text,
   ScrollView
 } from 'react-native';
+import { connect } from 'react-redux';
+import { 
+  getTeamData
+} from '../../actions';
 import { ifIphoneX } from '../IphoneXDetector';
+import { MissionDeatail } from '../common';
+import { PicDefault, Pass } from '../../images';
 //import { Actions } from 'react-native-router-flux';
 
 class Mission extends Component {
+
+  componentWillMount() {
+    this.props.getTeamData();
+  }
+
+  renderMission() {
+    return this.props.mission.map(
+      mission => (
+        <MissionDeatail
+          key={mission.id}
+          missionName={mission.missionName}
+          image={
+            (mission.finished === true)
+              ? Pass
+              : PicDefault
+          }
+          addType={mission.finished}
+          onPress={() => {
+        
+          }}
+        />
+      )
+    );
+  }
 
   render() {
     const { container, headerContainer, listContainer, titleStyle } = styles;
@@ -23,7 +53,7 @@ class Mission extends Component {
                 任務列表
               </Text>
             </View>
-
+            {this.renderMission()}
           </ScrollView>
         </View>
       </View>
@@ -60,4 +90,20 @@ const styles = {
   },
 };
 
-export default Mission;
+const mapStateToProps = ({ player }) => {
+  const {  
+    done_submission, //完成幾個支線任務
+    completed, //是否完成支線任務
+    loading,
+    mission
+   } = player;
+
+  return { 
+    done_submission, //完成幾個支線任務
+    completed, //是否完成支線任務
+    loading,
+    mission
+  };
+};
+
+export default connect(mapStateToProps, { getTeamData })(Mission);

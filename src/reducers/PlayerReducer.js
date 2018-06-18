@@ -40,7 +40,8 @@ import {
     showCodeModal: false,
     showErrorModal: false,
     errorText: '',
-    loading: false
+    loading: false,
+    mission: [] //紀錄支線任務內容
   };
   
   export default (state = INITIAL_STATE, action) => {
@@ -50,44 +51,44 @@ import {
       case GET_TEAM_DATA_JUNIOR_SUCCESS:
         return { 
             ...state,
-            batch: action.payload.batch,
-            camp: action.payload.camp,
-            name: action.payload.name,
-            done_submission: action.payload.done_submission,
-            completed: action.payload.completed,
-            team_total_score: action.payload.team_total_score,
-            free_point: action.payload.free_point,
-            career: action.payload.career,
+            batch: action.payload.responseData.batch,
+            camp: action.payload.responseData.camp,
+            name: action.payload.responseData.name,
+            done_submission: action.payload.responseData.done_submission,
+            completed: action.payload.responseData.completed,
+            team_total_score: action.payload.responseData.team_total_score,
+            free_point: action.payload.responseData.free_point,
+            career: action.payload.responseData.career,
             //能力值
-            strength: action.payload.strength,
-            wisdom: action.payload.wisdom,
-            vitality: action.payload.vitality,
-            faith: action.payload.faith,
-            agility: action.payload.agility,
-
+            strength: action.payload.responseData.strength,
+            wisdom: action.payload.responseData.wisdom,
+            vitality: action.payload.responseData.vitality,
+            faith: action.payload.responseData.faith,
+            agility: action.payload.responseData.agility,
             //
-            loading: false
+            loading: false,
+            mission: action.payload.mission
         };
       case GET_TEAM_DATA_COLLEGE_SUCCESS:
         return { 
             ...state,
-            batch: action.payload.batch,
-            camp: action.payload.camp,
-            name: action.payload.name,
-            done_submission: action.payload.done_submission,
-            completed: action.payload.completed,
-            team_total_score: action.payload.team_total_score,
-            free_point: action.payload.free_point,
-            career: action.payload.career,
+            batch: action.payload.responseData.batch,
+            camp: action.payload.responseData.camp,
+            name: action.payload.responseData.name,
+            done_submission: action.payload.responseData.done_submission,
+            completed: action.payload.responseData.completed,
+            team_total_score: action.payload.responseData.team_total_score,
+            free_point: action.payload.responseData.free_point,
+            career: action.payload.responseData.career,
             //能力值
-            passion: action.payload.passion,
-            creativity: action.payload.creativity,
-            intelligence: action.payload.intelligence,
-            love: action.payload.love,
-            patience: action.payload.patience,
-
+            passion: action.payload.responseData.passion,
+            creativity: action.payload.responseData.creativity,
+            intelligence: action.payload.responseData.intelligence,
+            love: action.payload.responseData.love,
+            patience: action.payload.responseData.patience,
             //
-            loading: false
+            loading: false,
+            mission: action.payload.mission
         };
       case CODE_MODAL_TYPE:
         return { ...state, showCodeModal: action.payload };

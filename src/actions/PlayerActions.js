@@ -35,6 +35,55 @@ export const careerCodeChanged = (text) => {
 };
 
 export const getTeamData = () => {
+    //支線任務內容
+    const mission = [
+        {
+          id: 1,
+          missionName: '遺落檔案(1)',
+          finished: false
+        },
+        {
+          id: 2,
+          missionName: '遺落檔案(2)',
+          finished: false
+        },
+        {
+          id: 3,
+          missionName: '遺落檔案(3)',
+          finished: false
+        },
+        {
+          id: 4,
+          missionName: '隔空聽耳',
+          finished: false
+        },
+        {
+          id: 5,
+          missionName: '銷毀的檔案',
+          finished: false
+        },
+        {
+          id: 6,
+          missionName: '解碼檔案',
+          finished: false
+        },
+        {
+          id: 7,
+          missionName: '鷹眼',
+          finished: false
+        },
+        {
+          id: 8,
+          missionName: '迷彩特務',
+          finished: false
+        },
+        {
+          id: 9,
+          missionName: '風聲',
+          finished: false
+        }
+    ];
+
     return async (dispatch) => {
         dispatch({ type: GET_TEAM_DATA });
         const sessionToken = await AsyncStorage.getItem('sessionToken');
@@ -67,12 +116,19 @@ export const getTeamData = () => {
         .then(async (responseData) => {
             console.log(responseData);
             await AsyncStorage.setItem('teamID', responseData.results[0].objectId);
+
+            //判斷已完成哪些支線任務
+            const temp = responseData.results[0].done_submission;
+            for (let i = 0; i < temp.length; i++) {
+            mission[temp[i] - 1].finished = true;
+            }
+
             if (responseData.results[0].batch === '國高') {
                 console.log('國高');
-                getTeamDataJuniorSuccess(dispatch, responseData.results[0]);
+                getTeamDataJuniorSuccess(dispatch, responseData.results[0], mission);
             } else if (responseData.results[0].batch === '大專') {
                 console.log('大專');
-                getTeamDataCollegeSuccess(dispatch, responseData.results[0]);
+                getTeamDataCollegeSuccess(dispatch, responseData.results[0], mission);
             } else {
                 console.log('no batch show up');
             }
@@ -83,17 +139,17 @@ export const getTeamData = () => {
     };
 };
 
-const getTeamDataJuniorSuccess = (dispatch, responseData) => {
+const getTeamDataJuniorSuccess = (dispatch, responseData, mission) => {
     dispatch({
       type: GET_TEAM_DATA_JUNIOR_SUCCESS,
-      payload: responseData
+      payload: { responseData, mission }
     });
 };
 
-const getTeamDataCollegeSuccess = (dispatch, responseData) => {
+const getTeamDataCollegeSuccess = (dispatch, responseData, mission) => {
     dispatch({
       type: GET_TEAM_DATA_COLLEGE_SUCCESS,
-      payload: responseData
+      payload: { responseData, mission }
     });
 };
 

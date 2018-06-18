@@ -40,10 +40,10 @@ class RouterComponent extends Component {
               <Scene key="tab1" title="配點" icon={TabIcon}>
                 <Scene key="skills" initial component={Skills} hideNavBar />
               </Scene>
-              <Scene key="tab2" initial title="首頁" icon={TabIcon}>
+              <Scene key="tab2" title="首頁" icon={TabIcon}>
                 <Scene key="teamInfo" initial component={LeaderInfo} hideNavBar />
               </Scene>
-              <Scene key="tab3" title="支線任務" icon={TabIcon}>
+              <Scene key="tab3" initial title="支線任務" icon={TabIcon}>
                 <Scene key="mission" initial component={Mission} hideNavBar />
               </Scene>
               <Scene key="tab4" title="設定" icon={TabIcon}>

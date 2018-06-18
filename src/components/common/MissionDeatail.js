@@ -19,22 +19,21 @@ class MissionDeatail extends Component {
 
       if (addType) {
         return (
-          <View style={addContainer}>
-            <Text
-              style={addStyle}
-              onPress={() => { this.props.onPressInvite(); }}
-            >
-              未通過
-            </Text>
-          </View>
+            <View style={addContainer}>
+                <Text style={invitedStyle}>
+                    已過關
+                </Text>
+            </View>
         );
       } else if (addType === false) {
         return (
-          <View style={addContainer}>
-            <Text style={invitedStyle}>
-              已過關
-            </Text>
-          </View>
+            <View style={addContainer}>
+                <Text
+                    style={addStyle}
+                >
+                    未通過
+                </Text>
+            </View>
         );
      }
   }
@@ -86,7 +85,7 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'center',
     flex: 1,
-    backgroundColor: '#fbfbfb'
+    backgroundColor: '#fff'
   },
   infoDiv: {
     flex: 7,
