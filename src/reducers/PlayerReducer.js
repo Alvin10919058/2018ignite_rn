@@ -8,7 +8,8 @@ import {
     ERROR_MODAL_TYPE,
     CAREER_GROW_UP,
     CAREER_GROW_UP_FINISHED,
-    CAREER_GROW_UP_SUCCESS
+    CAREER_GROW_UP_SUCCESS,
+    MISSION_CODE_CHANGED
   } from '../actions/types';
   
   const INITIAL_STATE = {
@@ -41,7 +42,8 @@ import {
     showErrorModal: false,
     errorText: '',
     loading: false,
-    mission: [] //紀錄支線任務內容
+    mission: [], //紀錄支線任務內容
+    missionCode: ''
   };
   
   export default (state = INITIAL_STATE, action) => {
@@ -111,14 +113,16 @@ import {
           loading: false 
         };
       case CAREER_GROW_UP_SUCCESS:
-         return { 
-           ...state, 
-           showErrorModal: true, 
-           errorText: action.payload.text, 
-           career: action.payload.responseData,
-           careerCode: '', 
-           loading: false 
-          };
+        return { 
+          ...state, 
+          showErrorModal: true, 
+          errorText: action.payload.text, 
+          career: action.payload.responseData,
+          careerCode: '', 
+          loading: false 
+        };
+      case MISSION_CODE_CHANGED: 
+        return { ...state, missionCode: action.payload };
       default:
         return state;
     }

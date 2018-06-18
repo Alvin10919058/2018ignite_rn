@@ -6,10 +6,13 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { 
-  getTeamData
+  getTeamData,
+  codeModalType,
+  errorModalType,
+  missionCodeChanged
 } from '../../actions';
 import { ifIphoneX } from '../IphoneXDetector';
-import { MissionDeatail, Spinner } from '../common';
+import { MissionDeatail, Spinner, InputModal } from '../common';
 import { PicDefault, Pass } from '../../images';
 //import { Actions } from 'react-native-router-flux';
 
@@ -17,6 +20,10 @@ class Mission extends Component {
 
   componentWillMount() {
     this.props.getTeamData();
+  }
+
+  onMissionCodeChange(text) {
+    this.props.missionCodeChanged(text);
   }
 
   renderMission() {
@@ -32,7 +39,9 @@ class Mission extends Component {
           }
           addType={mission.finished}
           onPress={() => {
-        
+            if (mission.finished === false) {
+              this.props.codeModalType(true);
+            }
           }}
         />
       )
@@ -50,6 +59,23 @@ class Mission extends Component {
     
     return (
       <View style={container}>
+         <InputModal
+           titleText={'請輸入序號以驗證是否正確:'}
+           visible={this.props.showCodeModal}
+           cancelButton
+           scrollable={false}
+           cancel={() => { this.props.codeModalType(false); }}
+           onPress={() => { }}
+           inputText
+           value={this.props.missionCode}
+           onChangeText={(text) => { this.onMissionCodeChange(text); }}
+         />
+         <InputModal
+           titleText={this.props.errorText}
+           scrollable={false}
+           visible={this.props.showErrorModal}
+           onPress={() => { this.props.errorModalType(false, ''); }}
+         />
         <View style={headerContainer}>
           <Text>支線任務</Text>
         </View>
@@ -102,15 +128,28 @@ const mapStateToProps = ({ player }) => {
     done_submission, //完成幾個支線任務
     completed, //是否完成支線任務
     loading,
-    mission
+    showCodeModal,
+    showErrorModal,
+    errorText,
+    mission,
+    missionCode
    } = player;
 
   return { 
     done_submission, //完成幾個支線任務
     completed, //是否完成支線任務
     loading,
-    mission
+    showCodeModal,
+    showErrorModal,
+    errorText,
+    mission,
+    missionCode
   };
 };
 
-export default connect(mapStateToProps, { getTeamData })(Mission);
+export default connect(mapStateToProps, { 
+  getTeamData,
+  codeModalType,
+  errorModalType,
+  missionCodeChanged
+})(Mission);

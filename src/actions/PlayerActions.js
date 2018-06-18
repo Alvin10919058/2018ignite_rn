@@ -10,7 +10,8 @@ import {
     ERROR_MODAL_TYPE,
     CAREER_GROW_UP,
     CAREER_GROW_UP_FINISHED,
-    CAREER_GROW_UP_SUCCESS    
+    CAREER_GROW_UP_SUCCESS,
+    MISSION_CODE_CHANGED    
   } from './types';
 
 export const errorModalType = (type, text) => {
@@ -30,6 +31,13 @@ export const codeModalType = (type) => {
 export const careerCodeChanged = (text) => {
     return {
         type: CAREER_CODE_CHANGED,
+        payload: text
+    };
+};
+
+export const missionCodeChanged = (text) => {
+    return {
+        type: MISSION_CODE_CHANGED,
         payload: text
     };
 };
