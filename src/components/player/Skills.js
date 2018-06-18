@@ -209,7 +209,7 @@ class Skills extends Component {
           </TouchableOpacity>
             
           {/* 能力值數值 */}
-          <View style={{ width: width * 0.15, alignItems: 'center' }}>
+          <View style={styles.skillValueStyle}>
             <Text style={styles.skillTextStyle}>
               {this.state.tmpFaith}
             </Text>
@@ -263,7 +263,7 @@ class Skills extends Component {
           </TouchableOpacity>
 
           {/* 能力值數值 */}
-          <View style={{ width: width * 0.15, alignItems: 'center' }}>
+          <View style={styles.skillValueStyle}>
             <Text style={styles.skillTextStyle}>
               {this.state.tmpAgility}
             </Text>
@@ -317,7 +317,7 @@ class Skills extends Component {
           </TouchableOpacity>
 
           {/* 能力值數值 */}
-          <View style={{ width: width * 0.15, alignItems: 'center' }}>
+          <View style={styles.skillValueStyle}>
             <Text style={styles.skillTextStyle}>
               {this.state.tmpStrength}
             </Text>
@@ -371,7 +371,7 @@ class Skills extends Component {
           </TouchableOpacity>
 
           {/* 能力值數值 */}
-          <View style={{ width: width * 0.15, alignItems: 'center' }}>
+          <View style={styles.skillValueStyle}>
             <Text style={styles.skillTextStyle}>
               {this.state.tmpWisdom}
             </Text>
@@ -425,7 +425,7 @@ class Skills extends Component {
           </TouchableOpacity>
             
           {/* 能力值數值 */}
-          <View style={{ width: width * 0.15, alignItems: 'center' }}>
+          <View style={styles.skillValueStyle}>
             <Text style={styles.skillTextStyle}>
               {this.state.tmpVitality}
             </Text>
