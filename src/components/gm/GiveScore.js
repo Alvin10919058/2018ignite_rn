@@ -15,20 +15,20 @@ class GiveScore extends React.Component {
     
     this.state = {
         activeSwitch: 1,
-        selecTeam: undefined,
+        selectBatch: '國高',
         //history table setting data
         TeamData: {},
         tableHead: ['梯次', '小隊', '種類', '點數'],
         tableData: [],
         widthArr: [80, 85, 120, 85],
         //Picker setting data
-        selectTeam: undefined,
+        selectTeam: '',
         teams: PickerData.teamSelection,
         selecT1Kinds: '',
         T1kinds: PickerData.T1teamSelection,
         selecT2Kinds: '',
         T2kinds: PickerData.T2teamSelection,
-        selecNumber: undefined,
+        selectNumber: undefined,
         number: PickerData.numberSelection
     };
 }
@@ -80,7 +80,6 @@ componentDidMount() {
           
            CopyRes.map((PointData) => {
              finalDataAry.push([PointData.batch, PointData.to_team.name, PointData.kinds, PointData.value]);
-            console.log(finalDataAry);
              return true;
            });
      this.setState({ tableData: finalDataAry });
@@ -90,6 +89,7 @@ componentDidMount() {
     });
   }
 
+  //getTeam 成功會call putTeam() putTeam 成功會call postTeam()
   //value: 要給幾點, kinds: 哪種類別
   getTeam(batch, teamName, value, kinds) {
     const params = {
@@ -199,7 +199,14 @@ render() {
      <View style={{ flex: 1, backgroundColor: '#fff' }}>
         <View style={styles.container}>
             <SwitchButton
-                    onValueChange={(val) => this.setState({ activeSwitch: val })}     
+                    onValueChange={(val) => {
+                      if (val === 1) {
+                        this.setState({ activeSwitch: val, selectBatch: '國高' });
+                      } else {
+                        this.setState({ activeSwitch: val, selectBatch: '大專' });
+                      }
+                      console.log(this.state.selectBatch);
+                    }}     
                     text1='國高'                      
                     text2='大專'                      
                     switchWidth={200}                  
@@ -224,14 +231,14 @@ render() {
                 items={this.state.teams}
                 onValueChange={(value) => {
                     this.setState({
-                      selecTeam: value,
+                      selectTeam: value,
                     });
                 }}
                 onDownArrow={() => {
                     this.inputRefs.picker2.togglePicker();
                 }}
                 style={{ ...pickerSelectStyles }}
-                value={this.state.selecTeam}
+                value={this.state.selectTeam}
                 ref={(el) => {
                     this.inputRefs.picker = el;
                 }}
@@ -274,7 +281,7 @@ render() {
                 items={this.state.number}
                 onValueChange={(value) => {
                     this.setState({
-                      selecNumber: value,
+                      selectNumber: value,
                     });
                 }}
                 onUpArrow={() => {
@@ -282,14 +289,19 @@ render() {
                 }}
                 
                 style={{ ...pickerSelectStyles }}
-                value={this.state.selecNumber}
+                value={this.state.selectNumber}
                 ref={(el) => {
                     this.inputRefs.picker3 = el;
                 }}
             />
 
             <View style={{ paddingVertical: 5 }} />
-            <Button onPress={() => { console.log(this.state.activeSwitch, this.state.selecTeam, this.state.selecT1Kinds, this.state.selecNumber); }} >
+            <Button 
+              onPress={() => {
+                console.log(this.state.selectBatch, this.state.selectTeam, this.state.selectNumber, this.state.selecT1Kinds);
+                this.getTeam(this.state.selectBatch, this.state.selectTeam, this.state.selectNumber, this.state.selecT1Kinds);
+              }} 
+            >
               送出
             </Button>
         </View>
