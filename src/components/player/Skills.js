@@ -17,6 +17,18 @@ import { Add, Sub } from '../../images';
 
 const { height, width } = Dimensions.get('window');
 
+// 重要註解！！！
+
+// table資料要放入從資料庫撈出來的目前小隊各能力值:
+// tableData: [
+//   [目前信心, 目前敏捷, 目前力量, 目前智慧, 目前體力]
+// ],
+
+// tmp開頭變數為存放使用者配點時點擊 加 或 減 的暫存
+// 最後按 確定按鈕 後要寫入資料庫中 （ 可更改getTeam()系列 來完成 ）
+
+// 重置功能尚未實作
+
 class Skills extends Component {
   state = { 
     tableHead: ['信心', '敏捷', '力量', '智慧', '體力'],
@@ -32,11 +44,6 @@ class Skills extends Component {
 
     batch: '國高',
     free_point: 50,
-    // strength: 20, //力量
-    // wisdom: 10, //智慧
-    // vitality: 15, //體力
-    // faith: 25, //信心
-    // agility: 14, //敏捷
   }
    
    //getTeam 成功會call putTeam() putTeam 成功會call postTeam()
@@ -176,7 +183,17 @@ class Skills extends Component {
 
         {/* 信心 row */}
         <View style={styles.skillRowStyle}>
-          {/* 減號 */}
+         
+          {/* 能力值文字 */}
+          <Text 
+            style={{ 
+              fontSize: 25,
+            }}
+          >
+            信心 
+          </Text>
+
+           {/* 減號 */}
           <TouchableOpacity
             onPress={() => {
               if (this.state.tmpFaith > 0) {
@@ -195,16 +212,16 @@ class Skills extends Component {
               />
           </TouchableOpacity>
             
-          {/* 中間文字 */}
-          <Text 
-          style={{ 
-            fontSize: 25,
-            marginLeft: 20,
-            marginRight: 20
-          }}
-          >
-            信心：{this.state.tmpFaith}
-          </Text>
+          {/* 能力值數值 */}
+          <View style={{ width: width * 0.15, alignItems: 'center' }}>
+            <Text
+              style={{ 
+                fontSize: 25,
+              }}
+            >
+              {this.state.tmpFaith}
+            </Text>
+          </View>
 
            {/* 加號 */}
           <TouchableOpacity
@@ -228,7 +245,17 @@ class Skills extends Component {
 
         {/* 敏捷 row */}
         <View style={styles.skillRowStyle}>
-          {/* 減號 */}
+            
+          {/* 能力值文字 */}
+          <Text 
+          style={{ 
+            fontSize: 25,
+          }}
+          >
+            敏捷 
+          </Text>
+
+           {/* 減號 */}
           <TouchableOpacity
             onPress={() => {
               if (this.state.tmpAgility > 0) {
@@ -246,17 +273,17 @@ class Skills extends Component {
                 source={Sub}
               />
           </TouchableOpacity>
-            
-          {/* 中間文字 */}
-          <Text 
-          style={{ 
-            fontSize: 25,
-            marginLeft: 20,
-            marginRight: 20
-          }}
-          >
-            敏捷：{this.state.tmpAgility}
-          </Text>
+
+          {/* 能力值數值 */}
+          <View style={{ width: width * 0.15, alignItems: 'center' }}>
+            <Text
+              style={{ 
+                fontSize: 25,
+              }}
+            >
+              {this.state.tmpAgility}
+            </Text>
+          </View>
 
            {/* 加號 */}
           <TouchableOpacity
@@ -280,7 +307,17 @@ class Skills extends Component {
 
         {/* 力量 row */}
         <View style={styles.skillRowStyle}>
-          {/* 減號 */}
+         
+          {/* 能力值文字 */}
+          <Text 
+          style={{ 
+            fontSize: 25,
+          }}
+          >
+            力量 
+          </Text>
+
+           {/* 減號 */}
           <TouchableOpacity
             onPress={() => {
               if (this.state.tmpStrength > 0) {
@@ -298,17 +335,17 @@ class Skills extends Component {
                 source={Sub}
               />
           </TouchableOpacity>
-            
-          {/* 中間文字 */}
-          <Text 
-          style={{ 
-            fontSize: 25,
-            marginLeft: 20,
-            marginRight: 20
-          }}
-          >
-            力量：{this.state.tmpStrength}
-          </Text>
+
+          {/* 能力值數值 */}
+          <View style={{ width: width * 0.15, alignItems: 'center' }}>
+            <Text
+              style={{ 
+                fontSize: 25,
+              }}
+            >
+              {this.state.tmpStrength}
+            </Text>
+          </View>
 
            {/* 加號 */}
           <TouchableOpacity
@@ -332,7 +369,17 @@ class Skills extends Component {
 
         {/* 智慧 row */}
         <View style={styles.skillRowStyle}>
-          {/* 減號 */}
+         
+          {/* 能力值文字 */}
+          <Text 
+          style={{ 
+            fontSize: 25,
+          }}
+          >
+            智慧 
+          </Text>
+
+           {/* 減號 */}
           <TouchableOpacity
             onPress={() => {
               if (this.state.tmpWisdom > 0) {
@@ -350,17 +397,17 @@ class Skills extends Component {
                 source={Sub}
               />
           </TouchableOpacity>
-            
-          {/* 中間文字 */}
-          <Text 
-          style={{ 
-            fontSize: 25,
-            marginLeft: 20,
-            marginRight: 20
-          }}
-          >
-            智慧：{this.state.tmpWisdom}
-          </Text>
+
+          {/* 能力值數值 */}
+          <View style={{ width: width * 0.15, alignItems: 'center' }}>
+            <Text
+              style={{ 
+                fontSize: 25,
+              }}
+            >
+              {this.state.tmpWisdom}
+            </Text>
+          </View>
 
            {/* 加號 */}
           <TouchableOpacity
@@ -384,7 +431,17 @@ class Skills extends Component {
 
         {/* 體力 row */}
         <View style={styles.skillRowStyle}>
-          {/* 減號 */}
+         
+          {/* 中間文字 */}
+          <Text 
+          style={{ 
+            fontSize: 25,
+          }}
+          >
+            體力
+          </Text>
+          
+           {/* 減號 */}
           <TouchableOpacity
             onPress={() => {
               if (this.state.tmpVitality > 0) {
@@ -403,16 +460,16 @@ class Skills extends Component {
               />
           </TouchableOpacity>
             
-          {/* 中間文字 */}
-          <Text 
-          style={{ 
-            fontSize: 25,
-            marginLeft: 20,
-            marginRight: 20
-          }}
-          >
-            體力：{this.state.tmpVitality}
-          </Text>
+          {/* 能力值數值 */}
+          <View style={{ width: width * 0.15, alignItems: 'center' }}>
+            <Text
+              style={{ 
+                fontSize: 25,
+              }}
+            >
+              {this.state.tmpVitality}
+            </Text>
+          </View>
 
            {/* 加號 */}
           <TouchableOpacity
@@ -434,7 +491,12 @@ class Skills extends Component {
           </TouchableOpacity>
         </View>
         <View style={styles.btnAreaStyle}>
-          <Button btnCustomStyle={{ backgroundColor: '#FF0000', marginRight: 20, borderColor: '#FF0000' }}>
+          <Button 
+          btnCustomStyle={{ 
+            backgroundColor: '#FF0000', 
+            marginRight: width * 0.12, 
+            borderColor: '#FF0000' }}
+          >
             重置
           </Button>
           <Button >
@@ -477,14 +539,14 @@ const styles = {
   },
   skillRowStyle: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    marginTop: 20
+    marginTop: height * 0.045
   },
   btnAreaStyle: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 30
+    marginTop: height * 0.05
   }
 };
 
