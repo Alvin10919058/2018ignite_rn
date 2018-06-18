@@ -44,7 +44,7 @@ import {
     showCodeModal: false,
     showErrorModal: false,
     errorText: '',
-    loading: false,
+    loading: true,
     mission: [], //紀錄支線任務內容
     missionCode: ''
   };
@@ -52,7 +52,7 @@ import {
   export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
       case GET_TEAM_DATA:
-        return { ...state, loading: true };
+        return { ...state };
       case GET_TEAM_DATA_JUNIOR_SUCCESS:
         return { 
             ...state,
@@ -113,6 +113,7 @@ import {
           showErrorModal: true, 
           errorText: action.payload, 
           careerCode: '', 
+          missionCode: '', 
           loading: false 
         };
       case CAREER_GROW_UP_SUCCESS:
@@ -122,6 +123,7 @@ import {
           errorText: action.payload.text, 
           career: action.payload.responseData,
           careerCode: '', 
+          missionCode: '', 
           loading: false 
         };
       case MISSION_CODE_CHANGED: 
@@ -134,6 +136,7 @@ import {
           showErrorModal: true, 
           errorText: action.payload.text, 
           mission: action.payload.mission,
+          careerCode: '',
           missionCode: '', 
           loading: false 
         };
@@ -142,6 +145,7 @@ import {
           ...state, 
           showErrorModal: true, 
           errorText: action.payload, 
+          careerCode: '',
           missionCode: '', 
           loading: false 
         };

@@ -6,7 +6,6 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { 
-  getTeamData,
   codeModalType,
   errorModalType,
   missionCodeChanged,
@@ -23,10 +22,6 @@ class Mission extends Component {
     missionId: null,
     missionName: ''
   };
-
-  componentWillMount() {
-    this.props.getTeamData();
-  }
 
   onMissionCodeChange(text) {
     this.props.missionCodeChanged(text);
@@ -175,7 +170,6 @@ const mapStateToProps = ({ player }) => {
 };
 
 export default connect(mapStateToProps, { 
-  getTeamData,
   codeModalType,
   errorModalType,
   missionCodeChanged,
