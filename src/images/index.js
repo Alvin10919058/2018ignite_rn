@@ -13,9 +13,11 @@ import Sniper from './Sniper.png';
 import Special from './Special.png';
 import Soldier from './Soldier.png';
 import Assault from './Assault.png';
+import Add from './add.png';
+import Sub from './sub.png';
 
 export {
   Background, Logo, User, Password,
   RankTab, SettingTab, MisionTab, HomePageTab, SkillsTab,
-  Biochemical, Defense, Sniper, Special, Soldier, Assault
+  Biochemical, Defense, Sniper, Special, Soldier, Assault, Add, Sub
 };

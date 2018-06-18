@@ -3,11 +3,11 @@ import { Text, TouchableOpacity, Platform, Dimensions } from 'react-native';
 
 const { height } = Dimensions.get('window');
 
-const Button = ({ onPress, children }) => {
+const Button = ({ onPress, children, btnCustomStyle }) => {
   const { buttonStyle, textStyle } = styles;
 
   return (
-    <TouchableOpacity onPress={onPress} style={buttonStyle}>
+    <TouchableOpacity onPress={onPress} style={[buttonStyle, btnCustomStyle]}>
       <Text style={textStyle}>
         {children}
       </Text>
