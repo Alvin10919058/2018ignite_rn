@@ -3,7 +3,6 @@ import {
     GET_TEAM_DATA,
     GET_TEAM_DATA_JUNIOR_SUCCESS,
     GET_TEAM_DATA_COLLEGE_SUCCESS,
-    CODE_MODAL_TYPE,
     CAREER_CODE_CHANGED,
     ERROR_MODAL_TYPE,
     CAREER_GROW_UP,
@@ -41,7 +40,6 @@ import {
 
     //
     careerCode: '',
-    showCodeModal: false,
     showErrorModal: false,
     errorText: '',
     loading: true,
@@ -95,8 +93,6 @@ import {
             loading: false,
             mission: action.payload.mission
         };
-      case CODE_MODAL_TYPE:
-        return { ...state, showCodeModal: action.payload };
       case ERROR_MODAL_TYPE:
         return { 
           ...state, 
@@ -106,7 +102,7 @@ import {
       case CAREER_CODE_CHANGED:
         return { ...state, careerCode: action.payload };
       case CAREER_GROW_UP:
-        return { ...state, showCodeModal: false, loading: true };
+        return { ...state, loading: true };
       case CAREER_GROW_UP_FINISHED:
         return { 
           ...state, 
@@ -129,7 +125,7 @@ import {
       case MISSION_CODE_CHANGED: 
         return { ...state, missionCode: action.payload };
       case MISSION_CODING:
-        return { ...state, showCodeModal: false, loading: true };
+        return { ...state, loading: true };
       case MISSION_CODE_FINISHED:
         return { 
           ...state, 

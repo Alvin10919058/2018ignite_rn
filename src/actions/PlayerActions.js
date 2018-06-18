@@ -5,7 +5,6 @@ import {
     GET_TEAM_DATA,
     GET_TEAM_DATA_JUNIOR_SUCCESS,
     GET_TEAM_DATA_COLLEGE_SUCCESS,
-    CODE_MODAL_TYPE,
     CAREER_CODE_CHANGED,
     ERROR_MODAL_TYPE,
     CAREER_GROW_UP,
@@ -21,13 +20,6 @@ export const errorModalType = (type, text) => {
     return {
         type: ERROR_MODAL_TYPE,
         payload: { type, text }
-    };
-};
-
-export const codeModalType = (type) => {
-    return {
-        type: CODE_MODAL_TYPE,
-        payload: type
     };
 };
 

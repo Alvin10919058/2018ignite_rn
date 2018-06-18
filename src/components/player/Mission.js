@@ -6,7 +6,6 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { 
-  codeModalType,
   errorModalType,
   missionCodeChanged,
   missionCoding
@@ -19,6 +18,7 @@ import { PicDefault, Pass } from '../../images';
 class Mission extends Component {
 
   state = {
+    showModal: false,
     missionId: null,
     missionName: ''
   };
@@ -41,7 +41,7 @@ class Mission extends Component {
           addType={mission.finished}
           onPress={() => {
             if (mission.finished === false) {
-              this.props.codeModalType(true);
+              this.setState({ showModal: true });
               this.setState({ 
                 missionId: mission.id,
                 missionName: mission.missionName
@@ -66,11 +66,11 @@ class Mission extends Component {
       <View style={container}>
          <InputModal
            titleText={'請輸入序號以驗證是否正確:'}
-           visible={this.props.showCodeModal}
+           visible={this.state.showModal}
            cancelButton
            scrollable={false}
            cancel={() => { 
-             this.props.codeModalType(false); 
+            this.setState({ showModal: false }); 
              this.setState({ 
               missionId: null,
               missionName: ''
@@ -84,6 +84,7 @@ class Mission extends Component {
               this.props.mission
             );
             this.setState({ 
+              showModal: false,
               missionId: null,
               missionName: ''
             });
@@ -150,7 +151,6 @@ const mapStateToProps = ({ player }) => {
     done_submission, //完成幾個支線任務
     completed, //是否完成支線任務
     loading,
-    showCodeModal,
     showErrorModal,
     errorText,
     mission,
@@ -161,7 +161,6 @@ const mapStateToProps = ({ player }) => {
     done_submission, //完成幾個支線任務
     completed, //是否完成支線任務
     loading,
-    showCodeModal,
     showErrorModal,
     errorText,
     mission,
@@ -170,7 +169,6 @@ const mapStateToProps = ({ player }) => {
 };
 
 export default connect(mapStateToProps, { 
-  codeModalType,
   errorModalType,
   missionCodeChanged,
   missionCoding
