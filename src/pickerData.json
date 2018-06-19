@@ -1,4 +1,30 @@
-{   "teamSelection": [
+{   "StageSelection": [
+        {
+            "label": "開場",
+            "value": "開場"
+        },
+        {
+            "label": "MP",
+            "value": "MP"
+        },
+        {
+            "label": "大地",
+            "value": "大地"
+        },
+        {
+            "label": "水大地",
+            "value": "水大地"
+        },
+        {
+            "label": "閉幕",
+            "value": "閉幕"
+        },
+        {
+            "label": "其他",
+            "value": "其他"
+        }
+    ],
+    "teamSelection": [
         {
             "label": "Team01",
             "value": "01"

@@ -24,20 +24,25 @@ class GiveScore extends React.Component {
       tableData: [],
       widthArr: [width * 0.205, width * 0.215, width * 0.32, width * 0.215],
       //Picker setting data
+      selectStage: '',
+      stage: PickerData.stageSelection,
       selectTeam: '',
       teams: PickerData.teamSelection,
-      selecKinds: '',
+      selectKinds: '',
       kinds: PickerData.T1teamSelection,
-      selecT1Kinds: '',
+      selectT1Kinds: '',
       T1kinds: PickerData.T1teamSelection,
-      selecT2Kinds: '',
+      selectT2Kinds: '',
       T2kinds: PickerData.T2teamSelection,
       selectNumber: undefined,
       number: PickerData.numberSelection
     };
   }
- 
-
+  // selectStage: '',
+  // selectTeam: '',
+  // selectKinds: '',
+  // selectT2Kinds: '',
+  // selectT2Kinds: '',
 componentDidMount() {
   this.getGMdata();
 }
@@ -205,20 +210,20 @@ render() {
         <View style={styles.container}>
             <SwitchButton
                     onValueChange={(val) => {
-                      const T1tmp = this.state.selecT1Kinds;
-                      const T2tmp = this.state.selecT2Kinds;
+                      const T1tmp = this.state.selectT1Kinds;
+                      const T2tmp = this.state.selectT2Kinds;
                       if (val === 1) {
                         this.setState({ 
                           activeSwitch: val, 
                           selectBatch: '國高',
-                          selecKinds: T1tmp,
+                          selectKinds: T1tmp,
                           // kinds: PickerData.T1teamSelection
                         });
                       } else {
                         this.setState({ 
                           activeSwitch: val, 
                           selectBatch: '大專',
-                          selecKinds: T2tmp,
+                          selectKinds: T2tmp,
                           // kinds: PickerData.T2teamSelection
                         });
                       }
@@ -237,11 +242,12 @@ render() {
                     fontColor='#b1b1b1'             
                     activeFontColor='#fff'
             />
-            <View style={{ paddingVertical: 10 }} />
-            <Text style={{ fontSize: 20, fontWeight: '400', marginBottom: 5 }}>小隊</Text>
+
+          <View style={styles.pickerRowStyle}>
+            <Text style={styles.labelStyle}>關卡</Text>
             <RNPickerSelect
                 placeholder={{
-                    label: '請選擇小隊',
+                    label: '請選擇關卡',
                     value: null,
                 }}
                 items={this.state.teams}
@@ -259,113 +265,151 @@ render() {
                     this.inputRefs.picker = el;
                 }}
             />
-            <View style={{ paddingVertical: 5 }} />
-              
-            <Text style={{ fontSize: 20, fontWeight: '400', marginBottom: 5 }}>種類</Text>
-          
-            {
-              this.state.activeSwitch === 1
-              &&
-              <RNPickerSelect
-                  placeholder={{
-                      label: '請選擇配點種類',
-                      value: null,
-                  }}
-                  
-                  items={this.state.T1kinds}
-                  value={this.state.selecT1Kinds}
-                  onValueChange={(value) => {
-                      this.setState({
-                        selecT1Kinds: value,
-                        selecKinds: value
-                      });
-                  }}
+          </View>
 
-                  onUpArrow={() => {
-                      this.inputRefs.picker.togglePicker();
-                  }}
-                  onDownArrow={() => {
-                      this.inputRefs.picker3.togglePicker();
-                  }}
-                  style={{ ...pickerSelectStyles }}
-                  ref={(el) => {
-                      this.inputRefs.picker2 = el;
-                  }}
-              />
-            }
-            {
-              this.state.activeSwitch === 2
-              &&
-              <RNPickerSelect
-                  placeholder={{
-                      label: '請選擇配點種類',
-                      value: null,
-                  }}
-                  
-                  items={this.state.T2kinds}
-                  value={this.state.selecT2Kinds}
-                  onValueChange={(value) => {
-                      this.setState({
-                        selecT2Kinds: value,
-                        selecKinds: value
-                      });
-                  }}
-
-                  onUpArrow={() => {
-                      this.inputRefs.picker.togglePicker();
-                  }}
-                  onDownArrow={() => {
-                      this.inputRefs.picker3.togglePicker();
-                  }}
-                  style={{ ...pickerSelectStyles }}
-                  ref={(el) => {
-                      this.inputRefs.picker2 = el;
-                  }}
-              />
-            }
-            {console.log(this.state.selecKinds)}
-         
-
-            <View style={{ paddingVertical: 5 }} />
-
-            <Text style={{ fontSize: 20, fontWeight: '400', marginBottom: 5 }}>點數</Text>
+          <View style={styles.pickerRowStyle}>
+            <Text style={styles.labelStyle}>小隊</Text>
             <RNPickerSelect
                 placeholder={{
-                    label: '請選擇給予點數',
+                    label: '請選擇小隊',
                     value: null,
                 }}
-                items={this.state.number}
+                items={this.state.teams}
                 onValueChange={(value) => {
                     this.setState({
-                      selectNumber: value,
+                      selectTeam: value,
                     });
                 }}
                 onUpArrow={() => {
-                    this.inputRefs.picker2.togglePicker();
+                  this.inputRefs.picker.togglePicker();
                 }}
-                
+                onDownArrow={() => {
+                    this.inputRefs.picker3.togglePicker();
+                }}
                 style={{ ...pickerSelectStyles }}
-                value={this.state.selectNumber}
+                value={this.state.selectTeam}
                 ref={(el) => {
-                    this.inputRefs.picker3 = el;
+                    this.inputRefs.picker2 = el;
                 }}
             />
+          </View>
 
-            <View style={{ paddingVertical: 5 }} />
+            {console.log(this.state.selectKinds)}
+
+          <View 
+            style={{ 
+              flexDirection: 'row', 
+              justifyContent: 'space-between',
+              width: width * 0.95,
+              marginTop: height * 0.025
+            }}
+          >
+            <View style={styles.row3col}>
+              <Text style={styles.labelStyle}>種類</Text>
+              {
+                this.state.activeSwitch === 1
+                &&
+                <RNPickerSelect
+                    placeholder={{
+                        label: '請選擇配點種類',
+                        value: null,
+                    }}
+                    
+                    items={this.state.T1kinds}
+                    value={this.state.selectT1Kinds}
+                    onValueChange={(value) => {
+                        this.setState({
+                          selectT1Kinds: value,
+                          selectKinds: value
+                        });
+                    }}
+
+                    onUpArrow={() => {
+                        this.inputRefs.picker2.togglePicker();
+                    }}
+                    onDownArrow={() => {
+                        this.inputRefs.picker4.togglePicker();
+                    }}
+                    style={{ ...pickerSelectStyles }}
+                    ref={(el) => {
+                        this.inputRefs.picker3 = el;
+                    }}
+                />
+              }
+              {
+                this.state.activeSwitch === 2
+                &&
+                <RNPickerSelect
+                    placeholder={{
+                        label: '請選擇配點種類',
+                        value: null,
+                    }}
+                    
+                    items={this.state.T2kinds}
+                    value={this.state.selectT2Kinds}
+                    onValueChange={(value) => {
+                        this.setState({
+                          selectT2Kinds: value,
+                          selectKinds: value
+                        });
+                    }}
+
+                    onUpArrow={() => {
+                        this.inputRefs.picker2.togglePicker();
+                    }}
+                    onDownArrow={() => {
+                        this.inputRefs.picker4.togglePicker();
+                    }}
+                    style={{ ...pickerSelectStyles }}
+                    ref={(el) => {
+                        this.inputRefs.picker3 = el;
+                    }}
+                />
+              }
+            </View>
+
+            <View style={styles.row3col}>
+              <Text style={styles.labelStyle}>點數</Text>
+              <RNPickerSelect
+                  placeholder={{
+                      label: '請選擇給予點數',
+                      value: null,
+                  }}
+                  items={this.state.number}
+                  onValueChange={(value) => {
+                      this.setState({
+                        selectNumber: value,
+                      });
+                  }}
+                  onUpArrow={() => {
+                      this.inputRefs.picker3.togglePicker();
+                  }}
+                  
+                  style={{ ...pickerSelectStyles }}
+                  value={this.state.selectNumber}
+                  ref={(el) => {
+                      this.inputRefs.picker4 = el;
+                  }}
+              />
+            </View>
+          </View>
+             
             <Button 
-              //  btnCustomStyle={{ 
-              //     backgroundColor: '#69aeb2',
-              //     borderColor: '#69aeb2' 
-              //   }}
+               btnCustomStyle={{ 
+                  backgroundColor: '#69aeb2',
+                  borderColor: '#69aeb2',
+                  marginTop: height * 0.031,
+                  marginBottom: height * 0.027
+                }}
               onPress={() => {
-                console.log(this.state.selectBatch, this.state.selectTeam, this.state.selectNumber, this.state.selecKinds);
-                this.getTeam(this.state.selectBatch, this.state.selectTeam, this.state.selectNumber, this.state.selecKinds);
+                console.log(this.state.selectBatch, this.state.selectTeam, this.state.selectNumber, this.state.selectKinds);
+                this.getTeam(this.state.selectBatch, this.state.selectTeam, this.state.selectNumber, this.state.selectKinds);
               }} 
             >
               送出
             </Button>
         </View>
-        <View style={{ paddingVertical: 5 }} />
+         
         <View style={{ marginLeft: width * 0.02, marginRight: width * 0.02 }}>
           <Table borderStyle={{ borderWidth: 2, borderColor: '#ffffff' }}>
             <Row 
@@ -430,21 +474,36 @@ const styles = StyleSheet.create({
   row: { 
     height: 40, 
     backgroundColor: '#d2e9ff' 
+  },
+  labelStyle: {
+    fontSize: 18, 
+    fontWeight: '400', 
+    marginBottom: height * 0.01
+  },
+  pickerRowStyle: {
+    width: width * 0.95,
+    alignItems: 'center',
+    marginTop: height * 0.025
+  },
+  row3col: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: width * 0.46
   }
 });
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-      fontSize: 16,
-      paddingTop: 13,
-      paddingHorizontal: 10,
-      paddingBottom: 12,
+      fontSize: 14,
+      paddingTop: 10,
+      paddingHorizontal: 15,
+      paddingBottom: 9,
       borderWidth: 1,
       borderColor: 'gray',
       borderRadius: 4,
       backgroundColor: 'white',
       color: 'black',
-  },
+  }
 });
 
 export default GiveScore;
