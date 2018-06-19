@@ -12,26 +12,29 @@ class GiveScore extends React.Component {
     super(props);
 
     this.inputRefs = {};
-    
+
     this.state = {
-        activeSwitch: 1,
-        selectBatch: '國高',
-        //history table setting data
-        TeamData: {},
-        tableHead: ['梯次', '小隊', '種類', '點數'],
-        tableData: [],
-        widthArr: [80, 85, 120, 85],
-        //Picker setting data
-        selectTeam: '',
-        teams: PickerData.teamSelection,
-        selecT1Kinds: '',
-        T1kinds: PickerData.T1teamSelection,
-        selecT2Kinds: '',
-        T2kinds: PickerData.T2teamSelection,
-        selectNumber: undefined,
-        number: PickerData.numberSelection
+      activeSwitch: 1,
+      selectBatch: '國高',
+      //history table setting data
+      TeamData: {},
+      tableHead: ['梯次', '小隊', '種類', '點數'],
+      tableData: [],
+      widthArr: [80, 85, 120, 85],
+      //Picker setting data
+      selectTeam: '',
+      teams: PickerData.teamSelection,
+      selecKinds: '',
+      kinds: PickerData.T1teamSelection,
+      selecT1Kinds: '',
+      T1kinds: PickerData.T1teamSelection,
+      selecT2Kinds: '',
+      T2kinds: PickerData.T2teamSelection,
+      selectNumber: undefined,
+      number: PickerData.numberSelection
     };
-}
+  }
+ 
 
 componentDidMount() {
   this.getGMdata();
@@ -200,12 +203,23 @@ render() {
         <View style={styles.container}>
             <SwitchButton
                     onValueChange={(val) => {
+                      const T1tmp = this.state.selecT1Kinds;
+                      const T2tmp = this.state.selecT2Kinds;
                       if (val === 1) {
-                        this.setState({ activeSwitch: val, selectBatch: '國高' });
+                        this.setState({ 
+                          activeSwitch: val, 
+                          selectBatch: '國高',
+                          selecKinds: T1tmp,
+                          // kinds: PickerData.T1teamSelection
+                        });
                       } else {
-                        this.setState({ activeSwitch: val, selectBatch: '大專' });
+                        this.setState({ 
+                          activeSwitch: val, 
+                          selectBatch: '大專',
+                          selecKinds: T2tmp,
+                          // kinds: PickerData.T2teamSelection
+                        });
                       }
-                      console.log(this.state.selectBatch);
                     }}     
                     text1='國高'                      
                     text2='大專'                      
@@ -244,31 +258,71 @@ render() {
                 }}
             />
             <View style={{ paddingVertical: 5 }} />
-
+              
             <Text style={{ fontSize: 20, fontWeight: '400', marginBottom: 5 }}>種類</Text>
-            <RNPickerSelect
-                placeholder={{
-                    label: '請選擇配點種類',
-                    value: null,
-                }}
-                items={this.state.T1kinds}
-                onValueChange={(value) => {
-                    this.setState({
-                      selecT1Kinds: value,
-                    });
-                }}
-                onUpArrow={() => {
-                    this.inputRefs.picker.togglePicker();
-                }}
-                onDownArrow={() => {
-                    this.inputRefs.picker3.togglePicker();
-                }}
-                style={{ ...pickerSelectStyles }}
-                value={this.state.selecT1Kinds}
-                ref={(el) => {
-                    this.inputRefs.picker2 = el;
-                }}
-            />
+          
+            {
+              this.state.activeSwitch === 1
+              &&
+              <RNPickerSelect
+                  placeholder={{
+                      label: '請選擇配點種類',
+                      value: null,
+                  }}
+                  
+                  items={this.state.T1kinds}
+                  value={this.state.selecT1Kinds}
+                  onValueChange={(value) => {
+                      this.setState({
+                        selecT1Kinds: value,
+                        selecKinds: value
+                      });
+                  }}
+
+                  onUpArrow={() => {
+                      this.inputRefs.picker.togglePicker();
+                  }}
+                  onDownArrow={() => {
+                      this.inputRefs.picker3.togglePicker();
+                  }}
+                  style={{ ...pickerSelectStyles }}
+                  ref={(el) => {
+                      this.inputRefs.picker2 = el;
+                  }}
+              />
+            }
+            {
+              this.state.activeSwitch === 2
+              &&
+              <RNPickerSelect
+                  placeholder={{
+                      label: '請選擇配點種類',
+                      value: null,
+                  }}
+                  
+                  items={this.state.T2kinds}
+                  value={this.state.selecT2Kinds}
+                  onValueChange={(value) => {
+                      this.setState({
+                        selecT2Kinds: value,
+                        selecKinds: value
+                      });
+                  }}
+
+                  onUpArrow={() => {
+                      this.inputRefs.picker.togglePicker();
+                  }}
+                  onDownArrow={() => {
+                      this.inputRefs.picker3.togglePicker();
+                  }}
+                  style={{ ...pickerSelectStyles }}
+                  ref={(el) => {
+                      this.inputRefs.picker2 = el;
+                  }}
+              />
+            }
+            {console.log(this.state.selecKinds)}
+         
 
             <View style={{ paddingVertical: 5 }} />
 
@@ -302,8 +356,8 @@ render() {
               //     borderColor: '#69aeb2' 
               //   }}
               onPress={() => {
-                console.log(this.state.selectBatch, this.state.selectTeam, this.state.selectNumber, this.state.selecT1Kinds);
-                this.getTeam(this.state.selectBatch, this.state.selectTeam, this.state.selectNumber, this.state.selecT1Kinds);
+                console.log(this.state.selectBatch, this.state.selectTeam, this.state.selectNumber, this.state.selecKinds);
+                this.getTeam(this.state.selectBatch, this.state.selectTeam, this.state.selectNumber, this.state.selecKinds);
               }} 
             >
               送出
