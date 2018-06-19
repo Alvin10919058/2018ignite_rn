@@ -1,11 +1,13 @@
 import React from 'react';
-import { Text, StyleSheet, View, ScrollView, AsyncStorage } from 'react-native';
+import { Text, StyleSheet, View, ScrollView, AsyncStorage, Dimensions } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { Table, Row } from 'react-native-table-component';
 import { Button } from '../common';
 import SwitchButton from '../common/SwitchButton';
 import data from '../../Setting.json';
 import PickerData from '../../pickerData.json';
+
+const { height, width } = Dimensions.get('window');
 
 class GiveScore extends React.Component {
   constructor(props) {
@@ -20,7 +22,7 @@ class GiveScore extends React.Component {
       TeamData: {},
       tableHead: ['梯次', '小隊', '種類', '點數'],
       tableData: [],
-      widthArr: [80, 85, 120, 85],
+      widthArr: [width * 0.205, width * 0.215, width * 0.32, width * 0.215],
       //Picker setting data
       selectTeam: '',
       teams: PickerData.teamSelection,
@@ -364,8 +366,8 @@ render() {
             </Button>
         </View>
         <View style={{ paddingVertical: 5 }} />
-        <View>
-          <Table borderStyle={{ borderWidth: 2, borderColor: '#f0f0f0' }}>
+        <View style={{ marginLeft: width * 0.02, marginRight: width * 0.02 }}>
+          <Table borderStyle={{ borderWidth: 2, borderColor: '#ffffff' }}>
             <Row 
               data={this.state.tableHead} 
               widthArr={this.state.widthArr} 
@@ -376,7 +378,7 @@ render() {
         
           <ScrollView style={styles.dataWrapper}>
             <Table 
-              borderStyle={{ borderWidth: 2, borderColor: '#f0f0f0' }}
+              borderStyle={{ borderWidth: 2, borderColor: '#ffffff' }}
             >
               {
                 this.state.tableData.map((rowData, index) => (
