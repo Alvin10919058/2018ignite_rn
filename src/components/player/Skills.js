@@ -107,9 +107,9 @@ class Skills extends Component {
         <View style={btnAreaStyle}>
           <Button 
           btnCustomStyle={{ 
-            backgroundColor: '#E63F00', 
+            backgroundColor: '#ED2A67', 
             marginRight: width * 0.12, 
-            borderColor: '#E63F00' }}
+            borderColor: '#ED2A67' }}
           >
             重置
           </Button>

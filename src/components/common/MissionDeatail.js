@@ -97,7 +97,7 @@ const styles = {
     alignItems: 'flex-end',
     padding: 10
   },
-  nameDiv:{
+  nameDiv: {
     justifyContent: 'center',
     flex: 3,
     marginLeft: 5
