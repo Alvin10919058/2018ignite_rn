@@ -4,8 +4,8 @@ import { TouchableOpacity, Text } from 'react-native';
 
 const CardList = ({ cardText, onPress, listCustomStyle }) => {
   return (
-    <TouchableOpacity onPress={onPress}>
-        <Text style={[styles.cardText, listCustomStyle]}>{cardText}</Text>
+    <TouchableOpacity onPress={onPress} style={listCustomStyle} >
+        <Text style={styles.cardText}>{cardText}</Text>
     </TouchableOpacity>
   );
 };
