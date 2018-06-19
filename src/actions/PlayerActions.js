@@ -202,7 +202,7 @@ export const careerGrowUp = (code) => {
         })
         .catch((error) => {
             console.log(error);
-            careerGrowUpFinished(dispatch, '發生不可預期的錯誤！\n請重新操作');
+            careerGrowUpFinished(dispatch, '發生不可預期的錯誤！\n請截圖給孟霈並重試');
         });
     };
 };
@@ -240,7 +240,7 @@ const changeTeamCareer = async (dispatch, responseData) => {
     })
     .catch((err) => {
         console.log(err);// error handling ..
-        careerGrowUpFinished(dispatch, '發生不可預期的錯誤！\n請重新操作');
+        careerGrowUpFinished(dispatch, '發生不可預期的錯誤！\n請截圖給孟霈並重試');
     });
 };
 
@@ -264,7 +264,7 @@ const changeCareerType = (dispatch, responseData) => {
     })
     .catch((err) => {
         console.log(err);// error handling ..
-        careerGrowUpFinished(dispatch, '發生不可預期的錯誤！\n請重新操作');
+        careerGrowUpFinished(dispatch, '發生不可預期的錯誤！\n請截圖給孟霈並重試');
     });
 };
 
@@ -311,7 +311,7 @@ export const missionCoding = (code, missionId, missionName, mission, submission)
         })
         .catch((error) => {
             console.log(error);
-            missionCodeFailed(dispatch, '發生不可預期的錯誤！\n請重新操作');
+            missionCodeFailed(dispatch, '發生不可預期的錯誤！\n請截圖給孟霈並重試');
         });
     };
 };
@@ -350,7 +350,7 @@ const changeTeamSubmission = async (dispatch, missionId, submission, mission) =>
     })
     .catch((err) => {
       console.log(err);// error handling ..
-      missionCodeFailed(dispatch, '發生不可預期的錯誤！\n請重新操作');
+      missionCodeFailed(dispatch, '發生不可預期的錯誤！\n請截圖給孟霈並重試');
     });
 };
 
