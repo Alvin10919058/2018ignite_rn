@@ -222,4 +222,3 @@ const mapStateToProps = ({ player }) => {
 };
 
 export default connect(mapStateToProps, {})(Skills);
-
