@@ -152,47 +152,52 @@ class Skills extends Component {
   }
 
   render() {
-    const { container } = styles;
+    const { 
+      container,
+      freePointContainer,
+      freePointTextStyle,
+      freePointNumTextStyle,
+      tableHead,
+      tableHeadText,
+      tableRow,
+      tableRowText,
+      skillRowStyle,
+      skillTextStyle,
+      iconStyle,
+      skillValueStyle,
+      btnAreaStyle
+    } = styles;
     return (
       <View style={container}>
 
         {/* 自由點數 row */}
-        <View 
-          style={{ 
-            flex: 2,
-            alignItems: 'center',
-            justifyContent: 'center' 
-            }}
-        >
-          <Text style={{ fontWeight: 'bold', fontSize: 22, marginBottom: height * 0.01 }}>自由點數</Text>
-          <Text style={{ fontWeight: 'bold', fontSize: 25 }}>{this.state.free_point}</Text>
-            
+        <View style={freePointContainer}>
+          <Text style={freePointTextStyle}>自由點數</Text>
+          <Text style={freePointNumTextStyle}>{this.state.free_point}</Text>        
         </View>
 
         {/* 目前能力值table */}
         <Table 
-          borderStyle={{ 
-            borderWidth: 2, 
-            borderColor: '#ffffff' }}
+          borderStyle={{ borderWidth: 2, borderColor: '#fff' }}
           style={{ flex: 2 }}
         >
             <Row 
               data={this.state.tableHead} 
-              style={styles.head} 
-              textStyle={styles.headText} 
+              style={tableHead} 
+              textStyle={tableHeadText} 
             />
             <Rows
                 data={this.state.tableData}
-                style={styles.row}
-                textStyle={styles.text}
+                style={tableRow}
+                textStyle={tableRowText}
             />
         </Table>
 
         {/* 信心 row */}
-        <View style={styles.skillRowStyle}>
+        <View style={skillRowStyle}>
          
           {/* 能力值文字 */}
-          <Text style={styles.skillTextStyle}>
+          <Text style={skillTextStyle}>
             信心 
           </Text>
 
@@ -210,14 +215,14 @@ class Skills extends Component {
             }}
           >
               <Image
-                style={styles.iconStyle}
+                style={iconStyle}
                 source={Sub}
               />
           </TouchableOpacity>
             
           {/* 能力值數值 */}
-          <View style={styles.skillValueStyle}>
-            <Text style={styles.skillTextStyle}>
+          <View style={skillValueStyle}>
+            <Text style={skillTextStyle}>
               {this.state.tmpFaith}
             </Text>
           </View>
@@ -236,17 +241,17 @@ class Skills extends Component {
               }}
           >
               <Image
-                style={styles.iconStyle}
+                style={iconStyle}
                 source={Add}
               />
           </TouchableOpacity>
         </View>
 
         {/* 敏捷 row */}
-        <View style={styles.skillRowStyle}>
+        <View style={skillRowStyle}>
             
           {/* 能力值文字 */}
-          <Text style={styles.skillTextStyle}>
+          <Text style={skillTextStyle}>
             敏捷 
           </Text>
 
@@ -264,14 +269,14 @@ class Skills extends Component {
             }}
           >
               <Image
-                style={styles.iconStyle}
+                style={iconStyle}
                 source={Sub}
               />
           </TouchableOpacity>
 
           {/* 能力值數值 */}
-          <View style={styles.skillValueStyle}>
-            <Text style={styles.skillTextStyle}>
+          <View style={skillValueStyle}>
+            <Text style={skillTextStyle}>
               {this.state.tmpAgility}
             </Text>
           </View>
@@ -290,17 +295,17 @@ class Skills extends Component {
               }}
           >
               <Image
-                style={styles.iconStyle}
+                style={iconStyle}
                 source={Add}
               />
           </TouchableOpacity>
         </View>
 
         {/* 力量 row */}
-        <View style={styles.skillRowStyle}>
+        <View style={skillRowStyle}>
          
           {/* 能力值文字 */}
-          <Text style={styles.skillTextStyle}>
+          <Text style={skillTextStyle}>
             力量 
           </Text>
 
@@ -318,14 +323,14 @@ class Skills extends Component {
             }}
           >
               <Image
-                style={styles.iconStyle}
+                style={iconStyle}
                 source={Sub}
               />
           </TouchableOpacity>
 
           {/* 能力值數值 */}
-          <View style={styles.skillValueStyle}>
-            <Text style={styles.skillTextStyle}>
+          <View style={skillValueStyle}>
+            <Text style={skillTextStyle}>
               {this.state.tmpStrength}
             </Text>
           </View>
@@ -344,17 +349,17 @@ class Skills extends Component {
               }}
           >
               <Image
-                style={styles.iconStyle}
+                style={iconStyle}
                 source={Add}
               />
           </TouchableOpacity>
         </View>
 
         {/* 智慧 row */}
-        <View style={styles.skillRowStyle}>
+        <View style={skillRowStyle}>
          
           {/* 能力值文字 */}
-          <Text style={styles.skillTextStyle}>
+          <Text style={skillTextStyle}>
             智慧 
           </Text>
 
@@ -372,14 +377,14 @@ class Skills extends Component {
             }}
           >
               <Image
-                style={styles.iconStyle}
+                style={iconStyle}
                 source={Sub}
               />
           </TouchableOpacity>
 
           {/* 能力值數值 */}
-          <View style={styles.skillValueStyle}>
-            <Text style={styles.skillTextStyle}>
+          <View style={skillValueStyle}>
+            <Text style={skillTextStyle}>
               {this.state.tmpWisdom}
             </Text>
           </View>
@@ -398,17 +403,17 @@ class Skills extends Component {
               }}
           >
               <Image
-                style={styles.iconStyle}
+                style={iconStyle}
                 source={Add}
               />
           </TouchableOpacity>
         </View>
 
         {/* 體力 row */}
-        <View style={styles.skillRowStyle}>
+        <View style={skillRowStyle}>
          
           {/* 中間文字 */}
-          <Text style={styles.skillTextStyle}>
+          <Text style={skillTextStyle}>
             體力
           </Text>
           
@@ -426,14 +431,14 @@ class Skills extends Component {
             }}
           >
               <Image
-                style={styles.iconStyle}
+                style={iconStyle}
                 source={Sub}
               />
           </TouchableOpacity>
             
           {/* 能力值數值 */}
-          <View style={styles.skillValueStyle}>
-            <Text style={styles.skillTextStyle}>
+          <View style={skillValueStyle}>
+            <Text style={skillTextStyle}>
               {this.state.tmpVitality}
             </Text>
           </View>
@@ -452,12 +457,12 @@ class Skills extends Component {
               }}
           >
               <Image
-                style={styles.iconStyle}
+                style={iconStyle}
                 source={Add}
               />
           </TouchableOpacity>
         </View>
-        <View style={styles.btnAreaStyle}>
+        <View style={btnAreaStyle}>
           <Button 
           btnCustomStyle={{ 
             backgroundColor: '#E63F00', 
@@ -468,8 +473,8 @@ class Skills extends Component {
           </Button>
           <Button 
             btnCustomStyle={{ 
-              backgroundColor: '#69aeb2',
-              borderColor: '#69aeb2' }}
+              marginLeft: width * 0.12,
+            }}
           >
             確定
           </Button>
@@ -481,28 +486,42 @@ class Skills extends Component {
 
 const styles = {
   container: {
-      flex: 1,
-      backgroundColor: 'white',
+    flex: 1,
+    backgroundColor: 'white',
   },
-  head: { 
+  freePointContainer: {
+    flex: 2,
+    alignItems: 'center',
+    justifyContent: 'center' 
+  },
+  freePointNumTextStyle: {
+    fontWeight: 'bold', 
+    fontSize: 25
+  },
+  freePointTextStyle: {
+    fontWeight: 'bold', 
+    fontSize: 22, 
+    marginBottom: height * 0.01
+  },
+  tableHead: { 
     height: 40,
-    backgroundColor: '#555555'
+    backgroundColor: '#AAAAAA'
   },
-  text: { 
+  tableRowText: { 
     margin: 6,
     textAlign: 'center', 
     fontWeight: '400' 
   },
-  headText: {
+  tableHeadText: {
     fontSize: 16,
     margin: 6,
     textAlign: 'center', 
     fontWeight: '600',
     color: 'white'
   },
-  row: { 
+  tableRow: { 
     height: 40, 
-    backgroundColor: '#d2e9ff' 
+    backgroundColor: '#BBC3DC' 
   },
   skillRowStyle: {
     flex: 1,

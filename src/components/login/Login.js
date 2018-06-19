@@ -90,14 +90,14 @@ const styles = {
     color: 'red'
   },
   backgroundStyle: {
-    backgroundColor: '#ecf5ff',
+    backgroundColor: '#fff',
     //justifyContent:'center',
     alignItems: 'center',
     paddingTop: 80,
     flex: 1
   },
   loginInputStyle: {
-    backgroundColor: '#ecf5ff',
+    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
     width: 250,

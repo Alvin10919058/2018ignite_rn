@@ -30,7 +30,7 @@ const Input = ({
 
 const styles = {
   inputStyle: {
-    color: '#000',
+    color: '#212159',
     paddingRight: 5,
     paddingLeft: 5,
     fontSize: 18,
