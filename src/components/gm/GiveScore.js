@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet, View, ScrollView, AsyncStorage, Dimensions } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import RNPickerSelect from 'react-native-picker-select';
 import { Table, Row } from 'react-native-table-component';
 import { Button } from '../common';
@@ -198,6 +199,8 @@ componentDidMount() {
     })
     .then((success) => {
     console.log(success);
+    Actions.pop();
+    Actions.giveScore();
     })
     .catch((err) => {
     console.log(err);// error handling ..
@@ -210,24 +213,28 @@ render() {
         <View style={styles.container}>
             <SwitchButton
                     onValueChange={(val) => {
-                      const T1tmp = this.state.selectT1Kinds;
-                      const T2tmp = this.state.selectT2Kinds;
+                      // const T1tmp = this.state.selectT1Kinds;
+                      // const T2tmp = this.state.selectT2Kinds;
                       if (val === 1) {
                         this.setState({ 
                           activeSwitch: val, 
                           selectBatch: '國高',
-                          selectKinds: T1tmp,
+                          //selectKinds: T1tmp,
+                          
                           // kinds: PickerData.T1teamSelection
                         });
                       } else {
                         this.setState({ 
                           activeSwitch: val, 
                           selectBatch: '大專',
-                          selectKinds: T2tmp,
+                          //selectKinds: T2tmp,
+                          
                           // kinds: PickerData.T2teamSelection
                         });
                       }
-                    }}     
+                      Actions.pop();
+                      Actions.giveScore();
+                    }} 
                     text1='國高'                      
                     text2='大專'                      
                     switchWidth={200}                  
@@ -250,10 +257,10 @@ render() {
                     label: '請選擇關卡',
                     value: null,
                 }}
-                items={this.state.teams}
+                items={this.state.stage}
                 onValueChange={(value) => {
                     this.setState({
-                      selectTeam: value,
+                      selectStage: value,
                     });
                 }}
                 onDownArrow={() => {
@@ -410,7 +417,7 @@ render() {
             </Button>
         </View>
          
-        <View style={{ marginLeft: width * 0.02, marginRight: width * 0.02 }}>
+        <View style={{ marginLeft: width * 0.02, marginRight: width * 0.02, flex: 1 }}>
           <Table borderStyle={{ borderWidth: 2, borderColor: '#ffffff' }}>
             <Row 
               data={this.state.tableHead} 
