@@ -202,6 +202,7 @@ export const careerGrowUp = (code) => {
         })
         .catch((error) => {
             console.log(error);
+            careerGrowUpFinished(dispatch, '發生不可預期的錯誤！\n請重新操作');
         });
     };
 };
@@ -234,11 +235,12 @@ const changeTeamCareer = async (dispatch, responseData) => {
     body: JSON.stringify(params)
     })
     .then((success) => {
-    console.log(success);
-    changeCareerType(dispatch, responseData);
+        console.log(success);
+        changeCareerType(dispatch, responseData);
     })
     .catch((err) => {
-    console.log(err);// error handling ..
+        console.log(err);// error handling ..
+        careerGrowUpFinished(dispatch, '發生不可預期的錯誤！\n請重新操作');
     });
 };
 
@@ -257,11 +259,12 @@ const changeCareerType = (dispatch, responseData) => {
     body: JSON.stringify(params)
     })
     .then((success) => {
-    console.log(success);
-    careerGrowUpSuccess(dispatch, '恭喜您成功轉職！', responseData.results[0]);
+        console.log(success);
+        careerGrowUpSuccess(dispatch, '恭喜您成功轉職！', responseData.results[0]);
     })
     .catch((err) => {
-    console.log(err);// error handling ..
+        console.log(err);// error handling ..
+        careerGrowUpFinished(dispatch, '發生不可預期的錯誤！\n請重新操作');
     });
 };
 
@@ -308,6 +311,7 @@ export const missionCoding = (code, missionId, missionName, mission, submission)
         })
         .catch((error) => {
             console.log(error);
+            missionCodeFailed(dispatch, '發生不可預期的錯誤！\n請重新操作');
         });
     };
 };
@@ -346,6 +350,7 @@ const changeTeamSubmission = async (dispatch, missionId, submission, mission) =>
     })
     .catch((err) => {
       console.log(err);// error handling ..
+      missionCodeFailed(dispatch, '發生不可預期的錯誤！\n請重新操作');
     });
 };
 
