@@ -33,6 +33,7 @@ class SettingPage extends Component {
       <View style={container}>
         <ScrollView>
             <CardList 
+              listCustomStyle={{ backgroundColor: 'gray' }}
               onPress={null} 
               cardText={'各類職業介紹'} 
             />
