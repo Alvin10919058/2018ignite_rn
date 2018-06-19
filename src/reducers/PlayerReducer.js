@@ -44,7 +44,12 @@ import {
     errorText: '',
     loading: true,
     mission: [], //紀錄支線任務內容
-    missionCode: ''
+    missionCode: '',
+
+    //技能
+    skillTable: [],
+    tableHead: [],
+    tableData: [],
   };
   
   export default (state = INITIAL_STATE, action) => {
@@ -70,7 +75,49 @@ import {
             agility: action.payload.responseData.agility,
             //
             loading: false,
-            mission: action.payload.mission
+            mission: action.payload.mission,
+            //技能
+            tableHead: ['力量', '智慧', '體力', '信心', '敏捷'],
+            tableData: [[
+              action.payload.responseData.strength,
+              action.payload.responseData.wisdom,
+              action.payload.responseData.vitality,
+              action.payload.responseData.faith,
+              action.payload.responseData.agility
+              ]
+            ],
+            skillTable: [
+              { 
+                id: 1,
+                chineseName: '力量',
+                value: action.payload.responseData.strength,
+                valueName: 'temp1'
+              },
+              { 
+                id: 2,
+                chineseName: '智慧',
+                value: action.payload.responseData.wisdom,
+                valueName: 'temp2'
+              },
+              {
+                id: 3,
+                chineseName: '體力',
+                value: action.payload.responseData.vitality,
+                valueName: 'temp3'
+              },
+              {
+                id: 4,
+                chineseName: '信心',
+                value: action.payload.responseData.faith,
+                valueName: 'temp4'
+              },
+              {
+                id: 5,
+                chineseName: '敏捷',
+                value: action.payload.responseData.agility,
+                valueName: 'temp5'
+              }
+            ] 
         };
       case GET_TEAM_DATA_COLLEGE_SUCCESS:
         return { 
@@ -91,7 +138,49 @@ import {
             patience: action.payload.responseData.patience,
             //
             loading: false,
-            mission: action.payload.mission
+            mission: action.payload.mission,
+             //技能
+             tableHead: ['熱情', '創意', '智慧', '愛心', '耐力'],
+             tableData: [[
+                action.payload.responseData.passion,
+                action.payload.responseData.creativity,
+                action.payload.responseData.intelligence,
+                action.payload.responseData.love,
+                action.payload.responseData.patience
+              ]
+             ],
+             skillTable: [
+              { 
+                id: 1,
+                chineseName: '熱情',
+                value: action.payload.responseData.passion,
+                valueName: 'temp1'
+              },
+              { 
+                id: 2,
+                chineseName: '創意',
+                value: action.payload.responseData.creativity,
+                valueName: 'temp2'
+              },
+              {
+                id: 3,
+                chineseName: '智慧',
+                value: action.payload.responseData.intelligence,
+                valueName: 'temp3'
+              },
+              {
+                id: 4,
+                chineseName: '愛心',
+                value: action.payload.responseData.love,
+                valueName: 'temp4'
+              },
+              {
+                id: 5,
+                chineseName: '耐力',
+                value: action.payload.responseData.patience,
+                valueName: 'temp5'
+              }
+            ] 
         };
       case ERROR_MODAL_TYPE:
         return { 
