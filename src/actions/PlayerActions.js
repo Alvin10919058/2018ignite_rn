@@ -13,13 +13,21 @@ import {
     MISSION_CODE_CHANGED,
     MISSION_CODING,
     MISSION_CODE_FINISHED,
-    MISSION_CODE_FAILED  
+    MISSION_CODE_FAILED,
+    RESET_CODE_CHANGED
   } from './types';
 
 export const errorModalType = (type, text) => {
     return {
         type: ERROR_MODAL_TYPE,
         payload: { type, text }
+    };
+};
+
+export const resetCodeChanged = (text) => {
+    return {
+        type: RESET_CODE_CHANGED,
+        payload: text
     };
 };
 

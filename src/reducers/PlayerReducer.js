@@ -11,7 +11,8 @@ import {
     MISSION_CODE_CHANGED,
     MISSION_CODING,
     MISSION_CODE_FINISHED,
-    MISSION_CODE_FAILED
+    MISSION_CODE_FAILED,
+    RESET_CODE_CHANGED
   } from '../actions/types';
   
   const INITIAL_STATE = {
@@ -45,6 +46,7 @@ import {
     loading: true,
     mission: [], //紀錄支線任務內容
     missionCode: '',
+    resetCode: '',
 
     //技能
     skillTable: [],
@@ -234,6 +236,8 @@ import {
           missionCode: '', 
           loading: false 
         };
+      case RESET_CODE_CHANGED: 
+        return { ...state, resetCode: action.payload };
       default:
         return state;
     }

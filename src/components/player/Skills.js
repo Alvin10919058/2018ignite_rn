@@ -6,21 +6,25 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Table, Row, Rows } from 'react-native-table-component';
-import { Button, SkillRow } from '../common';
+import { 
+  resetCodeChanged
+} from '../../actions';
+import { Button, SkillRow, InputModal } from '../common';
 
 const { height, width } = Dimensions.get('window');
 class Skills extends Component {
   state = { 
-    tableHead: ['信心', '敏捷', '力量', '智慧', '體力'],
-    tableData: [
-      [17, 36, 42, 12, 28]
-    ],
-
+    showSureModal: false,
+    showResetModal: false,
     temp1: 0,
     temp2: 0,
     temp3: 0,
     temp4: 0,
     temp5: 0
+  }
+
+  onResetCodeChange(text) {
+    this.props.resetCodeChanged(text);
   }
 
   renderSkill() {
@@ -75,7 +79,36 @@ class Skills extends Component {
     } = styles;
     return (
       <View style={container}>
-
+         <InputModal
+           titleText={'請輸入序號來重置所有能力值:'}
+           visible={this.state.showResetModal}
+           cancelButton
+           scrollable={false}
+           cancel={() => { 
+            this.setState({ showResetModal: false }); 
+          }}
+           onPress={() => { 
+            
+           }}
+           inputText
+           value={this.props.resetCode}
+           onChangeText={(text) => { this.onResetCodeChange(text); }}
+         />
+        <InputModal
+           titleText={'請確認您配置的能力值點數\n送出後將無法回復!'}
+           visible={this.state.showSureModal}
+           cancelButton
+           scrollable={false}
+           cancel={() => { 
+            this.setState({ showSureModal: false }); 
+           }}
+           onPress={() => { 
+            
+           }}
+           onPress={() => { 
+    
+           }}
+        />
         <View style={freePointContainer}>
           <Text style={freePointTextStyle}>自由點數</Text>
           <Text style={freePointNumTextStyle}>{
@@ -106,10 +139,14 @@ class Skills extends Component {
         {this.renderSkill()}
         <View style={btnAreaStyle}>
           <Button 
-          btnCustomStyle={{ 
-            backgroundColor: '#ED2A67', 
-            marginRight: width * 0.12, 
-            borderColor: '#ED2A67' }}
+            btnCustomStyle={{ 
+              backgroundColor: '#ED2A67', 
+              marginRight: width * 0.12, 
+              borderColor: '#ED2A67' 
+            }}
+            onPress={() => {
+              this.setState({ showResetModal: true });
+            }}
           >
             重置
           </Button>
@@ -117,8 +154,11 @@ class Skills extends Component {
             btnCustomStyle={{ 
               marginLeft: width * 0.12,
             }}
+            onPress={() => {
+              this.setState({ showSureModal: true });
+            }}
           >
-            確定
+            送出
           </Button>
         </View>
       </View>
@@ -175,10 +215,10 @@ const styles = {
 
 const mapStateToProps = ({ player }) => {
   const {  
-    batch, //國高or大專
     skillTable,
     tableHead,
     tableData,
+    resetCode,
 
     free_point, //自由點數
 
@@ -198,10 +238,10 @@ const mapStateToProps = ({ player }) => {
    } = player;
 
   return { 
-    batch, //國高or大專
     skillTable,
     tableHead,
     tableData,
+    resetCode,
 
     free_point, //自由點數
 
@@ -221,4 +261,6 @@ const mapStateToProps = ({ player }) => {
   };
 };
 
-export default connect(mapStateToProps, {})(Skills);
+export default connect(mapStateToProps, {
+  resetCodeChanged
+})(Skills);
