@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { Platform } from 'react-native';
-import { Scene, Router, Stack } from 'react-native-router-flux';
+import { Scene, Router, Stack, Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import { 
+  getTeamData,
+} from '../actions';
 import TabIcon from './TabIcon';
 import Login from './login/Login';
 import LeaderInfo from './player/LeaderInfo';
@@ -32,6 +36,11 @@ class RouterComponent extends Component {
               swipeEnabled={false} 
               animationEnabled={false}
               tabBarStyle={styles.tabBarStyle}
+              tabBarOnPress={(a) => {
+                 this.props.getTeamData();
+                 const temp = a.scene.route.key;
+                 Actions[temp]();
+                 }}
             >
 
               <Scene key="tab0" title="排名" icon={TabIcon}>
@@ -105,4 +114,7 @@ const styles = {
   }
 };
 
-export default RouterComponent;
+
+export default connect(null, { 
+  getTeamData,
+})(RouterComponent);

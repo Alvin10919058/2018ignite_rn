@@ -12,7 +12,6 @@ import {
   getTeamData, 
   careerCodeChanged, 
   careerGrowUp, 
-  codeModalType,
   errorModalType 
 } from '../../actions';
 import { BackgroundImage, InputModal, Spinner } from '../common';
@@ -22,6 +21,10 @@ import { Biochemical, Defense, Sniper, Special, Soldier, Assault } from '../../i
 const { height, width } = Dimensions.get('window');
 
 class LeaderInfo extends Component {
+
+  state= {
+    showModal: false
+  };
 
   componentWillMount() {
     this.props.getTeamData();
@@ -126,7 +129,7 @@ class LeaderInfo extends Component {
         <View style={circleContainerStyle}>
           <View style={circle}>
             <Text 
-              onPress={() => { this.props.codeModalType(true); }} 
+              onPress={() => { this.setState({ showModal: true }); }} 
               style={careerTextStyle}
             >
               轉職
@@ -191,23 +194,28 @@ class LeaderInfo extends Component {
   }
 
   render() {
-    if (this.props.loading) {
-      return (
-        <Spinner />
-      );
-    } 
       const { 
         containerStyle
       } = styles;
+
+      if (this.props.loading) {
+        return (
+          <Spinner />
+        );
+      } 
+      
       return (
         <BackgroundImage style={containerStyle}>
           <InputModal
             titleText={'請輸入序號以驗證是否正確:'}
-            visible={this.props.showCodeModal}
+            visible={this.state.showModal}
             cancelButton
             scrollable={false}
-            cancel={() => { this.props.codeModalType(false); }}
-            onPress={() => { this.onCareerGrowUp(this.props.careerCode); }}
+            cancel={() => { this.setState({ showModal: false }); }}
+            onPress={() => { 
+              this.setState({ showModal: false });
+              this.onCareerGrowUp(this.props.careerCode); 
+            }}
             inputText
             value={this.props.careerCode}
             onChangeText={(text) => { this.onCareerCodeChange(text); }}
@@ -312,7 +320,6 @@ const mapStateToProps = ({ player }) => {
 
     //
     careerCode,
-    showCodeModal,
     showErrorModal,
     errorText,
     loading
@@ -341,7 +348,6 @@ const mapStateToProps = ({ player }) => {
 
     //
     careerCode,
-    showCodeModal,
     showErrorModal,
     errorText,
     loading
@@ -352,6 +358,5 @@ export default connect(mapStateToProps, {
   getTeamData,
   careerCodeChanged,
   careerGrowUp,
-  codeModalType,
   errorModalType
 })(LeaderInfo);

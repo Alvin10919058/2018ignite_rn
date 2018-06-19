@@ -5,25 +5,21 @@ import {
     GET_TEAM_DATA,
     GET_TEAM_DATA_JUNIOR_SUCCESS,
     GET_TEAM_DATA_COLLEGE_SUCCESS,
-    CODE_MODAL_TYPE,
     CAREER_CODE_CHANGED,
     ERROR_MODAL_TYPE,
     CAREER_GROW_UP,
     CAREER_GROW_UP_FINISHED,
-    CAREER_GROW_UP_SUCCESS    
+    CAREER_GROW_UP_SUCCESS,
+    MISSION_CODE_CHANGED,
+    MISSION_CODING,
+    MISSION_CODE_FINISHED,
+    MISSION_CODE_FAILED  
   } from './types';
 
 export const errorModalType = (type, text) => {
     return {
         type: ERROR_MODAL_TYPE,
         payload: { type, text }
-    };
-};
-
-export const codeModalType = (type) => {
-    return {
-        type: CODE_MODAL_TYPE,
-        payload: type
     };
 };
 
@@ -34,7 +30,63 @@ export const careerCodeChanged = (text) => {
     };
 };
 
+export const missionCodeChanged = (text) => {
+    return {
+        type: MISSION_CODE_CHANGED,
+        payload: text
+    };
+};
+
 export const getTeamData = () => {
+    //支線任務內容
+    const mission = [
+        {
+          id: 1,
+          missionName: '遺落檔案(1)',
+          finished: false
+        },
+        {
+          id: 2,
+          missionName: '遺落檔案(2)',
+          finished: false
+        },
+        {
+          id: 3,
+          missionName: '遺落檔案(3)',
+          finished: false
+        },
+        {
+          id: 4,
+          missionName: '隔空聽耳',
+          finished: false
+        },
+        {
+          id: 5,
+          missionName: '銷毀的檔案',
+          finished: false
+        },
+        {
+          id: 6,
+          missionName: '解碼檔案',
+          finished: false
+        },
+        {
+          id: 7,
+          missionName: '鷹眼',
+          finished: false
+        },
+        {
+          id: 8,
+          missionName: '迷彩特務',
+          finished: false
+        },
+        {
+          id: 9,
+          missionName: '風聲',
+          finished: false
+        }
+    ];
+
     return async (dispatch) => {
         dispatch({ type: GET_TEAM_DATA });
         const sessionToken = await AsyncStorage.getItem('sessionToken');
@@ -67,12 +119,19 @@ export const getTeamData = () => {
         .then(async (responseData) => {
             console.log(responseData);
             await AsyncStorage.setItem('teamID', responseData.results[0].objectId);
+
+            //判斷已完成哪些支線任務
+            const temp = responseData.results[0].done_submission;
+            for (let i = 0; i < temp.length; i++) {
+            mission[temp[i] - 1].finished = true;
+            }
+
             if (responseData.results[0].batch === '國高') {
                 console.log('國高');
-                getTeamDataJuniorSuccess(dispatch, responseData.results[0]);
+                getTeamDataJuniorSuccess(dispatch, responseData.results[0], mission);
             } else if (responseData.results[0].batch === '大專') {
                 console.log('大專');
-                getTeamDataCollegeSuccess(dispatch, responseData.results[0]);
+                getTeamDataCollegeSuccess(dispatch, responseData.results[0], mission);
             } else {
                 console.log('no batch show up');
             }
@@ -83,17 +142,17 @@ export const getTeamData = () => {
     };
 };
 
-const getTeamDataJuniorSuccess = (dispatch, responseData) => {
+const getTeamDataJuniorSuccess = (dispatch, responseData, mission) => {
     dispatch({
       type: GET_TEAM_DATA_JUNIOR_SUCCESS,
-      payload: responseData
+      payload: { responseData, mission }
     });
 };
 
-const getTeamDataCollegeSuccess = (dispatch, responseData) => {
+const getTeamDataCollegeSuccess = (dispatch, responseData, mission) => {
     dispatch({
       type: GET_TEAM_DATA_COLLEGE_SUCCESS,
-      payload: responseData
+      payload: { responseData, mission }
     });
 };
 
@@ -198,5 +257,57 @@ const careerGrowUpSuccess = (dispatch, text, responseData) => {
     dispatch({
       type: CAREER_GROW_UP_SUCCESS,
       payload: { text, responseData }
+    });
+};
+
+export const missionCoding = (code, missionId, missionName, mission) => {
+    return async (dispatch) => {
+        dispatch({ type: MISSION_CODING });
+        const params = {
+            where: {
+                name: missionName,
+                code_number: code
+            }
+        };
+        const esc = encodeURIComponent;
+        const query = Object.keys(params)
+            .map(k => `${esc(k)}=${esc(JSON.stringify(params[k]))}`)
+            .join('&');
+        fetch(`${data.parseServerURL}/classes/Submission?${query}`, {
+        method: 'GET',
+        headers: {
+            'X-Parse-Application-Id': data.parseAppId,
+            'X-Parse-REST-API-Key': data.paresApiKey
+        }
+        })
+        .then((response) => response.json())
+        .then((responseData) => {
+            console.log(responseData);
+            if (responseData.results[0] !== undefined) {
+                console.log('yes');
+                const temp = mission;
+                temp[missionId - 1].finished = true;
+                missionCodeFinished(dispatch, '恭喜完成任務！', temp);
+            } else {
+                missionCodeFailed(dispatch, '序號輸入錯誤或已被使用！');
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    };
+};
+
+const missionCodeFinished = (dispatch, text, mission) => {
+    dispatch({
+      type: MISSION_CODE_FINISHED,
+      payload: { text, mission }
+    });
+};
+
+const missionCodeFailed = (dispatch, text) => {
+    dispatch({
+      type: MISSION_CODE_FAILED,
+      payload: text
     });
 };
