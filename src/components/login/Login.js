@@ -35,7 +35,7 @@ class Login extends Component {
   render() {
     const { backgroundStyle, loginInputStyle, errorTextStyle } = styles;
     return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: '#ecf5ff' }}>
       <KeyboardAvoidingView style={backgroundStyle} behavior="padding" enabled>
         <View style={{ flex: 6, justifyContent: 'center' }}>
           <Image
@@ -100,7 +100,6 @@ const styles = {
     color: 'red'
   },
   backgroundStyle: {
-    backgroundColor: '#ecf5ff',
     justifyContent: 'center',
     alignItems: 'center',
     flex: 4
