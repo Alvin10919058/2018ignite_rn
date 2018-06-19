@@ -81,7 +81,8 @@ class Mission extends Component {
               this.props.missionCode, 
               this.state.missionId, 
               this.state.missionName,
-              this.props.mission
+              this.props.mission,
+              this.props.done_submission
             );
             this.setState({ 
               showModal: false,

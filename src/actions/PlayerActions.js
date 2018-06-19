@@ -84,6 +84,11 @@ export const getTeamData = () => {
           id: 9,
           missionName: '風聲',
           finished: false
+        },
+        {
+          id: 10,
+          missionName: '特務急急棒',
+          finished: false
         }
     ];
 
@@ -260,7 +265,7 @@ const careerGrowUpSuccess = (dispatch, text, responseData) => {
     });
 };
 
-export const missionCoding = (code, missionId, missionName, mission) => {
+export const missionCoding = (code, missionId, missionName, mission, submission) => {
     return async (dispatch) => {
         dispatch({ type: MISSION_CODING });
         const params = {
@@ -285,9 +290,10 @@ export const missionCoding = (code, missionId, missionName, mission) => {
             console.log(responseData);
             if (responseData.results[0] !== undefined) {
                 console.log('yes');
+                //將UI mission改成已通過
                 const temp = mission;
                 temp[missionId - 1].finished = true;
-                missionCodeFinished(dispatch, '恭喜完成任務！', temp);
+                changeTeamSubmission(dispatch, missionId, submission, temp);
             } else {
                 missionCodeFailed(dispatch, '序號輸入錯誤或已被使用！');
             }
@@ -296,6 +302,43 @@ export const missionCoding = (code, missionId, missionName, mission) => {
             console.log(error);
         });
     };
+};
+
+//至Team Class更改done_submission資料
+const changeTeamSubmission = async (dispatch, missionId, submission, mission) => {
+    const teamID = await AsyncStorage.getItem('teamID');  
+
+    //將完成的支線任務塞入原本的array中
+    const tempArr = submission;
+    tempArr.push(missionId);
+    tempArr.sort((a, b) => { return a - b; });
+    console.log(tempArr);
+
+    const params = {
+        done_submission: tempArr
+    };
+
+    //如果10個任務都完成
+    if (tempArr.length === 10) {
+        params.completed = true;
+        console.log('mission completed');
+    }
+    
+    fetch(`${data.parseServerURL}/classes/Team/${teamID}`, {
+    method: 'PUT',
+    headers: {
+        'X-Parse-Application-Id': data.parseAppId,
+        'X-Parse-REST-API-Key': data.paresApiKey
+    },
+    body: JSON.stringify(params)
+    })
+    .then((success) => {
+       console.log(success);
+       missionCodeFinished(dispatch, '恭喜完成任務！', mission);
+    })
+    .catch((err) => {
+      console.log(err);// error handling ..
+    });
 };
 
 const missionCodeFinished = (dispatch, text, mission) => {
