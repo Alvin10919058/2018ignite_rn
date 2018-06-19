@@ -35,6 +35,7 @@ class Login extends Component {
   render() {
     const { backgroundStyle, loginInputStyle, errorTextStyle } = styles;
     return (
+    <View style={{ flex: 1 }}>
       <KeyboardAvoidingView style={backgroundStyle} behavior="padding" enabled>
         <View style={{ flex: 6, justifyContent: 'center' }}>
           <Image
@@ -46,7 +47,7 @@ class Login extends Component {
             source={Logo}
           />
         </View>
-        <View style={{ flex: 3, justifyContent: 'flex-start', marginTop: 14 }}>
+        <View style={{ flex: 3, justifyContent: 'flex-start', marginBottom: 20 }}>
           <CardSection style={loginInputStyle}>
             <Image
             style={{ width: 30, height: 30 }}
@@ -82,10 +83,12 @@ class Login extends Component {
 
         </View>
 
-          <CardSection style={[loginInputStyle, { borderBottomWidth: 0, flex: 4, alignItems: 'flex-start', marginTop: 20 }]}>
+          <CardSection style={[loginInputStyle, { borderBottomWidth: 0, flex: 3, alignItems: 'flex-start' }]}>
             {this.renderButton()}
           </CardSection>
       </KeyboardAvoidingView>
+      <View style={{ flex: 1 }} />
+    </View>
     );
   }
 }
@@ -94,14 +97,13 @@ const styles = {
   errorTextStyle: {
     fontSize: 20,
     alignSelf: 'center',
-    color: 'red',
-    flex: 1
+    color: 'red'
   },
   backgroundStyle: {
     backgroundColor: '#ecf5ff',
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1
+    flex: 4
   },
   loginInputStyle: {
     backgroundColor: '#ecf5ff',
