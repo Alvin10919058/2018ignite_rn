@@ -15,10 +15,13 @@ import Soldier from './Soldier.png';
 import Assault from './Assault.png';
 import PicDefault from './PicDefault.png';
 import Pass from './Pass.png';
+import Add from './add.png';
+import Sub from './sub.png';
 
 export {
   Background, Logo, User, Password,
   RankTab, SettingTab, MisionTab, HomePageTab, SkillsTab,
   Biochemical, Defense, Sniper, Special, Soldier, Assault,
-  PicDefault, Pass
+  PicDefault, Pass, 
+  Add, Sub
 };

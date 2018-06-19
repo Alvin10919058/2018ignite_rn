@@ -1,0 +1,321 @@
+{   "teamSelection": [
+        {
+            "label": "Team01",
+            "value": "01"
+        },
+        {
+            "label": "Team02",
+            "value": "02"
+        },
+        {
+            "label": "Team03",
+            "value": "03"
+        },
+        {
+            "label": "Team04",
+            "value": "04"
+        },
+        {
+            "label": "Team05",
+            "value": "05"
+        },
+        {
+            "label": "Team06",
+            "value": "06"
+        },
+        {
+            "label": "Team07",
+            "value": "07"
+        },
+        {
+            "label": "Team08",
+            "value": "08"
+        },
+        {
+            "label": "Team09",
+            "value": "09"
+        },
+        {
+            "label": "Team10",
+            "value": "10"
+        },
+        {
+            "label": "Team11",
+            "value": "11"
+        },
+        {
+            "label": "Team12",
+            "value": "12"
+        },
+        {
+            "label": "Team13",
+            "value": "13"
+        },
+        {
+            "label": "Team14",
+            "value": "14"
+        },
+        {
+            "label": "Team15",
+            "value": "15"
+        },
+        {
+            "label": "Team16",
+            "value": "16"
+        },
+        {
+            "label": "Team17",
+            "value": "17"
+        },
+        {
+            "label": "Team18",
+            "value": "18"
+        },
+        {
+            "label": "Team19",
+            "value": "19"
+        },
+        {
+            "label": "Team20",
+            "value": "20"
+        },
+        {
+            "label": "Team21",
+            "value": "21"
+        },
+        {
+            "label": "Team22",
+            "value": "22"
+        },
+        {
+            "label": "Team23",
+            "value": "23"
+        },
+        {
+            "label": "Team24",
+            "value": "24"
+        }
+    ],
+    "T1teamSelection": [
+        {
+            "label": "自由點數",
+            "value": "free_point"
+        },
+        {
+            "label": "力量",
+            "value": "strength"
+        },
+        {
+            "label": "信心",
+            "value": "faith"
+        },
+        {
+            "label": "智慧",
+            "value": "wisdom"
+        },
+        {
+            "label": "敏捷",
+            "value": "agility"
+        },
+        {
+            "label": "體力",
+            "value": "vitality"
+        }
+    ],
+    "T2teamSelection": [
+        {
+            "label": "自由點數",
+            "value": "free_point"
+        },
+        {
+            "label": "智慧",
+            "value": "intelligence"
+        },
+        {
+            "label": "創意",
+            "value": "creativity"
+        },
+        {
+            "label": "耐力",
+            "value": "patience"
+        },
+        {
+            "label": "愛心",
+            "value": "love"
+        },
+        {
+            "label": "熱情",
+            "value": "passion"
+        }
+    ],
+    "numberSelection": [
+        {
+            "label": "1",
+            "value": 1
+        },
+        {
+            "label": "2",
+            "value": 2
+        },
+        {
+            "label": "3",
+            "value": 3 
+        },
+        {
+            "label": "4",
+            "value": 4 
+        },
+        {
+            "label": "5",
+            "value": 5
+        },
+        {
+            "label": "6",
+            "value": 6
+        },
+        {
+            "label": "7",
+            "value": 7
+        },
+        {
+            "label": "8",
+            "value": 8
+        },
+        {
+            "label": "9",
+            "value": 9
+        },
+        {
+            "label": "10",
+            "value": 10
+        },
+        {
+            "label": "15",
+            "value": 15
+        },
+        {
+            "label": "20",
+            "value": 20
+        },
+        {
+            "label": "25",
+            "value": 25
+        },
+        {
+            "label": "30",
+            "value": 30
+        },
+        {
+            "label": "35",
+            "value": 35
+        },
+        {
+            "label": "40",
+            "value": 40
+        },
+        {
+            "label": "45",
+            "value": 45
+        },
+        {
+            "label": "50",
+            "value": 50
+        },
+        {
+            "label": "55",
+            "value": 55
+        },
+        {
+            "label": "60",
+            "value": 60
+        },
+        {
+            "label": "100",
+            "value": 100
+        },
+        {
+            "label": "-1",
+            "value": -1
+        },
+        {
+            "label": "-2",
+            "value": -2
+        },
+        {
+            "label": "-3",
+            "value": -3
+        },
+        {
+            "label": "-4",
+            "value": -4
+        },
+        {
+            "label": "-5",
+            "value": -5
+        },
+        {
+            "label": "-6",
+            "value": -6
+        },
+        {
+            "label": "-7",
+            "value": -7
+        },
+        {
+            "label": "-8",
+            "value": -8
+        },
+        {
+            "label": "-9",
+            "value": -9
+        },
+        {
+            "label": "-10",
+            "value": -10
+        },
+        {
+            "label": "-15",
+            "value": -15
+        },
+        {
+            "label": "-20",
+            "value": -20
+        },
+        {
+            "label": "-25",
+            "value": -25
+        },
+        {
+            "label": "-30",
+            "value": -30
+        },
+        {
+            "label": "-35",
+            "value": -35
+        },
+        {
+            "label": "-40",
+            "value": -40
+        },
+        {
+            "label": "-45",
+            "value": -45
+        },
+        {
+            "label": "-50",
+            "value": -50
+        },
+        {
+            "label": "-55",
+            "value": -55
+        },
+        {
+            "label": "-60",
+            "value": -60
+        },
+        {
+            "label": "-100",
+            "value": -100
+        }
+    ]
+}
