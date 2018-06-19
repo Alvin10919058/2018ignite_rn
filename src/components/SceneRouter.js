@@ -39,8 +39,14 @@ class RouterComponent extends Component {
               tabBarOnPress={(a) => {
                  this.props.getTeamData();
                  const temp = a.scene.route.key;
+                 if (temp === 'tab0') {
+                  //暴力解讓Rank重loading
+                  console.log('tab0');
+                  Actions[temp]({ reload: true });
+                  Actions.pop();
+                 }
                  Actions[temp]();
-                 }}
+              }}
             >
 
               <Scene key="tab0" title="排名" icon={TabIcon}>
