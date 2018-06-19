@@ -40,7 +40,15 @@ class Skills extends Component {
             }
           }}
           addOnPress={() => {
-            if (this.props.free_point > 0) {
+            if (
+              this.props.free_point -
+              this.state.temp1 -
+              this.state.temp2 -
+              this.state.temp3 -
+              this.state.temp4 -
+              this.state.temp5    
+              > 0
+            ) {
               this.setState((previousState) => {
                 return {
                   [skills.valueName]: previousState[skills.valueName] + 1
