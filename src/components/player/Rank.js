@@ -56,7 +56,7 @@ class Rank extends Component {
 
     return (
       <View style={container}>
-        <Table borderStyle={{ borderWidth: 2, borderColor: '#f0f0f0' }}>
+        <Table borderStyle={{ borderWidth: 2, borderColor: '#fff' }}>
           <Row 
             data={this.state.tableHead} 
             widthArr={this.state.widthArr} 
@@ -67,7 +67,7 @@ class Rank extends Component {
       
         <ScrollView style={styles.dataWrapper}>
           <Table 
-            borderStyle={{ borderWidth: 2, borderColor: '#f0f0f0' }}
+            borderStyle={{ borderWidth: 2, borderColor: '#fff' }}
           >
             {
               this.state.tableData.map((rowData, index) => (
@@ -75,7 +75,7 @@ class Rank extends Component {
                   key={index}
                   data={rowData}
                   widthArr={this.state.widthArr}
-                  style={[styles.row, index % 2 && { backgroundColor: '#66b3ff' }]}
+                  style={[styles.row, index % 2 && { backgroundColor: '#bbc3dc' }]}
                   textStyle={styles.text}
                 />
               ))
@@ -95,7 +95,7 @@ const styles = {
   },
   head: { 
     height: 40,
-    backgroundColor: '#004b97'
+    backgroundColor: '#AAAAAA'
   },
   text: { 
     margin: 6,
