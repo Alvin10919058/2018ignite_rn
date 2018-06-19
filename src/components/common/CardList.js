@@ -2,10 +2,10 @@ import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 
 
-const CardList = ({ cardText, onPress, listCustomStyle }) => {
+const CardList = ({ cardText, onPress, listCustomStyle, listTextStyle }) => {
   return (
     <TouchableOpacity onPress={onPress} style={listCustomStyle} >
-        <Text style={styles.cardText}>{cardText}</Text>
+        <Text style={[styles.cardText, listTextStyle]}>{cardText}</Text>
     </TouchableOpacity>
   );
 };
