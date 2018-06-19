@@ -101,6 +101,16 @@ const InputModal = ({
               </View>
             }
           </View>
+          {
+              !cancelButton
+              &&
+              <View
+              style={{ 
+                borderBottomWidth: 1.5, 
+                borderBottomColor: '#DDDDDD',
+                }}
+              />
+            }
           <TouchableOpacity style={checkArea} onPress={onPress}>
             {
               cancelButton
@@ -142,19 +152,20 @@ const styles = {
   checkArea: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
     flexDirection: 'row'
   },
   sureTextStyle: {
     flex: 1,
     fontSize: 16,
     textAlign: 'center',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   cancelTextStyle: {
     flex: 1,
     fontSize: 16,
     textAlign: 'center',
-    color: '#FF0000'
+    color: '#FF0000',
   },
   inputStyle: {
     flex: 1,

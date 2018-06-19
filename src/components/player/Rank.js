@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import {
   ScrollView,
-  View
+  View,
+  Dimensions,
 } from 'react-native';
 import Parse from 'parse/react-native';
 import { Table, Row } from 'react-native-table-component';
+
+const { height, width } = Dimensions.get('window');
 
 class Rank extends Component {
 
@@ -12,7 +15,7 @@ class Rank extends Component {
     TeamData: {},
     tableHead: ['排名', '小隊', '職業', '分數'],
     tableData: [],
-    widthArr: [65, 90, 110, 84],
+    widthArr: [width * 0.15, width * 0.21, width * 0.315, width * 0.26],
   };
 
   componentDidMount() {
