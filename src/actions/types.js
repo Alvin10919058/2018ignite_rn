@@ -26,3 +26,7 @@ export const MISSION_CODE_FAILED = 'mission_code_failed';
 //Skills
 
 export const RESET_CODE_CHANGED = 'reset_code_changed';
+export const SKILL_JUNIOR = 'skill_junior';
+export const SKILL_JUNIOR_FAILED = 'skill_junior_failed';
+export const SKILL_JUNIOR_SUCCESS = 'skill_junior_success';
+

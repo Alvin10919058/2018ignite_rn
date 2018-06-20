@@ -14,7 +14,10 @@ import {
     MISSION_CODING,
     MISSION_CODE_FINISHED,
     MISSION_CODE_FAILED,
-    RESET_CODE_CHANGED
+    RESET_CODE_CHANGED,
+    SKILL_JUNIOR,
+    SKILL_JUNIOR_FAILED,
+    SKILL_JUNIOR_SUCCESS
   } from './types';
 
 export const errorModalType = (type, text) => {
@@ -370,5 +373,148 @@ const missionCodeFailed = (dispatch, text) => {
     dispatch({
       type: MISSION_CODE_FAILED,
       payload: text
+    });
+};
+
+//Skills
+
+export const skillJunior = (
+    freePoint,
+    strength, wisdom, vitality, faith, agility,
+    career,
+    temp1, temp2, temp3, temp4, temp5
+) => {
+    return async (dispatch) => {
+        dispatch({ type: SKILL_JUNIOR });
+        const teamID = await AsyncStorage.getItem('teamID'); 
+
+        fetch(`${data.parseServerURL}/classes/Team/${teamID}`, {
+        method: 'GET',
+        headers: {
+            'X-Parse-Application-Id': data.parseAppId,
+            'X-Parse-REST-API-Key': data.paresApiKey
+        }
+        })
+        .then((response) => response.json())
+        .then((responseData) => {
+           console.log(responseData);
+           //判斷資料是不是一樣
+           if (
+            responseData.free_point === freePoint &&
+            responseData.strength === strength &&
+            responseData.wisdom === wisdom &&
+            responseData.vitality === vitality &&
+            responseData.faith === faith &&
+            responseData.agility === agility
+           ) {
+               //一樣就去加分數
+               console.log('success');
+               countScore(
+                   dispatch,
+                   freePoint,
+                   strength, wisdom, vitality, faith, agility,
+                   career,
+                   temp1, temp2, temp3, temp4, temp5
+                );
+           } else {
+            skillJuniorFailed(dispatch, '傳送時發生錯誤！\n點擊下方配點選單鍵重新整理再嘗試輸入');
+           }
+        })
+        .catch((error) => {
+            console.log(error);
+            skillJuniorFailed(dispatch, '發生不可預期的錯誤！\n請截圖至群組並重試');
+        });
+    };
+};
+
+const countScore = async (
+    dispatch,
+    freePoint,
+    strength, wisdom, vitality, faith, agility,
+    career,
+    temp1, temp2, temp3, temp4, temp5
+) => {
+    const teamID = await AsyncStorage.getItem('teamID');  
+ 
+    let score = 0;
+
+    if (career.name === '戰士') {
+       score = freePoint + strength + wisdom + vitality + faith + agility;
+    } else if (career.name === '特勤部隊') {
+       score = (strength + temp1) * 2 + (wisdom + temp2) + (vitality + temp3) + 
+       (faith + temp4) + (agility + temp5) * 1.5 + (freePoint - temp1 - temp2 - temp3 - temp4 - temp5);
+       console.log(score);
+    } else if (career.name === '急襲部隊') {
+       score = (strength + temp1) * 1.5 + (wisdom + temp2) + (vitality + temp3) + 
+       (faith + temp4) + (agility + temp5) * 2 + (freePoint - temp1 - temp2 - temp3 - temp4 - temp5);
+       console.log(score);
+    } else if (career.name === '狙擊部隊') {
+       score = (strength + temp1) + (wisdom + temp2) + (vitality + temp3) * 1.5 + 
+       (faith + temp4) * 2 + (agility + temp5) + (freePoint - temp1 - temp2 - temp3 - temp4 - temp5);
+       console.log(score);
+    } else if (career.name === '防禦部隊') {
+       score = (strength + temp1) + (wisdom + temp2) * 1.5 + (vitality + temp3) * 2 + 
+       (faith + temp4) + (agility + temp5) + (freePoint - temp1 - temp2 - temp3 - temp4 - temp5);
+       console.log(score);
+    } else if (career.name === '生化小組') {
+       score = (strength + temp1) + (wisdom + temp2) * 2 + (vitality + temp3) + 
+       (faith + temp4) * 1.5 + (agility + temp5) + (freePoint - temp1 - temp2 - temp3 - temp4 - temp5);
+       console.log(score);
+    } 
+   
+
+    const params = {
+      free_point: freePoint - temp1 - temp2 - temp3 - temp4 - temp5,
+      strength: strength + temp1,
+      wisdom: wisdom + temp2,
+      vitality: vitality + temp3,
+      faith: faith + temp4,
+      agility: agility + temp5,
+      team_total_score: score
+    };
+
+    
+    fetch(`${data.parseServerURL}/classes/Team/${teamID}`, {
+    method: 'PUT',
+    headers: {
+        'X-Parse-Application-Id': data.parseAppId,
+        'X-Parse-REST-API-Key': data.paresApiKey
+    },
+    body: JSON.stringify(params)
+    })
+    .then((success) => {
+       console.log(success);
+       skillJuniorSuccess(
+           dispatch, '配點成功！',
+           freePoint - temp1 - temp2 - temp3 - temp4 - temp5,
+           strength + temp1,
+           wisdom + temp2,
+           vitality + temp3,
+           faith + temp4,
+           agility + temp5,
+           score
+       );
+    })
+    .catch((err) => {
+      console.log(err);// error handling ..
+      skillJuniorFailed(dispatch, '發生不可預期的錯誤！\n請截圖至群組並重試');
+    });
+};
+
+const skillJuniorFailed = (dispatch, text) => {
+    dispatch({
+      type: SKILL_JUNIOR_FAILED,
+      payload: text
+    });
+};
+
+
+const skillJuniorSuccess = (
+    dispatch, text, 
+    freePoint, strength, wisdom, vitality, faith, agility, score
+) => {
+    dispatch({
+      type: SKILL_JUNIOR_SUCCESS,
+      payload: { text, freePoint, strength, wisdom, vitality, faith, agility, score }
     });
 };

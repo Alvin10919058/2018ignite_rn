@@ -12,7 +12,10 @@ import {
     MISSION_CODING,
     MISSION_CODE_FINISHED,
     MISSION_CODE_FAILED,
-    RESET_CODE_CHANGED
+    RESET_CODE_CHANGED,
+    SKILL_JUNIOR,
+    SKILL_JUNIOR_FAILED,
+    SKILL_JUNIOR_SUCCESS
   } from '../actions/types';
   
   const INITIAL_STATE = {
@@ -238,6 +241,38 @@ import {
         };
       case RESET_CODE_CHANGED: 
         return { ...state, resetCode: action.payload };
+      case SKILL_JUNIOR:
+        return { ...state, loading: true };
+      case SKILL_JUNIOR_FAILED:
+        return { 
+          ...state, 
+          showErrorModal: true, 
+          errorText: action.payload, 
+          loading: false 
+        };
+      case SKILL_JUNIOR_SUCCESS:
+        return { 
+          ...state, 
+          showErrorModal: true, 
+          errorText: action.payload.text, 
+          loading: false,
+          //能力值
+          team_total_score: action.payload.score,
+          free_point: action.payload.freePoint,
+          strength: action.payload.strength,
+          wisdom: action.payload.wisdom,
+          vitality: action.payload.vitality,
+          faith: action.payload.faith,
+          agility: action.payload.agility,
+          tableData: [[
+            action.payload.strength,
+            action.payload.wisdom,
+            action.payload.vitality,
+            action.payload.faith,
+            action.payload.agility
+            ]
+          ],
+        };
       default:
         return state;
     }
