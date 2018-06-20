@@ -18,6 +18,7 @@ import Pass from './Pass.png';
 import Add from './add.png';
 import Sub from './sub.png';
 import chevronRight from './chevron-right.png';
+import arrowLeft from './ArrowLeft.png';
 
 
 export {
@@ -26,5 +27,5 @@ export {
   Biochemical, Defense, Sniper, Special, Soldier, Assault,
   PicDefault, Pass, 
   Add, Sub,
-  chevronRight
+  chevronRight, arrowLeft
 };

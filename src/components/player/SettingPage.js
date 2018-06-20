@@ -51,24 +51,35 @@ class SettingPage extends Component {
               listCustomStyle={cardListCustom} 
               listTextStyle={listTextStyle}
               onPress={null} 
+              onPress={() => {
+                Actions.careerInfo();
+              }} 
               cardText={'各類職業介紹'} 
             />
             <CardList 
               listCustomStyle={cardListCustom} 
               listTextStyle={listTextStyle}
               onPress={null} 
+              onPress={() => {
+                Actions.mp();
+              }} 
               cardText={'MissionPop 交戰守則'} 
             />
             <CardList 
               listCustomStyle={cardListCustom} 
               listTextStyle={listTextStyle}
-              onPress={null} 
-              cardText={'關於作者'} 
+              onPress={() => {
+                Actions.about();
+              }}  
+              cardText={'關於APP'} 
             />
             <CardList 
               listCustomStyle={cardListCustom} 
               listTextStyle={listTextStyle}
               onPress={null} 
+              onPress={() => {
+                Actions.policy();
+              }} 
               cardText={'隱私權政策'} 
             />
             <CardList 

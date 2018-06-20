@@ -15,3 +15,4 @@
  export * from './CardList';
  export * from './MissionDeatail';
  export * from './SkillRow';
+ export * from './GeneralPage';

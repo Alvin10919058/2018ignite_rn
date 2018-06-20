@@ -16,6 +16,12 @@ import GiveScore from './gm/GiveScore';
 import Begin from './Begin';
 import { ifIphoneX } from './IphoneXDetector';
 
+import CareerInfo from './setting/CareerInfo';
+import MP from './setting/MP';
+import About from './setting/About';
+import Policy from './setting/Policy';
+
+
 class RouterComponent extends Component {
   render() {
     return (
@@ -92,6 +98,12 @@ class RouterComponent extends Component {
 
             </Scene>
           </Scene>
+
+          {/* setting pages */}
+          <Scene key="careerInfo" component={CareerInfo} hideNavBar />   
+          <Scene key="mp" component={MP} hideNavBar /> 
+          <Scene key="about" component={About} hideNavBar /> 
+          <Scene key="policy" component={Policy} hideNavBar /> 
 
         </Stack>
       </Router>

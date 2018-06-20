@@ -6,7 +6,14 @@ const { height, width } = Dimensions.get('window');
 
 const CardList = ({ cardText, onPress, listCustomStyle, listTextStyle, arrow }) => {
   return (
-    <TouchableOpacity onPress={onPress} style={[listCustomStyle, { flexDirection: 'row', width: width * 1, justifyContent: 'space-between' }]} >
+    <TouchableOpacity 
+      onPress={onPress} 
+      style={[listCustomStyle, { 
+        flexDirection: 'row',
+         width: width * 1, 
+         justifyContent: 'space-between' 
+      }]} 
+    >
         <Text style={[styles.cardText, listTextStyle]}>{cardText}</Text>
         {
           arrow
