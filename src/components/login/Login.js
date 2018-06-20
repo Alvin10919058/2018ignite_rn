@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, Image, KeyboardAvoidingView, View } from 'react-native';
+import { Text, Image, KeyboardAvoidingView, View, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import { emailChanged, passwordChanged, loginUser } from '../../actions';
 import { CardSection, Input, Button, Spinner } from '../common';
@@ -16,8 +16,8 @@ class Login extends Component {
 
   onButtonPress() {
     const { username, password } = this.props;
-
     this.props.loginUser({ username, password });
+    Keyboard.dismiss();
   }
 
   renderButton() {
