@@ -46,13 +46,7 @@ class RouterComponent extends Component {
               tabBarStyle={styles.tabBarStyle}
               tabBarOnPress={(a) => {
                  this.props.getTeamData();
-                 const temp = a.scene.route.key;
-                 if (temp === 'tab0') {
-                  //暴力解讓Rank重loading
-                  console.log(temp);
-                  Actions[temp]({ reload: true });
-                  Actions.pop();
-                 }
+                 const temp = a.scene.route.key;         
                  Actions[temp]();
               }}
             >
@@ -84,6 +78,10 @@ class RouterComponent extends Component {
               swipeEnabled={false} 
               animationEnabled={false}
               tabBarStyle={styles.tabBarStyle}
+              tabBarOnPress={(a) => {
+                const temp = a.scene.route.key;
+                Actions[temp]();
+             }}
             >
 
               <Scene key="tab5" title="排名" icon={TabIcon}>
