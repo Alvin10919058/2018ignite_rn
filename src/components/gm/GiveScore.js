@@ -1,9 +1,9 @@
 import React from 'react';
-import { Text, StyleSheet, View, ScrollView, AsyncStorage, Dimensions } from 'react-native';
+import { Text, StyleSheet, View, ScrollView, AsyncStorage, Dimensions, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import RNPickerSelect from 'react-native-picker-select';
 import { Table, Row } from 'react-native-table-component';
-import { Button } from '../common';
+import { Button, InputModal } from '../common';
 import SwitchButton from '../common/SwitchButton';
 import data from '../../Setting.json';
 import PickerData from '../../pickerData.json';
@@ -17,6 +17,8 @@ class GiveScore extends React.Component {
     this.inputRefs = {};
 
     this.state = {
+      showModal: false,
+      InputModalText: '',
       activeSwitch: 1,
       selectBatch: '國高',
       //history table setting data
@@ -35,15 +37,10 @@ class GiveScore extends React.Component {
       T1kinds: PickerData.T1teamSelection,
       selectT2Kinds: '',
       T2kinds: PickerData.T2teamSelection,
-      selectNumber: undefined,
+      selectNumber: 0,
       number: PickerData.numberSelection
     };
   }
-  // selectStage: '',
-  // selectTeam: '',
-  // selectKinds: '',
-  // selectT2Kinds: '',
-  // selectT2Kinds: '',
 componentDidMount() {
   this.getGMdata();
 }
@@ -131,9 +128,25 @@ componentDidMount() {
           kinds, 
           responseData.results[0][kinds]
         );
+        Alert.alert(
+          '您的資料已成功送出',
+          '',
+          [
+            { text: 'OK', onPress: () => console.log('OK Pressed') },
+          ],
+          { cancelable: true }
+        );
     })
     .catch((error) => {
         console.log(error);
+        Alert.alert(
+          '資料送出失敗ＱＱ',
+          '',
+          [
+            { text: 'OK', onPress: () => console.log('OK Pressed') },
+          ],
+          { cancelable: true }
+        );
     });
   }
 
@@ -154,11 +167,19 @@ componentDidMount() {
     body: JSON.stringify(params)
     })
     .then((success) => {
-      console.log(success);
-      this.postPoint(teamID, batch, value, kinds);
+        console.log(success);
+        this.postPoint(teamID, batch, value, kinds);
     })
     .catch((err) => {
-    console.log(err);// error handling ..
+        console.log(err);// error handling ..
+        Alert.alert(
+          '資料送出失敗ＱＱ',
+          '',
+          [
+            { text: 'OK', onPress: () => console.log('OK Pressed') },
+          ],
+          { cancelable: true }
+        );
     });
   }
 
@@ -203,7 +224,15 @@ componentDidMount() {
     Actions.giveScore();
     })
     .catch((err) => {
-    console.log(err);// error handling ..
+        console.log(err);// error handling ..
+        Alert.alert(
+          '資料送出失敗ＱＱ',
+          '',
+          [
+            { text: 'OK', onPress: () => console.log('OK Pressed') },
+          ],
+          { cancelable: true }
+        );
     });
   }
 
@@ -211,25 +240,40 @@ render() {
     return (
      <View style={{ flex: 1, backgroundColor: '#fff' }}>
         <View style={styles.container}>
+        <InputModal  
+          titleText={this.state.InputModalText}
+          textCustomStyle={{ alignContent: 'flex-start' }}
+          visible={this.state.showModal}
+          cancelButton
+          scrollable={false}
+          cancel={() => { this.setState({ showModal: false }); }}
+          onPress={() => { 
+            this.setState({ showModal: false });
+            this.getTeam(
+              this.state.selectBatch, 
+              this.state.selectTeam, 
+              this.state.selectNumber, 
+              this.state.selectKinds);
+          }}
+  
+        />
             <SwitchButton
                     onValueChange={(val) => {
-                      // const T1tmp = this.state.selectT1Kinds;
-                      // const T2tmp = this.state.selectT2Kinds;
+                      const T1tmp = this.state.selectT1Kinds;
+                      const T2tmp = this.state.selectT2Kinds;
                       if (val === 1) {
                         this.setState({ 
                           activeSwitch: val, 
                           selectBatch: '國高',
-                          //selectKinds: T1tmp,
-                          
-                          // kinds: PickerData.T1teamSelection
+                          selectKinds: T1tmp,
+                          kinds: PickerData.T1teamSelection
                         });
                       } else {
                         this.setState({ 
                           activeSwitch: val, 
                           selectBatch: '大專',
-                          //selectKinds: T2tmp,
-                          
-                          // kinds: PickerData.T2teamSelection
+                          selectKinds: T2tmp,
+                          kinds: PickerData.T2teamSelection
                         });
                       }
                       // Actions.pop();
@@ -409,8 +453,23 @@ render() {
                   marginBottom: height * 0.027
                 }}
               onPress={() => {
+                if (this.state.selectBatch && this.state.selectTeam && this.state.selectNumber && this.state.selectKinds && 1 !== null) {
+                const textTmp = '請檢查資料是否正確:\n\n關卡：' + this.state.selectBatch + '\n小隊:' + this.state.selectTeam + '\n種類:' + this.state.selectKinds + '\n點數:' + this.state.selectNumber + '\n';
+                  this.setState({ 
+                    InputModalText: textTmp,
+                    showModal: true,
+                  });
+                } else {
+                  Alert.alert(
+                    '您還有未輸入欄位哦！',
+                    '',
+                    [
+                      { text: 'OK', onPress: () => console.log('OK Pressed') },
+                    ],
+                    { cancelable: true }
+                  );
+                }
                 console.log(this.state.selectBatch, this.state.selectTeam, this.state.selectNumber, this.state.selectKinds);
-                this.getTeam(this.state.selectBatch, this.state.selectTeam, this.state.selectNumber, this.state.selectKinds);
               }} 
             >
               送出
