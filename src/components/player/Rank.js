@@ -37,6 +37,7 @@ class Rank extends Component {
     query.include('career');
     //判別要撈出 國高 還是 大專 的team分數
     query.equalTo('batch', this.props.batch);
+    query.limit(16);
     query.find()
       .then((response) => {
       console.log(response);
