@@ -23,9 +23,10 @@ class GiveScore extends React.Component {
       selectBatch: '國高',
       //history table setting data
       TeamData: {},
-      tableHead: ['梯次', '小隊', '種類', '點數'],
+      tableHead: ['梯次', '關卡', '小隊', '種類', '點數'],
       tableData: [],
-      widthArr: [width * 0.205, width * 0.215, width * 0.32, width * 0.215],
+      //widthArr: [width * 0.205, width * 0.215, width * 0.32, width * 0.215],
+      widthArr: [width * 0.140, width * 0.160, width * 0.140, width * 0.3, width * 0.215],
       //Picker setting data
       selectStage: '',
       stage: PickerData.stageSelection,
@@ -87,7 +88,7 @@ componentDidMount() {
            const finalDataAry = [];
           
            CopyRes.map((PointData) => {
-             finalDataAry.push([PointData.batch, PointData.to_team.name, PointData.kinds, PointData.value]);
+             finalDataAry.push([PointData.batch, PointData.stage, PointData.to_team.name, PointData.kinds, PointData.value]);
              return true;
            });
      this.setState({ tableData: finalDataAry });
@@ -99,7 +100,7 @@ componentDidMount() {
 
   //getTeam 成功會call putTeam() putTeam 成功會call postTeam()
   //value: 要給幾點, kinds: 哪種類別
-  getTeam(batch, teamName, value, kinds) {
+  getTeam(batch, teamName, value, kinds, stage) {
     const params = {
         where: {
           batch,
@@ -126,7 +127,8 @@ componentDidMount() {
           batch, 
           value, 
           kinds, 
-          responseData.results[0][kinds]
+          responseData.results[0][kinds],
+          stage
         );
         Alert.alert(
           '您的資料已成功送出',
@@ -151,7 +153,7 @@ componentDidMount() {
   }
 
   //value: 要給幾點, kinds: 哪種類別, originalValue: 原來類別的分數
-  putTeam(teamID, batch, value, kinds, originalValue) {
+  putTeam(teamID, batch, value, kinds, originalValue, stage) {
     const params = {
         
     };
@@ -168,7 +170,7 @@ componentDidMount() {
     })
     .then((success) => {
         console.log(success);
-        this.postPoint(teamID, batch, value, kinds);
+        this.postPoint(teamID, batch, value, kinds, stage);
     })
     .catch((err) => {
         console.log(err);// error handling ..
@@ -184,7 +186,7 @@ componentDidMount() {
   }
 
   //value: 要給幾點, kinds: 哪種類別
-  async postPoint(teamID, batch, value, kinds) {
+  async postPoint(teamID, batch, value, kinds, stage) {
     const sessionToken = await AsyncStorage.getItem('sessionToken');
     const userID = await AsyncStorage.getItem('userID');
 
@@ -203,7 +205,8 @@ componentDidMount() {
       ACL: {},
       kinds,
       batch,
-      value
+      value,
+      stage
     };
 
     params.ACL[userID] = { read: true, write: true };
@@ -253,7 +256,8 @@ render() {
               this.state.selectBatch, 
               this.state.selectTeam, 
               this.state.selectNumber, 
-              this.state.selectKinds);
+              this.state.selectKinds,
+              this.state.selectStage);
           }}
   
         />
@@ -454,7 +458,7 @@ render() {
                 }}
               onPress={() => {
                 if (this.state.selectBatch && this.state.selectTeam && this.state.selectNumber && this.state.selectKinds && 1 !== null) {
-                const textTmp = '請檢查資料是否正確:\n\n關卡：' + this.state.selectBatch + '\n小隊:' + this.state.selectTeam + '\n種類:' + this.state.selectKinds + '\n點數:' + this.state.selectNumber + '\n';
+                const textTmp = '請檢查資料是否正確:\n\n梯次：' + this.state.selectBatch + '\n關卡：' + this.state.selectStage + '\n小隊:' + this.state.selectTeam + '\n種類:' + this.state.selectKinds + '\n點數:' + this.state.selectNumber + '\n';
                   this.setState({ 
                     InputModalText: textTmp,
                     showModal: true,
@@ -469,7 +473,7 @@ render() {
                     { cancelable: true }
                   );
                 }
-                console.log(this.state.selectBatch, this.state.selectTeam, this.state.selectNumber, this.state.selectKinds);
+                console.log(this.state.selectBatch, this.state.selectStage, this.state.selectTeam, this.state.selectNumber, this.state.selectKinds);
               }} 
             >
               送出
