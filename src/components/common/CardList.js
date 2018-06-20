@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, Image, Dimensions } from 'react-native';
-import { chevronRight } from '../../images';
+import { ChevronRight } from '../../images';
 
 const { height, width } = Dimensions.get('window');
 
@@ -20,7 +20,7 @@ const CardList = ({ cardText, onPress, listCustomStyle, listTextStyle, arrow }) 
           &&
           <Image
             style={styles.iconStyle}
-            source={chevronRight}
+            source={ChevronRight}
           />
         }
     </TouchableOpacity>

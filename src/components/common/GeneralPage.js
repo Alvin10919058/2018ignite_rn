@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Image, Text, Dimensions, TouchableOpacity } from 'react-native';
-import { arrowLeft } from '../../images';
+import { ArrowLeft } from '../../images';
 
 const { width } = Dimensions.get('window');
 
@@ -29,7 +29,7 @@ class GeneralPage extends Component {
           <TouchableOpacity onPress={onPress} style={backStyle}>
             <Image
                 style={iconStyle}
-                source={arrowLeft}
+                source={ArrowLeft}
             />
           </TouchableOpacity>
           <View style={textContainer}>

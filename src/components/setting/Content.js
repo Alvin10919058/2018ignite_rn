@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView, Image, Text } from 'react-native';
-import { marker } from '../../images';
+import { Logo } from '../../images';
 
 class Content extends Component {
   render() {
@@ -19,7 +19,7 @@ class Content extends Component {
               marginBottom: 50,
               resizeMode: Image.resizeMode.contain
             }}
-            source={marker}
+            source={Logo}
           />
         </ScrollView>
     );
