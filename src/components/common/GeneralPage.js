@@ -51,8 +51,8 @@ const styles = {
     flex: 1
   },
   iconStyle: { 
-    width: 20, 
-    height: 20,
+    width: 17, 
+    height: 17,
     alignSelf: 'center'
   },
   headerContainer: {
