@@ -202,7 +202,7 @@ export const careerGrowUp = (code) => {
         })
         .catch((error) => {
             console.log(error);
-            careerGrowUpFinished(dispatch, '發生不可預期的錯誤！\n請截圖給孟霈並重試');
+            careerGrowUpFinished(dispatch, '發生不可預期的錯誤！\n請截圖至群組並重試');
         });
     };
 };
@@ -240,7 +240,7 @@ const changeTeamCareer = async (dispatch, responseData) => {
     })
     .catch((err) => {
         console.log(err);// error handling ..
-        careerGrowUpFinished(dispatch, '發生不可預期的錯誤！\n請截圖給孟霈並重試');
+        careerGrowUpFinished(dispatch, '發生不可預期的錯誤！\n請截圖至群組並重試');
     });
 };
 
@@ -264,7 +264,7 @@ const changeCareerType = (dispatch, responseData) => {
     })
     .catch((err) => {
         console.log(err);// error handling ..
-        careerGrowUpFinished(dispatch, '發生不可預期的錯誤！\n請截圖給孟霈並重試');
+        careerGrowUpFinished(dispatch, '發生不可預期的錯誤！\n請截圖至群組並重試');
     });
 };
 
@@ -311,7 +311,7 @@ export const missionCoding = (code, missionId, missionName, mission, submission)
         })
         .catch((error) => {
             console.log(error);
-            missionCodeFailed(dispatch, '發生不可預期的錯誤！\n請截圖給孟霈並重試');
+            missionCodeFailed(dispatch, '發生不可預期的錯誤！\n請截圖至群組並重試');
         });
     };
 };
@@ -324,10 +324,15 @@ const changeTeamSubmission = async (dispatch, missionId, submission, mission) =>
     const tempArr = submission;
     tempArr.push(missionId);
     tempArr.sort((a, b) => { return a - b; });
+    //過濾掉重複的數字以防萬一有多重裝置輸入
+    const result = tempArr.filter((element, index, arr) => {
+        return arr.indexOf(element) === index;
+    });
     console.log(tempArr);
+    console.log(result);
 
     const params = {
-        done_submission: tempArr
+        done_submission: result
     };
 
     //如果10個任務都完成
@@ -350,7 +355,7 @@ const changeTeamSubmission = async (dispatch, missionId, submission, mission) =>
     })
     .catch((err) => {
       console.log(err);// error handling ..
-      missionCodeFailed(dispatch, '發生不可預期的錯誤！\n請截圖給孟霈並重試');
+      missionCodeFailed(dispatch, '發生不可預期的錯誤！\n請截圖至群組並重試');
     });
 };
 
