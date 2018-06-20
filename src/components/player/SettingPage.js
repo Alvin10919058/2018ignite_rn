@@ -9,7 +9,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import Parse from 'parse/react-native';
 import { CardList } from '../common';
-import { Logo, ChevronRight } from '../../images';
+import { Logo } from '../../images';
 
 const { height, width } = Dimensions.get('window');
 class SettingPage extends Component {
@@ -51,7 +51,7 @@ class SettingPage extends Component {
             <CardList
               listCustomStyle={cardListCustom} 
               listTextStyle={listTextStyle}
-              arrow={true} 
+              arrow
               onPress={() => {
                 Actions.careerInfo();
               }} 
@@ -60,7 +60,7 @@ class SettingPage extends Component {
             <CardList 
               listCustomStyle={cardListCustom} 
               listTextStyle={listTextStyle}
-              arrow={true} 
+              arrow
               onPress={() => {
                 Actions.mp();
               }} 
@@ -69,7 +69,7 @@ class SettingPage extends Component {
             <CardList 
               listCustomStyle={cardListCustom} 
               listTextStyle={listTextStyle}
-              arrow={true} 
+              arrow
               onPress={() => {
                 Actions.about();
               }}  
@@ -78,7 +78,7 @@ class SettingPage extends Component {
             <CardList 
               listCustomStyle={cardListCustom} 
               listTextStyle={listTextStyle}
-              arrow={true} 
+              arrow
               onPress={() => {
                 Actions.policy();
               }} 
