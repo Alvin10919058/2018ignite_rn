@@ -27,24 +27,32 @@ class SettingPage extends Component {
   }
 
   render() {
-    const { container } = styles;
+    const { container, CardListStyle, listTextStyle } = styles;
     return (
      
       <View style={container}>
         <ScrollView>
             <CardList 
+              listCustomStyle={CardListStyle}
+              listTextStyle={listTextStyle}
               onPress={null} 
               cardText={'各類職業介紹'} 
             />
             <CardList 
+              listCustomStyle={CardListStyle}
+              listTextStyle={listTextStyle}
               onPress={null} 
               cardText={'關於作者'} 
             />
             <CardList 
+              listCustomStyle={CardListStyle}
+              listTextStyle={listTextStyle}
               onPress={null} 
               cardText={'隱私權政策'} 
             />
             <CardList 
+              listCustomStyle={CardListStyle}
+              listTextStyle={listTextStyle}
               onPress={this.logout.bind(this)} 
               cardText={'登出'} 
             />
@@ -58,6 +66,14 @@ const styles = {
   container: {
       flex: 1,
       backgroundColor: 'white'
+  },
+  CardListStyle: {
+    borderWidth: 1, 
+    borderColor: '#dddddd',
+    paddingHorizontal: 15,
+  },
+  listTextStyle: {
+    fontSize: 18
   }
 };
 
