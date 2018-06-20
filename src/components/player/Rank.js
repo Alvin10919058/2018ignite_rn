@@ -16,7 +16,7 @@ class Rank extends Component {
     TeamData: {},
     tableHead: ['排名', '小隊', '職業', '分數'],
     tableData: [],
-    widthArr: [width * 0.15, width * 0.21, width * 0.315, width * 0.26],
+    widthArr: [width * 0.15, width * 0.21, width * 0.315, width * 0.25],
     reload: this.props.reload
   };
 

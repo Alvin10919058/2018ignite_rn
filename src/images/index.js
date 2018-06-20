@@ -17,11 +17,14 @@ import PicDefault from './PicDefault.png';
 import Pass from './Pass.png';
 import Add from './add.png';
 import Sub from './sub.png';
+import chevronRight from './chevron-right.png';
+
 
 export {
   Background, Logo, User, Password,
   RankTab, SettingTab, MisionTab, HomePageTab, SkillsTab,
   Biochemical, Defense, Sniper, Special, Soldier, Assault,
   PicDefault, Pass, 
-  Add, Sub
+  Add, Sub,
+  chevronRight
 };
