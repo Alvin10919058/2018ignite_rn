@@ -15,6 +15,12 @@ import Skills from './player/Skills';
 import GiveScore from './gm/GiveScore';
 import Begin from './Begin';
 import { ifIphoneX } from './IphoneXDetector';
+//setting 內容頁面
+import CareerInfo from './player/SettingPages/CareerInfo';
+import MP from './player/SettingPages/MP';
+import About from './player/SettingPages/About';
+import Policy from './player/SettingPages/Policy';
+
 
 class RouterComponent extends Component {
   render() {
@@ -57,8 +63,9 @@ class RouterComponent extends Component {
               </Scene>
               <Scene key="tab4" title="設定" icon={TabIcon}>
                 <Scene key="settingPage" initial component={SettingPage} hideNavBar />
-              </Scene>        
+              </Scene> 
 
+              
             </Scene>
           </Scene>
 
@@ -80,10 +87,14 @@ class RouterComponent extends Component {
               </Scene>
               <Scene key="tab7" title="設定" icon={TabIcon}>
                 <Scene key="settingPage2" initial component={SettingPage} hideNavBar />
-              </Scene>        
-
+              </Scene>       
             </Scene>
           </Scene>
+          {/* setting pages */}
+          <Scene key="careerInfo" component={CareerInfo} hideNavBar />   
+          <Scene key="mp" component={MP} hideNavBar /> 
+          <Scene key="about" component={About} hideNavBar /> 
+          <Scene key="policy" component={Policy} hideNavBar /> 
 
         </Stack>
       </Router>
