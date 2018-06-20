@@ -19,7 +19,9 @@ import { ifIphoneX } from './IphoneXDetector';
 class RouterComponent extends Component {
   render() {
     return (
-      <Router>
+      <Router
+       backAndroidHandler={() => (true)}
+      >
         <Stack
           duration={0}
         >
@@ -41,7 +43,7 @@ class RouterComponent extends Component {
                  const temp = a.scene.route.key;
                  if (temp === 'tab0') {
                   //暴力解讓Rank重loading
-                  console.log('tab0');
+                  console.log(temp);
                   Actions[temp]({ reload: true });
                   Actions.pop();
                  }
