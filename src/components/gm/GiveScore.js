@@ -465,7 +465,7 @@ render() {
                   });
                 } else {
                   Alert.alert(
-                    '您還有未輸入欄位哦！',
+                    '您還有未輸入的欄位哦！',
                     '',
                     [
                       { text: 'OK', onPress: () => console.log('OK Pressed') },
