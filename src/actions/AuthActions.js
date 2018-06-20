@@ -47,12 +47,13 @@ const loginUserFail = (dispatch) => {
   dispatch({ type: LOGIN_USER_FAIL });
 };
 
-const loginUserSuccess = (dispatch, user) => {
+const loginUserSuccess = async (dispatch, user) => {
   dispatch({
     type: LOGIN_USER_SUCCESS,
     payload: user
   });
   if (user.attributes.character === 'gm') {
+    await AsyncStorage.setItem('gm_batch', user.attributes.gm_batch);
     Actions.gm();
   } else {
     Actions.main();

@@ -3,12 +3,13 @@ import {
   ScrollView,
   View,
   Dimensions,
+  AsyncStorage
 } from 'react-native';
 import Parse from 'parse/react-native';
 import { connect } from 'react-redux';
 import { Table, Row } from 'react-native-table-component';
 
-const { height, width } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 class Rank extends Component {
 
@@ -20,7 +21,7 @@ class Rank extends Component {
     reload: this.props.reload
   };
 
-  componentDidMount() {
+ componentDidMount() {
     this.getTeamScore();
   }
 
@@ -36,7 +37,14 @@ class Rank extends Component {
     const query = new Parse.Query(Team);
     query.include('career');
     //判別要撈出 國高 還是 大專 的team分數
-    query.equalTo('batch', this.props.batch);
+    const batch = await AsyncStorage.getItem('gm_batch');
+    if (batch === null) {
+      //隊長專屬
+      query.equalTo('batch', this.props.batch);
+    } else {
+      //GM專屬
+      query.equalTo('batch', batch);
+    }
     query.limit(16);
     query.find()
       .then((response) => {
@@ -128,13 +136,18 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ player }) => {
+const mapStateToProps = ({ player, auth }) => {
   const {  
     batch, //國高or大專
    } = player;
 
+  const {
+    user
+  } = auth;
+
   return { 
     batch, //國高or大專
+    user
   };
 };
 

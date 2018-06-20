@@ -35,6 +35,7 @@ class App extends Component {
         await AsyncStorage.setItem('sessionToken', sessionToken);
         await AsyncStorage.setItem('userID', currentUser.id);
         if (currentUser.attributes.character === 'gm') {
+          await AsyncStorage.setItem('gm_batch', currentUser.attributes.gm_batch);
           Actions.gm();
         } else {
           Actions.main();
