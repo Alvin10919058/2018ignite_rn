@@ -232,8 +232,8 @@ render() {
                           // kinds: PickerData.T2teamSelection
                         });
                       }
-                      Actions.pop();
-                      Actions.giveScore();
+                      // Actions.pop();
+                      // Actions.giveScore();
                     }} 
                     text1='國高'                      
                     text2='大專'                      
