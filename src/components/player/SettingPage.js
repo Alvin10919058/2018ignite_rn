@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
   ScrollView,
-  AsyncStorage
+  Image,
+  AsyncStorage,
+  Dimensions
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Parse from 'parse/react-native';
 import { CardList } from '../common';
+import { Logo } from '../../images';
 
+const { height, width } = Dimensions.get('window');
 class SettingPage extends Component {
 
   logout() {
@@ -27,31 +30,60 @@ class SettingPage extends Component {
   }
 
   render() {
-    const { container, CardListStyle, listTextStyle } = styles;
+    const { container, cardListStyle, cardListCustom, listTextStyle } = styles;
     return (
      
       <View style={container}>
-        <ScrollView>
-            <CardList 
-              listCustomStyle={CardListStyle}
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <Image
+              style={{ 
+                height: width / 2,
+                width: width / 2,
+                borderRadius: width / 6,
+                alignSelf: 'center',
+                alignItems: 'center'
+              }}
+              source={Logo}
+          />
+        </View>
+        <ScrollView style={cardListStyle}>
+            <CardList
+              listCustomStyle={cardListCustom} 
               listTextStyle={listTextStyle}
               onPress={null} 
+              onPress={() => {
+                Actions.careerInfo();
+              }} 
               cardText={'各類職業介紹'} 
             />
             <CardList 
-              listCustomStyle={CardListStyle}
+              listCustomStyle={cardListCustom} 
               listTextStyle={listTextStyle}
               onPress={null} 
-              cardText={'關於作者'} 
+              onPress={() => {
+                Actions.mp();
+              }} 
+              cardText={'MissionPop 交戰守則'} 
             />
             <CardList 
-              listCustomStyle={CardListStyle}
+              listCustomStyle={cardListCustom} 
+              listTextStyle={listTextStyle}
+              onPress={() => {
+                Actions.about();
+              }}  
+              cardText={'關於APP'} 
+            />
+            <CardList 
+              listCustomStyle={cardListCustom} 
               listTextStyle={listTextStyle}
               onPress={null} 
+              onPress={() => {
+                Actions.policy();
+              }} 
               cardText={'隱私權政策'} 
             />
             <CardList 
-              listCustomStyle={CardListStyle}
+              listCustomStyle={cardListCustom}
               listTextStyle={listTextStyle}
               onPress={this.logout.bind(this)} 
               cardText={'登出'} 
@@ -64,16 +96,22 @@ class SettingPage extends Component {
 
 const styles = {
   container: {
-      flex: 1,
-      backgroundColor: 'white'
+    flex: 1,
+    backgroundColor: '#fff'
   },
-  CardListStyle: {
-    borderWidth: 1, 
-    borderColor: '#dddddd',
+  cardListStyle: {
+    flex: 1, 
+    borderTopWidth: 0.5, 
+    borderTopColor: '#AAAAAA',
+    backgroundColor: '#FBFBFB'
+  },
+  cardListCustom: {
     paddingHorizontal: 15,
+    marginTop: height * 0.001,
+    marginBottom: height * 0.001
   },
   listTextStyle: {
-    fontSize: 18
+    fontSize: 16
   }
 };
 

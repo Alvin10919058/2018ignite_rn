@@ -150,7 +150,7 @@ const styles = {
     textAlign: 'center'
   },
   checkArea: {
-    flex: 1,
+    flex: 1.5,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row'

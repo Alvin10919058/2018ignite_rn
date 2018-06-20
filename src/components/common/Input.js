@@ -23,6 +23,7 @@ const Input = ({
         value={value}
         onChangeText={onChangeText}
         underlineColorAndroid={underlineColorAndroid}
+        autoCapitalize={'none'}
       />
     </View>
   );
@@ -30,7 +31,7 @@ const Input = ({
 
 const styles = {
   inputStyle: {
-    color: '#000',
+    color: '#212159',
     paddingRight: 5,
     paddingLeft: 5,
     fontSize: 18,

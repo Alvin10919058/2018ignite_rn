@@ -22,3 +22,7 @@ export const MISSION_CODE_CHANGED = 'mission_code_changed';
 export const MISSION_CODING = 'mission_coding';
 export const MISSION_CODE_FINISHED = 'mission_code_finished';
 export const MISSION_CODE_FAILED = 'mission_code_failed';
+
+//Skills
+
+export const RESET_CODE_CHANGED = 'reset_code_changed';

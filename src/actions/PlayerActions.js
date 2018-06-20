@@ -13,13 +13,21 @@ import {
     MISSION_CODE_CHANGED,
     MISSION_CODING,
     MISSION_CODE_FINISHED,
-    MISSION_CODE_FAILED  
+    MISSION_CODE_FAILED,
+    RESET_CODE_CHANGED
   } from './types';
 
 export const errorModalType = (type, text) => {
     return {
         type: ERROR_MODAL_TYPE,
         payload: { type, text }
+    };
+};
+
+export const resetCodeChanged = (text) => {
+    return {
+        type: RESET_CODE_CHANGED,
+        payload: text
     };
 };
 
@@ -83,6 +91,11 @@ export const getTeamData = () => {
         {
           id: 9,
           missionName: '風聲',
+          finished: false
+        },
+        {
+          id: 10,
+          missionName: '特務急急棒',
           finished: false
         }
     ];
@@ -189,6 +202,7 @@ export const careerGrowUp = (code) => {
         })
         .catch((error) => {
             console.log(error);
+            careerGrowUpFinished(dispatch, '發生不可預期的錯誤！\n請截圖至群組並重試');
         });
     };
 };
@@ -221,11 +235,12 @@ const changeTeamCareer = async (dispatch, responseData) => {
     body: JSON.stringify(params)
     })
     .then((success) => {
-    console.log(success);
-    changeCareerType(dispatch, responseData);
+        console.log(success);
+        changeCareerType(dispatch, responseData);
     })
     .catch((err) => {
-    console.log(err);// error handling ..
+        console.log(err);// error handling ..
+        careerGrowUpFinished(dispatch, '發生不可預期的錯誤！\n請截圖至群組並重試');
     });
 };
 
@@ -244,11 +259,12 @@ const changeCareerType = (dispatch, responseData) => {
     body: JSON.stringify(params)
     })
     .then((success) => {
-    console.log(success);
-    careerGrowUpSuccess(dispatch, '恭喜您成功轉職！', responseData.results[0]);
+        console.log(success);
+        careerGrowUpSuccess(dispatch, '恭喜您成功轉職！', responseData.results[0]);
     })
     .catch((err) => {
-    console.log(err);// error handling ..
+        console.log(err);// error handling ..
+        careerGrowUpFinished(dispatch, '發生不可預期的錯誤！\n請截圖至群組並重試');
     });
 };
 
@@ -260,7 +276,7 @@ const careerGrowUpSuccess = (dispatch, text, responseData) => {
     });
 };
 
-export const missionCoding = (code, missionId, missionName, mission) => {
+export const missionCoding = (code, missionId, missionName, mission, submission) => {
     return async (dispatch) => {
         dispatch({ type: MISSION_CODING });
         const params = {
@@ -285,17 +301,62 @@ export const missionCoding = (code, missionId, missionName, mission) => {
             console.log(responseData);
             if (responseData.results[0] !== undefined) {
                 console.log('yes');
+                //將UI mission改成已通過
                 const temp = mission;
                 temp[missionId - 1].finished = true;
-                missionCodeFinished(dispatch, '恭喜完成任務！', temp);
+                changeTeamSubmission(dispatch, missionId, submission, temp);
             } else {
                 missionCodeFailed(dispatch, '序號輸入錯誤或已被使用！');
             }
         })
         .catch((error) => {
             console.log(error);
+            missionCodeFailed(dispatch, '發生不可預期的錯誤！\n請截圖至群組並重試');
         });
     };
+};
+
+//至Team Class更改done_submission資料
+const changeTeamSubmission = async (dispatch, missionId, submission, mission) => {
+    const teamID = await AsyncStorage.getItem('teamID');  
+
+    //將完成的支線任務塞入原本的array中
+    const tempArr = submission;
+    tempArr.push(missionId);
+    tempArr.sort((a, b) => { return a - b; });
+    //過濾掉重複的數字以防萬一有多重裝置輸入
+    const result = tempArr.filter((element, index, arr) => {
+        return arr.indexOf(element) === index;
+    });
+    console.log(tempArr);
+    console.log(result);
+
+    const params = {
+        done_submission: result
+    };
+
+    //如果10個任務都完成
+    if (tempArr.length === 10) {
+        params.completed = true;
+        console.log('mission completed');
+    }
+    
+    fetch(`${data.parseServerURL}/classes/Team/${teamID}`, {
+    method: 'PUT',
+    headers: {
+        'X-Parse-Application-Id': data.parseAppId,
+        'X-Parse-REST-API-Key': data.paresApiKey
+    },
+    body: JSON.stringify(params)
+    })
+    .then((success) => {
+       console.log(success);
+       missionCodeFinished(dispatch, '恭喜完成任務！', mission);
+    })
+    .catch((err) => {
+      console.log(err);// error handling ..
+      missionCodeFailed(dispatch, '發生不可預期的錯誤！\n請截圖至群組並重試');
+    });
 };
 
 const missionCodeFinished = (dispatch, text, mission) => {

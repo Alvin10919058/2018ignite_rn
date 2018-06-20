@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, Image, KeyboardAvoidingView, View } from 'react-native';
+import { Text, Image, KeyboardAvoidingView, View, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import { emailChanged, passwordChanged, loginUser } from '../../actions';
 import { CardSection, Input, Button, Spinner } from '../common';
@@ -16,8 +16,8 @@ class Login extends Component {
 
   onButtonPress() {
     const { username, password } = this.props;
-
     this.props.loginUser({ username, password });
+    Keyboard.dismiss();
   }
 
   renderButton() {
@@ -87,7 +87,7 @@ class Login extends Component {
             {this.renderButton()}
           </CardSection>
       </KeyboardAvoidingView>
-      <View style={{ flex: 1 }} />
+      <View style={{ flex: 1, backgroundColor: '#fff' }} />
     </View>
     );
   }
@@ -100,12 +100,14 @@ const styles = {
     color: 'red'
   },
   backgroundStyle: {
+    backgroundColor: '#fff',
+    //justifyContent:'center',
     justifyContent: 'center',
     alignItems: 'center',
     flex: 4
   },
   loginInputStyle: {
-    backgroundColor: '#ecf5ff',
+    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
     width: 230,

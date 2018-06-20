@@ -16,10 +16,18 @@ import GiveScore from './gm/GiveScore';
 import Begin from './Begin';
 import { ifIphoneX } from './IphoneXDetector';
 
+import CareerInfo from './setting/CareerInfo';
+import MP from './setting/MP';
+import About from './setting/About';
+import Policy from './setting/Policy';
+
+
 class RouterComponent extends Component {
   render() {
     return (
-      <Router>
+      <Router
+       backAndroidHandler={() => (true)}
+      >
         <Stack
           duration={0}
         >
@@ -39,8 +47,14 @@ class RouterComponent extends Component {
               tabBarOnPress={(a) => {
                  this.props.getTeamData();
                  const temp = a.scene.route.key;
+                 if (temp === 'tab0') {
+                  //暴力解讓Rank重loading
+                  console.log(temp);
+                  Actions[temp]({ reload: true });
+                  Actions.pop();
+                 }
                  Actions[temp]();
-                 }}
+              }}
             >
 
               <Scene key="tab0" title="排名" icon={TabIcon}>
@@ -84,6 +98,12 @@ class RouterComponent extends Component {
 
             </Scene>
           </Scene>
+
+          {/* setting pages */}
+          <Scene key="careerInfo" component={CareerInfo} hideNavBar />   
+          <Scene key="mp" component={MP} hideNavBar /> 
+          <Scene key="about" component={About} hideNavBar /> 
+          <Scene key="policy" component={Policy} hideNavBar /> 
 
         </Stack>
       </Router>

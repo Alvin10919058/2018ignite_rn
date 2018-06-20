@@ -5,6 +5,7 @@ import {
   Dimensions,
 } from 'react-native';
 import Parse from 'parse/react-native';
+import { connect } from 'react-redux';
 import { Table, Row } from 'react-native-table-component';
 
 const { height, width } = Dimensions.get('window');
@@ -16,9 +17,16 @@ class Rank extends Component {
     tableHead: ['排名', '小隊', '職業', '分數'],
     tableData: [],
     widthArr: [width * 0.15, width * 0.21, width * 0.315, width * 0.25],
+    reload: this.props.reload
   };
 
   componentDidMount() {
+    this.getTeamScore();
+  }
+
+  //暴力解讓Rank重loading
+  componentWillReceiveProps() {
+    console.log('HIHIH');
     this.getTeamScore();
   }
   
@@ -28,27 +36,29 @@ class Rank extends Component {
     const query = new Parse.Query(Team);
     query.include('career');
     //判別要撈出 國高 還是 大專 的team分數
-    query.equalTo('batch', '國高');
+    query.equalTo('batch', this.props.batch);
+    query.limit(16);
     query.find()
       .then((response) => {
-            //將取得的物件資料複製一份到obj
-            const CopyRes = [...response];
-            //將此物件依據小隊總分由大到小(b-a)的順序來排序
-            CopyRes.sort((a, b) => b.attributes.team_total_score - a.attributes.team_total_score);
-            this.setState({ TeamData: CopyRes });
-            //選出要的資料放入tableData中
-              const finalDataAry = [];
-              let rank = 1;
-              CopyRes.map((teamdata) => {
-                finalDataAry.push([rank, teamdata.attributes.name, teamdata.attributes.career.attributes.name, teamdata.attributes.team_total_score]);
-                rank++;
-                return true;
-              });
+      console.log(response);
+      //將取得的物件資料複製一份到obj
+      const CopyRes = [...response];
+      //將此物件依據小隊總分由大到小(b-a)的順序來排序
+      CopyRes.sort((a, b) => b.attributes.team_total_score - a.attributes.team_total_score);
+      this.setState({ TeamData: CopyRes });
+      //選出要的資料放入tableData中
+        const finalDataAry = [];
+        let rank = 1;
+        CopyRes.map((teamdata) => {
+          finalDataAry.push([rank, teamdata.attributes.name, teamdata.attributes.career.attributes.name, teamdata.attributes.team_total_score]);
+          rank++;
+          return true;
+        });
         this.setState({ tableData: finalDataAry });
-            })
+      })
       .catch((error) => {
-                console.log(error);
-            });
+        console.log(error);
+      });
   }
 
   render() {
@@ -56,7 +66,7 @@ class Rank extends Component {
 
     return (
       <View style={container}>
-        <Table borderStyle={{ borderWidth: 2, borderColor: '#f0f0f0' }}>
+        <Table borderStyle={{ borderWidth: 2, borderColor: '#fff' }}>
           <Row 
             data={this.state.tableHead} 
             widthArr={this.state.widthArr} 
@@ -67,7 +77,7 @@ class Rank extends Component {
       
         <ScrollView style={styles.dataWrapper}>
           <Table 
-            borderStyle={{ borderWidth: 2, borderColor: '#f0f0f0' }}
+            borderStyle={{ borderWidth: 2, borderColor: '#fff' }}
           >
             {
               this.state.tableData.map((rowData, index) => (
@@ -75,7 +85,7 @@ class Rank extends Component {
                   key={index}
                   data={rowData}
                   widthArr={this.state.widthArr}
-                  style={[styles.row, index % 2 && { backgroundColor: '#66b3ff' }]}
+                  style={[styles.row, index % 2 && { backgroundColor: '#bbc3dc' }]}
                   textStyle={styles.text}
                 />
               ))
@@ -95,7 +105,7 @@ const styles = {
   },
   head: { 
     height: 40,
-    backgroundColor: '#004b97'
+    backgroundColor: '#AAAAAA'
   },
   text: { 
     margin: 6,
@@ -118,4 +128,14 @@ const styles = {
   }
 };
 
-export default Rank;
+const mapStateToProps = ({ player }) => {
+  const {  
+    batch, //國高or大專
+   } = player;
+
+  return { 
+    batch, //國高or大專
+  };
+};
+
+export default connect(mapStateToProps, {})(Rank);

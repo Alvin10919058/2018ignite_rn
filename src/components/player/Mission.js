@@ -54,7 +54,7 @@ class Mission extends Component {
   }
 
   render() {
-    const { container, headerContainer, listContainer, titleStyle } = styles;
+    const { container, listContainer, titleStyle } = styles;
 
     if (this.props.loading) {
       return (
@@ -81,7 +81,8 @@ class Mission extends Component {
               this.props.missionCode, 
               this.state.missionId, 
               this.state.missionName,
-              this.props.mission
+              this.props.mission,
+              this.props.done_submission
             );
             this.setState({ 
               showModal: false,
@@ -99,9 +100,6 @@ class Mission extends Component {
            visible={this.props.showErrorModal}
            onPress={() => { this.props.errorModalType(false, ''); }}
          />
-        <View style={headerContainer}>
-          <Text>支線任務</Text>
-        </View>
         <View style={listContainer}>
           <ScrollView style={{ paddingTop: 10 }}>
             <View>
@@ -120,15 +118,6 @@ class Mission extends Component {
 const styles = {
   container: {
       flex: 1
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    height: 50,
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderColor: '#bbb'
   },
   listContainer: {
     flex: 1,

@@ -30,10 +30,10 @@ const styles = {
     width: 100,
     justifyContent: 'center',
     // alignSelf: 'stretch',
-    backgroundColor: '#007aff',
+    backgroundColor: '#69aeb2',
     borderRadius: 3,
     borderWidth: 1,
-    borderColor: '#007aff',
+    borderColor: '#69aeb2',
     marginLeft: 5,
     marginRight: 5,
     ...Platform.select({
