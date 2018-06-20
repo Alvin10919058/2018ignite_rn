@@ -122,7 +122,7 @@ const styles = {
     padding: 10
   },
   addStyle: {
-    color: '#ED2A67',
+    color: '#69AEB2',
     fontSize: 14,
     fontWeight: '500',
     textDecorationLine: 'underline'
