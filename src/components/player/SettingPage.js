@@ -9,7 +9,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import Parse from 'parse/react-native';
 import { CardList } from '../common';
-import { Logo } from '../../images';
+import { Logo, ChevronRight } from '../../images';
 
 const { height, width } = Dimensions.get('window');
 class SettingPage extends Component {
@@ -34,12 +34,12 @@ class SettingPage extends Component {
     return (
      
       <View style={container}>
-        <View style={{ flex: 1, justifyContent: 'center' }}>
+        <View style={{ flex: 0.5, justifyContent: 'center' }}>
           <Image
               style={{ 
-                height: width / 2,
-                width: width / 2,
-                borderRadius: width / 6,
+                height: width / 3,
+                width: width / 3,
+                borderRadius: width / 9,
                 alignSelf: 'center',
                 alignItems: 'center'
               }}
@@ -50,7 +50,7 @@ class SettingPage extends Component {
             <CardList
               listCustomStyle={cardListCustom} 
               listTextStyle={listTextStyle}
-              onPress={null} 
+              arrow={true} 
               onPress={() => {
                 Actions.careerInfo();
               }} 
@@ -59,7 +59,7 @@ class SettingPage extends Component {
             <CardList 
               listCustomStyle={cardListCustom} 
               listTextStyle={listTextStyle}
-              onPress={null} 
+              arrow={true} 
               onPress={() => {
                 Actions.mp();
               }} 
@@ -68,6 +68,7 @@ class SettingPage extends Component {
             <CardList 
               listCustomStyle={cardListCustom} 
               listTextStyle={listTextStyle}
+              arrow={true} 
               onPress={() => {
                 Actions.about();
               }}  
@@ -76,7 +77,7 @@ class SettingPage extends Component {
             <CardList 
               listCustomStyle={cardListCustom} 
               listTextStyle={listTextStyle}
-              onPress={null} 
+              arrow={true} 
               onPress={() => {
                 Actions.policy();
               }} 
@@ -100,15 +101,19 @@ const styles = {
     backgroundColor: '#fff'
   },
   cardListStyle: {
-    flex: 1, 
-    borderTopWidth: 0.5, 
-    borderTopColor: '#AAAAAA',
-    backgroundColor: '#FBFBFB'
+    flex: 2, 
+    //borderTopWidth: 0.5, 
+    //borderTopColor: '#AAAAAA',
+    //backgroundColor: '#FBFBFB'
+    backgroundColor: '#ffffff'
   },
   cardListCustom: {
     paddingHorizontal: 15,
-    marginTop: height * 0.001,
-    marginBottom: height * 0.001
+    marginTop: height * 0.002,
+    marginBottom: height * 0.002,
+    backgroundColor: '#ffffff',
+    borderWidth: 1, 
+    borderColor: '#eeeeee',
   },
   listTextStyle: {
     fontSize: 16

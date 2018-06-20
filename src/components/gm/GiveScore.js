@@ -26,7 +26,7 @@ class GiveScore extends React.Component {
       tableHead: ['梯次', '關卡', '小隊', '種類', '點數'],
       tableData: [],
       //widthArr: [width * 0.205, width * 0.215, width * 0.32, width * 0.215],
-      widthArr: [width * 0.140, width * 0.160, width * 0.140, width * 0.3, width * 0.215],
+      widthArr: [width * 0.160, width * 0.180, width * 0.160, width * 0.27, width * 0.185],
       //Picker setting data
       selectStage: '',
       stage: PickerData.stageSelection,

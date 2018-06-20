@@ -17,7 +17,7 @@ import PicDefault from './PicDefault.png';
 import Pass from './Pass.png';
 import Add from './add.png';
 import Sub from './sub.png';
-import ChevronRight from './chevron-right.png';
+import ChevronRight from './chevronRight.png';
 import ArrowLeft from './ArrowLeft.png';
 
 
