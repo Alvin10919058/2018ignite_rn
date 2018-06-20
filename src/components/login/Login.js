@@ -87,7 +87,7 @@ class Login extends Component {
             {this.renderButton()}
           </CardSection>
       </KeyboardAvoidingView>
-      <View style={{ flex: 1 }} />
+      <View style={{ flex: 1, backgroundColor: '#fff' }} />
     </View>
     );
   }

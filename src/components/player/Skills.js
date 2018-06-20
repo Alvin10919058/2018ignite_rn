@@ -23,6 +23,18 @@ class Skills extends Component {
     temp5: 0
   }
 
+  //重loading資料時暫存點數歸零
+  componentWillReceiveProps() {
+    console.log('HIHIH');
+    this.setState({
+      temp1: 0,
+      temp2: 0,
+      temp3: 0,
+      temp4: 0,
+      temp5: 0
+    });
+  }
+
   onResetCodeChange(text) {
     this.props.resetCodeChanged(text);
   }
@@ -88,7 +100,15 @@ class Skills extends Component {
             this.setState({ showResetModal: false }); 
           }}
            onPress={() => { 
-            
+             if (this.props.batch === '國高') {
+                this.props.resetCodeJunior(
+                 
+                );
+             } else {
+              this.props.resetCodeCollege(
+
+              );
+             }
            }}
            inputText
            value={this.props.resetCode}
@@ -103,10 +123,27 @@ class Skills extends Component {
             this.setState({ showSureModal: false }); 
            }}
            onPress={() => { 
-            
-           }}
-           onPress={() => { 
-    
+            if (this.props.batch === '國高') {
+              this.props.skillJunior(
+                this.state.temp1 + this.state.temp2 + this.state.temp3 + this.state.temp4 + this.state.temp5, 
+                this.props.strength + this.state.temp1,
+                this.props.wisdom + this.state.temp2,
+                this.props.vitality + this.state.temp3,
+                this.props.faith + this.state.temp4,
+                this.props.agility + this.state.temp5,
+                this.props.career
+              );
+            } else {
+             this.props.skillCollege(
+                this.state.temp1 + this.state.temp2 + this.state.temp3 + this.state.temp4 + this.state.temp5, 
+                this.props.passion + this.state.temp1,
+                this.props.creativity + this.state.temp2,
+                this.props.intelligence + this.state.temp3,
+                this.props.love + this.state.temp4,
+                this.props.patience + this.state.temp5,
+                this.props.career
+             );
+            }
            }}
         />
         <View style={freePointContainer}>
@@ -215,6 +252,8 @@ const styles = {
 
 const mapStateToProps = ({ player }) => {
   const {  
+    batch,
+    career,
     skillTable,
     tableHead,
     tableData,
@@ -238,6 +277,8 @@ const mapStateToProps = ({ player }) => {
    } = player;
 
   return { 
+    batch,
+    career,
     skillTable,
     tableHead,
     tableData,
