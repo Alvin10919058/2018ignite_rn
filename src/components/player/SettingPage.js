@@ -3,11 +3,14 @@ import {
   View,
   Text,
   ScrollView,
-  AsyncStorage
+  AsyncStorage,
+  Dimensions
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Parse from 'parse/react-native';
 import { CardList } from '../common';
+
+const { height, width } = Dimensions.get('window');
 
 class SettingPage extends Component {
 
@@ -35,19 +38,37 @@ class SettingPage extends Component {
             <CardList 
               listCustomStyle={CardListStyle}
               listTextStyle={listTextStyle}
-              onPress={null} 
+              onPress={() => {
+                Actions.careerInfo();
+                }
+              } 
               cardText={'各類職業介紹'} 
             />
             <CardList 
               listCustomStyle={CardListStyle}
               listTextStyle={listTextStyle}
-              onPress={null} 
+              onPress={() => {
+                Actions.mp();
+                }
+              } 
+              cardText={'MissionPop 交戰守則'} 
+            />
+            <CardList 
+              listCustomStyle={CardListStyle}
+              listTextStyle={listTextStyle}
+              onPress={() => {
+                Actions.about();
+                }
+              } 
               cardText={'關於作者'} 
             />
             <CardList 
               listCustomStyle={CardListStyle}
               listTextStyle={listTextStyle}
-              onPress={null} 
+              onPress={() => {
+                Actions.policy();
+                }
+              } 
               cardText={'隱私權政策'} 
             />
             <CardList 
@@ -71,6 +92,8 @@ const styles = {
     borderWidth: 1, 
     borderColor: '#dddddd',
     paddingHorizontal: 15,
+    marginTop: height * 0.001,
+    marginBottom: height * 0.001
   },
   listTextStyle: {
     fontSize: 18
