@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet, View, ScrollView, AsyncStorage, Dimensions, Alert } from 'react-native';
+import { Text, StyleSheet, View, ScrollView, AsyncStorage, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import RNPickerSelect from 'react-native-picker-select';
 import { Table, Row } from 'react-native-table-component';
@@ -17,8 +17,11 @@ class GiveScore extends React.Component {
     this.inputRefs = {};
 
     this.state = {
-      showModal: false,
-      InputModalText: '',
+      showSureModal: false,
+      InputModalSureText: '',
+      showAlertModal: false,
+      InputModalAlertText: '',
+
       activeSwitch: 1,
       selectBatch: '國高',
       //history table setting data
@@ -130,25 +133,13 @@ componentDidMount() {
           responseData.results[0][kinds],
           stage
         );
-        Alert.alert(
-          '您的資料已成功送出',
-          '',
-          [
-            { text: 'OK', onPress: () => console.log('OK Pressed') },
-          ],
-          { cancelable: true }
-        );
     })
     .catch((error) => {
         console.log(error);
-        Alert.alert(
-          '資料送出失敗ＱＱ',
-          '',
-          [
-            { text: 'OK', onPress: () => console.log('OK Pressed') },
-          ],
-          { cancelable: true }
-        );
+        this.setState({ 
+          InputModalAlertText: '資料傳送失敗！\n請再試一次！',
+          showAlertModal: true,
+        });
     });
   }
 
@@ -174,14 +165,10 @@ componentDidMount() {
     })
     .catch((err) => {
         console.log(err);// error handling ..
-        Alert.alert(
-          '資料送出失敗ＱＱ',
-          '',
-          [
-            { text: 'OK', onPress: () => console.log('OK Pressed') },
-          ],
-          { cancelable: true }
-        );
+        this.setState({ 
+          InputModalAlertText: '資料傳送失敗！\n請再試一次！',
+          showAlertModal: true,
+        });
     });
   }
 
@@ -228,75 +215,76 @@ componentDidMount() {
     })
     .catch((err) => {
         console.log(err);// error handling ..
-        Alert.alert(
-          '資料送出失敗ＱＱ',
-          '',
-          [
-            { text: 'OK', onPress: () => console.log('OK Pressed') },
-          ],
-          { cancelable: true }
-        );
+        this.setState({ 
+          InputModalAlertText: '資料傳送失敗！\n請再試一次！',
+          showAlertModal: true,
+        });
     });
   }
 
 render() {
     return (
      <View style={{ flex: 1, backgroundColor: '#fff' }}>
-        <View style={styles.container}>
         <InputModal  
-          titleText={this.state.InputModalText}
-          textCustomStyle={{ alignContent: 'flex-start' }}
-          visible={this.state.showModal}
+          titleText={this.state.InputModalSureText}
+          textCustomStyle={{ textAlign: 'left' }}
+          visible={this.state.showSureModal}
+          scrollable
           cancelButton
-          scrollable={false}
-          cancel={() => { this.setState({ showModal: false }); }}
+          cancel={() => { this.setState({ showSureModal: false }); }}
           onPress={() => { 
-            this.setState({ showModal: false });
+            this.setState({ showSureModal: false });
             this.getTeam(
               this.state.selectBatch, 
               this.state.selectTeam, 
               this.state.selectNumber, 
               this.state.selectKinds,
               this.state.selectStage);
-          }}
-  
+          }} 
         />
-            <SwitchButton
-                    onValueChange={(val) => {
-                      const T1tmp = this.state.selectT1Kinds;
-                      const T2tmp = this.state.selectT2Kinds;
-                      if (val === 1) {
-                        this.setState({ 
-                          activeSwitch: val, 
-                          selectBatch: '國高',
-                          selectKinds: T1tmp,
-                          kinds: PickerData.T1teamSelection
-                        });
-                      } else {
-                        this.setState({ 
-                          activeSwitch: val, 
-                          selectBatch: '大專',
-                          selectKinds: T2tmp,
-                          kinds: PickerData.T2teamSelection
-                        });
-                      }
-                      // Actions.pop();
-                      // Actions.giveScore();
-                    }} 
-                    text1='國高'                      
-                    text2='大專'                      
-                    switchWidth={200}                  
-                    switchHeight={44}              
-                    switchdirection='ltr'            
-                    switchBorderRadius={100}       
-                    switchSpeedChange={500}           
-                    switchBorderColor='#d4d4d4'       
-                    switchBackgroundColor='#fff'   
-                    btnBorderColor='#00a4b9'          
-                    btnBackgroundColor='#69aeb2'     
-                    fontColor='#b1b1b1'             
-                    activeFontColor='#fff'
-            />
+        <InputModal  
+          titleText={this.state.InputModalAlertText}
+          scrollable={false}
+          visible={this.state.showAlertModal}
+          onPress={() => { this.setState({ showAlertModal: false }); }}
+        />
+        <View style={styles.container}>
+          <SwitchButton
+            onValueChange={(val) => {
+              const T1tmp = this.state.selectT1Kinds;
+              const T2tmp = this.state.selectT2Kinds;
+              if (val === 1) {
+                this.setState({ 
+                  activeSwitch: val, 
+                  selectBatch: '國高',
+                  selectKinds: T1tmp,
+                  kinds: PickerData.T1teamSelection
+                });
+              } else {
+                this.setState({ 
+                  activeSwitch: val, 
+                  selectBatch: '大專',
+                  selectKinds: T2tmp,
+                  kinds: PickerData.T2teamSelection
+                });
+              }
+              // Actions.pop();
+              // Actions.giveScore();
+            }} 
+            text1='國高'                      
+            text2='大專'                      
+            switchWidth={200}                  
+            switchHeight={44}              
+            switchdirection='ltr'            
+            switchBorderRadius={100}       
+            switchSpeedChange={500}           
+            switchBorderColor='#d4d4d4'       
+            switchBackgroundColor='#fff'   
+            btnBorderColor='#00a4b9'          
+            btnBackgroundColor='#69aeb2'     
+            fontColor='#b1b1b1'             
+            activeFontColor='#fff'
+          />
 
           <View style={styles.pickerRowStyle}>
             <Text style={styles.labelStyle}>關卡</Text>
@@ -460,18 +448,15 @@ render() {
                 if (this.state.selectBatch && this.state.selectTeam && this.state.selectNumber && this.state.selectKinds && 1 !== null) {
                 const textTmp = '請檢查資料是否正確:\n\n梯次：' + this.state.selectBatch + '\n關卡：' + this.state.selectStage + '\n小隊:' + this.state.selectTeam + '\n種類:' + this.state.selectKinds + '\n點數:' + this.state.selectNumber + '\n';
                   this.setState({ 
-                    InputModalText: textTmp,
-                    showModal: true,
+                    InputModalSureText: textTmp,
+                    showSureModal: true,
                   });
                 } else {
-                  Alert.alert(
-                    '您還有未輸入的欄位哦！',
-                    '',
-                    [
-                      { text: 'OK', onPress: () => console.log('OK Pressed') },
-                    ],
-                    { cancelable: true }
-                  );
+                  console.log('here');
+                  this.setState({ 
+                    InputModalAlertText: '您還有未輸入的欄位哦！',
+                    showAlertModal: true,
+                  });
                 }
                 console.log(this.state.selectBatch, this.state.selectStage, this.state.selectTeam, this.state.selectNumber, this.state.selectKinds);
               }} 
