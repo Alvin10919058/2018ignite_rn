@@ -47,18 +47,13 @@ const text =
 
 class CareerInfo extends Component {
 
-  state={
-    title: true
-  }
-
   render() {
     return (
       <GeneralPage
         header={'各類職業介紹'}
         onPress={() => { Actions.pop(); }}
       >
-        <Content isTitleImg={this.state.title} content={text} />
-        {console.log(this.state.title)}
+        <Content isTitleImg content={text} />
       </GeneralPage>
     );
   }
