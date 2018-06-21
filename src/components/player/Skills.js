@@ -10,6 +10,7 @@ import {
   resetCodeChanged,
   skillJunior,
   skillCollege,
+  resetCodeJunior,
   errorModalType
 } from '../../actions';
 import { Button, SkillRow, InputModal, Spinner } from '../common';
@@ -142,12 +143,25 @@ class Skills extends Component {
            onPress={() => { 
              if (this.props.batch === '國高') {
                 this.props.resetCodeJunior(
-                 
+                  this.props.resetCode,
+                  this.props.free_point,
+                  this.props.strength,
+                  this.props.wisdom,
+                  this.props.vitality,
+                  this.props.faith,
+                  this.props.agility,
                 );
+                this.setState({ showResetModal: false }); 
              } else {
               this.props.resetCodeCollege(
-
+                  this.props.free_point,
+                  this.props.passion,
+                  this.props.creativity,
+                  this.props.intelligence,
+                  this.props.love,
+                  this.props.patience,
               );
+              this.setState({ showResetModal: false }); 
              }
            }}
            inputText
@@ -347,5 +361,6 @@ export default connect(mapStateToProps, {
   resetCodeChanged,
   skillJunior,
   skillCollege,
+  resetCodeJunior,
   errorModalType
 })(Skills);

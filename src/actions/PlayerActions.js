@@ -20,7 +20,12 @@ import {
     SKILL_JUNIOR_SUCCESS,
     SKILL_COLLEGE,
     SKILL_COLLEGE_FAILED,
-    SKILL_COLLEGE_SUCCESS
+    SKILL_COLLEGE_SUCCESS,
+    RESET_CODE_JUNIOR,
+    RESET_CODE_COLLEGE,
+    RESET_CODE_FAILED,
+    RESET_CODE_SUCCESS_JUNIOR,
+    RESET_CODE_SUCCESS_COLLEGE
   } from './types';
 
 export const errorModalType = (type, text) => {
@@ -653,7 +658,6 @@ const skillCollegeFailed = (dispatch, text) => {
     });
 };
 
-
 const skillCollegeSuccess = (
     dispatch, text, 
     freePoint, passion, creativity, intelligence, love, patience, score
@@ -663,3 +667,175 @@ const skillCollegeSuccess = (
       payload: { text, freePoint, passion, creativity, intelligence, love, patience, score }
     });
 };
+
+export const resetCodeJunior = (
+    resetCode,
+    freePoint,
+    strength, wisdom, vitality, faith, agility,
+) => {
+    return async (dispatch) => {
+        dispatch({ type: RESET_CODE_JUNIOR });
+        const teamID = await AsyncStorage.getItem('teamID'); 
+
+        fetch(`${data.parseServerURL}/classes/Team/${teamID}`, {
+        method: 'GET',
+        headers: {
+            'X-Parse-Application-Id': data.parseAppId,
+            'X-Parse-REST-API-Key': data.paresApiKey
+        }
+        })
+        .then((response) => response.json())
+        .then((responseData) => {
+           console.log(responseData);
+           //判斷資料是不是一樣
+           if (
+            responseData.free_point === freePoint &&
+            responseData.strength === strength &&
+            responseData.wisdom === wisdom &&
+            responseData.vitality === vitality &&
+            responseData.faith === faith &&
+            responseData.agility === agility
+           ) {
+               //一樣就去檢查密碼是否正確
+               console.log('success');
+               checkResetCodeJunior(
+                   dispatch,
+                   resetCode,
+                   freePoint,
+                   strength, wisdom, vitality, faith, agility,
+                );
+           } else {
+            resetCodeFailed(dispatch, '傳送時發生錯誤！\n點擊下方配點選單鍵重新整理再嘗試輸入');
+           }
+        })
+        .catch((error) => {
+            console.log(error);
+            resetCodeFailed(dispatch, '發生不可預期的錯誤！\n請截圖至群組並重試');
+        });
+    };
+};
+
+const checkResetCodeJunior = (
+    dispatch,
+    resetCode,
+    freePoint,
+    strength, wisdom, vitality, faith, agility,
+) => {
+    const params = {
+        where: {
+            code: resetCode,
+            used: false
+        }
+    };
+    const esc = encodeURIComponent;
+    const query = Object.keys(params)
+        .map(k => `${esc(k)}=${esc(JSON.stringify(params[k]))}`)
+        .join('&');
+    fetch(`${data.parseServerURL}/classes/Reset?${query}`, {
+    method: 'GET',
+    headers: {
+        'X-Parse-Application-Id': data.parseAppId,
+        'X-Parse-REST-API-Key': data.paresApiKey
+    }
+    })
+    .then((response) => response.json())
+    .then((responseData) => {
+        console.log(responseData);
+        if (responseData.results[0] !== undefined) {
+            console.log('yes'); 
+            resetJunior(
+                dispatch,
+                freePoint,
+                strength, wisdom, vitality, faith, agility,
+                responseData.results[0].objectId
+            );
+        } else {
+          resetCodeFailed(dispatch, '序號錯誤或已被使用過！');
+        }
+    })
+    .catch((error) => {
+        console.log(error);
+        resetCodeFailed(dispatch, '傳送時發生錯誤！\n點擊下方配點選單鍵重新整理再嘗試輸入');
+    });
+};
+
+const resetJunior = async (
+    dispatch,
+    freePoint,
+    strength, wisdom, vitality, faith, agility,
+    resetCodeId
+) => {
+    const teamID = await AsyncStorage.getItem('teamID');  
+ 
+    const params = {
+      free_point: freePoint + strength + wisdom + vitality + faith + agility,
+      strength: 0,
+      wisdom: 0,
+      vitality: 0,
+      faith: 0,
+      agility: 0,
+      team_total_score: freePoint + strength + wisdom + vitality + faith + agility
+    };
+
+    
+    fetch(`${data.parseServerURL}/classes/Team/${teamID}`, {
+    method: 'PUT',
+    headers: {
+        'X-Parse-Application-Id': data.parseAppId,
+        'X-Parse-REST-API-Key': data.paresApiKey
+    },
+    body: JSON.stringify(params)
+    })
+    .then((success) => {
+       console.log(success);
+       resetCodeUsed(resetCodeId);
+       resetCodeSuccessJunior(
+           dispatch, 
+           '能力值重置成功！',
+           freePoint + strength + wisdom + vitality + faith + agility
+       );
+    })
+    .catch((err) => {
+      console.log(err);// error handling ..
+      resetCodeFailed(dispatch, '傳送時發生錯誤！\n點擊下方配點選單鍵重新整理再嘗試輸入');
+    });
+};
+
+const resetCodeUsed = (resetCodeId) => {
+    const params = {
+     used: true
+    };
+    
+    fetch(`${data.parseServerURL}/classes/Reset/${resetCodeId}`, {
+    method: 'PUT',
+    headers: {
+        'X-Parse-Application-Id': data.parseAppId,
+        'X-Parse-REST-API-Key': data.paresApiKey
+    },
+    body: JSON.stringify(params)
+    })
+    .then((success) => {
+       console.log(success);
+    })
+    .catch((err) => {
+      console.log(err);// error handling ..
+    });
+};
+
+
+const resetCodeSuccessJunior = (
+    dispatch, text, score
+) => {
+    dispatch({
+      type: RESET_CODE_SUCCESS_JUNIOR,
+      payload: { text, score }
+    });
+};
+
+const resetCodeFailed = (dispatch, text) => {
+    dispatch({
+      type: RESET_CODE_FAILED,
+      payload: text
+    });
+};
+

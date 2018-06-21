@@ -18,7 +18,12 @@ import {
     SKILL_JUNIOR_SUCCESS,
     SKILL_COLLEGE,
     SKILL_COLLEGE_FAILED,
-    SKILL_COLLEGE_SUCCESS
+    SKILL_COLLEGE_SUCCESS,
+    RESET_CODE_JUNIOR,
+    RESET_CODE_COLLEGE,
+    RESET_CODE_FAILED,
+    RESET_CODE_SUCCESS_JUNIOR,
+    RESET_CODE_SUCCESS_COLLEGE
   } from '../actions/types';
   
   const INITIAL_STATE = {
@@ -308,6 +313,42 @@ import {
           ]
         ],
       };
+      case RESET_CODE_JUNIOR:
+       return { ...state, loading: true };
+      case RESET_CODE_COLLEGE:
+        return { ...state, loading: true };
+      case RESET_CODE_FAILED:
+        return { 
+          ...state, 
+          showErrorModal: true, 
+          errorText: action.payload, 
+          loading: false,
+          resetCode: ''
+        };
+      case RESET_CODE_SUCCESS_JUNIOR:
+        return { 
+          ...state, 
+          showErrorModal: true, 
+          errorText: action.payload.text, 
+          loading: false,
+          //能力值
+          team_total_score: action.payload.score,
+          free_point: action.payload.score,
+          strength: 0,
+          wisdom: 0,
+          vitality: 0,
+          faith: 0,
+          agility: 0,
+          tableData: [[
+            0,
+            0,
+            0,
+            0,
+            0
+            ]
+          ],
+          resetCode: ''
+        };
       default:
         return state;
     }
