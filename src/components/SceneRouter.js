@@ -115,8 +115,8 @@ const styles = {
     ...Platform.select({
       ios: {
         ...ifIphoneX({
-          paddingBottom: 34,
-          height: 83
+          paddingBottom: 20,
+          height: 45
         },
         {
           paddingBottom: 0

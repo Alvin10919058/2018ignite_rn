@@ -25,7 +25,7 @@ class Rank extends Component {
     this.getTeamScore();
   }
 
-  //暴力解讓Rank重loading
+  //讓Rank重loading
   componentWillReceiveProps() {
     console.log('HIHIH');
     this.getTeamScore();
@@ -136,18 +136,13 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ player, auth }) => {
+const mapStateToProps = ({ player }) => {
   const {  
     batch, //國高or大專
    } = player;
 
-  const {
-    user
-  } = auth;
-
   return { 
     batch, //國高or大專
-    user
   };
 };
 

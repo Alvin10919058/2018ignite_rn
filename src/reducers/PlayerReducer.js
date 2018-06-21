@@ -12,7 +12,18 @@ import {
     MISSION_CODING,
     MISSION_CODE_FINISHED,
     MISSION_CODE_FAILED,
-    RESET_CODE_CHANGED
+    RESET_CODE_CHANGED,
+    SKILL_JUNIOR,
+    SKILL_JUNIOR_FAILED,
+    SKILL_JUNIOR_SUCCESS,
+    SKILL_COLLEGE,
+    SKILL_COLLEGE_FAILED,
+    SKILL_COLLEGE_SUCCESS,
+    RESET_CODE_JUNIOR,
+    RESET_CODE_COLLEGE,
+    RESET_CODE_FAILED,
+    RESET_CODE_SUCCESS_JUNIOR,
+    RESET_CODE_SUCCESS_COLLEGE
   } from '../actions/types';
   
   const INITIAL_STATE = {
@@ -238,6 +249,129 @@ import {
         };
       case RESET_CODE_CHANGED: 
         return { ...state, resetCode: action.payload };
+      case SKILL_JUNIOR:
+        return { ...state, loading: true };
+      case SKILL_JUNIOR_FAILED:
+        return { 
+          ...state, 
+          showErrorModal: true, 
+          errorText: action.payload, 
+          loading: false 
+        };
+      case SKILL_JUNIOR_SUCCESS:
+        return { 
+          ...state, 
+          showErrorModal: true, 
+          errorText: action.payload.text, 
+          loading: false,
+          //能力值
+          team_total_score: action.payload.score,
+          free_point: action.payload.freePoint,
+          strength: action.payload.strength,
+          wisdom: action.payload.wisdom,
+          vitality: action.payload.vitality,
+          faith: action.payload.faith,
+          agility: action.payload.agility,
+          tableData: [[
+            action.payload.strength,
+            action.payload.wisdom,
+            action.payload.vitality,
+            action.payload.faith,
+            action.payload.agility
+            ]
+          ],
+        };
+      case SKILL_COLLEGE:
+       return { ...state, loading: true };
+      case SKILL_COLLEGE_FAILED:
+        return { 
+          ...state, 
+          showErrorModal: true, 
+          errorText: action.payload, 
+          loading: false 
+        };
+      case SKILL_COLLEGE_SUCCESS:
+      return { 
+        ...state, 
+        showErrorModal: true, 
+        errorText: action.payload.text, 
+        loading: false,
+        //能力值
+        team_total_score: action.payload.score,
+        free_point: action.payload.freePoint,
+        passion: action.payload.passion,
+        creativity: action.payload.creativity,
+        intelligence: action.payload.intelligence,
+        love: action.payload.love,
+        patience: action.payload.patience,
+        tableData: [[
+          action.payload.passion,
+          action.payload.creativity,
+          action.payload.intelligence,
+          action.payload.love,
+          action.payload.patience
+          ]
+        ],
+      };
+      case RESET_CODE_JUNIOR:
+       return { ...state, loading: true };
+      case RESET_CODE_COLLEGE:
+        return { ...state, loading: true };
+      case RESET_CODE_FAILED:
+        return { 
+          ...state, 
+          showErrorModal: true, 
+          errorText: action.payload, 
+          loading: false,
+          resetCode: ''
+        };
+      case RESET_CODE_SUCCESS_JUNIOR:
+        return { 
+          ...state, 
+          showErrorModal: true, 
+          errorText: action.payload.text, 
+          loading: false,
+          //能力值
+          team_total_score: action.payload.score,
+          free_point: action.payload.score,
+          strength: 0,
+          wisdom: 0,
+          vitality: 0,
+          faith: 0,
+          agility: 0,
+          tableData: [[
+            0,
+            0,
+            0,
+            0,
+            0
+            ]
+          ],
+          resetCode: ''
+        };
+      case RESET_CODE_SUCCESS_COLLEGE:
+        return { 
+          ...state, 
+          showErrorModal: true, 
+          errorText: action.payload.text, 
+          loading: false,
+          //能力值
+          team_total_score: action.payload.score,
+          free_point: action.payload.score,
+          passion: 0,
+          creativity: 0,
+          intelligence: 0,
+          love: 0,
+          patience: 0,
+          tableData: [[
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+        };
       default:
         return state;
     }

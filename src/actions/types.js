@@ -26,3 +26,14 @@ export const MISSION_CODE_FAILED = 'mission_code_failed';
 //Skills
 
 export const RESET_CODE_CHANGED = 'reset_code_changed';
+export const SKILL_JUNIOR = 'skill_junior';
+export const SKILL_JUNIOR_FAILED = 'skill_junior_failed';
+export const SKILL_JUNIOR_SUCCESS = 'skill_junior_success';
+export const SKILL_COLLEGE = 'skill_college';
+export const SKILL_COLLEGE_FAILED = 'skill_college_failed';
+export const SKILL_COLLEGE_SUCCESS = 'skill_college_success';
+export const RESET_CODE_JUNIOR = 'reset_code_junior';
+export const RESET_CODE_COLLEGE = 'reset_code_college';
+export const RESET_CODE_FAILED = 'reset_code_failed';
+export const RESET_CODE_SUCCESS_JUNIOR = 'reset_code_success_junior';
+export const RESET_CODE_SUCCESS_COLLEGE = 'reset_code_success_college';

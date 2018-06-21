@@ -7,9 +7,14 @@ import {
 import { connect } from 'react-redux';
 import { Table, Row, Rows } from 'react-native-table-component';
 import { 
-  resetCodeChanged
+  resetCodeChanged,
+  skillJunior,
+  skillCollege,
+  resetCodeJunior,
+  resetCodeCollege,
+  errorModalType
 } from '../../actions';
-import { Button, SkillRow, InputModal } from '../common';
+import { Button, SkillRow, InputModal, Spinner } from '../common';
 
 const { height, width } = Dimensions.get('window');
 class Skills extends Component {
@@ -77,6 +82,37 @@ class Skills extends Component {
     );
   }
 
+  renderButton() {
+    const { btnAreaStyle } = styles;
+
+    return (
+      <View style={btnAreaStyle}>
+        <Button 
+          btnCustomStyle={{ 
+            backgroundColor: '#ED2A67', 
+            marginRight: width * 0.12, 
+            borderColor: '#ED2A67' 
+          }}
+          onPress={() => {
+            this.setState({ showResetModal: true });
+          }}
+        >
+          重置
+        </Button>
+        <Button 
+          btnCustomStyle={{ 
+            marginLeft: width * 0.12,
+          }}
+          onPress={() => {
+            this.setState({ showSureModal: true });
+          }}
+        >
+          送出
+        </Button>
+      </View>
+    );
+  }
+
   render() {
     const { 
       container,
@@ -86,9 +122,15 @@ class Skills extends Component {
       tableHead,
       tableHeadText,
       tableRow,
-      tableRowText,
-      btnAreaStyle
+      tableRowText
     } = styles;
+
+    if (this.props.loading) {
+      return (
+        <Spinner />
+      );
+    } 
+
     return (
       <View style={container}>
          <InputModal
@@ -102,12 +144,26 @@ class Skills extends Component {
            onPress={() => { 
              if (this.props.batch === '國高') {
                 this.props.resetCodeJunior(
-                 
+                  this.props.resetCode,
+                  this.props.free_point,
+                  this.props.strength,
+                  this.props.wisdom,
+                  this.props.vitality,
+                  this.props.faith,
+                  this.props.agility,
                 );
+                this.setState({ showResetModal: false }); 
              } else {
               this.props.resetCodeCollege(
-
+                  this.props.resetCode,
+                  this.props.free_point,
+                  this.props.passion,
+                  this.props.creativity,
+                  this.props.intelligence,
+                  this.props.love,
+                  this.props.patience,
               );
+              this.setState({ showResetModal: false }); 
              }
            }}
            inputText
@@ -125,26 +181,44 @@ class Skills extends Component {
            onPress={() => { 
             if (this.props.batch === '國高') {
               this.props.skillJunior(
-                this.state.temp1 + this.state.temp2 + this.state.temp3 + this.state.temp4 + this.state.temp5, 
-                this.props.strength + this.state.temp1,
-                this.props.wisdom + this.state.temp2,
-                this.props.vitality + this.state.temp3,
-                this.props.faith + this.state.temp4,
-                this.props.agility + this.state.temp5,
-                this.props.career
+                this.props.free_point,
+                this.props.strength,
+                this.props.wisdom,
+                this.props.vitality,
+                this.props.faith,
+                this.props.agility,
+                this.props.career,
+                this.state.temp1,
+                this.state.temp2,
+                this.state.temp3,
+                this.state.temp4,
+                this.state.temp5,
               );
+              this.setState({ showSureModal: false });
             } else {
              this.props.skillCollege(
-                this.state.temp1 + this.state.temp2 + this.state.temp3 + this.state.temp4 + this.state.temp5, 
-                this.props.passion + this.state.temp1,
-                this.props.creativity + this.state.temp2,
-                this.props.intelligence + this.state.temp3,
-                this.props.love + this.state.temp4,
-                this.props.patience + this.state.temp5,
-                this.props.career
+                this.props.free_point,
+                this.props.passion,
+                this.props.creativity,
+                this.props.intelligence,
+                this.props.love,
+                this.props.patience,
+                this.props.career,
+                this.state.temp1,
+                this.state.temp2,
+                this.state.temp3,
+                this.state.temp4,
+                this.state.temp5,
              );
+             this.setState({ showSureModal: false });
             }
            }}
+        />
+        <InputModal
+          titleText={this.props.errorText}
+          scrollable={false}
+          visible={this.props.showErrorModal}
+          onPress={() => { this.props.errorModalType(false, ''); }}
         />
         <View style={freePointContainer}>
           <Text style={freePointTextStyle}>自由點數</Text>
@@ -174,30 +248,7 @@ class Skills extends Component {
             />
         </Table>
         {this.renderSkill()}
-        <View style={btnAreaStyle}>
-          <Button 
-            btnCustomStyle={{ 
-              backgroundColor: '#ED2A67', 
-              marginRight: width * 0.12, 
-              borderColor: '#ED2A67' 
-            }}
-            onPress={() => {
-              this.setState({ showResetModal: true });
-            }}
-          >
-            重置
-          </Button>
-          <Button 
-            btnCustomStyle={{ 
-              marginLeft: width * 0.12,
-            }}
-            onPress={() => {
-              this.setState({ showSureModal: true });
-            }}
-          >
-            送出
-          </Button>
-        </View>
+        {this.renderButton()}
       </View>
     );
   }
@@ -258,6 +309,9 @@ const mapStateToProps = ({ player }) => {
     tableHead,
     tableData,
     resetCode,
+    showErrorModal,
+    errorText,
+    loading,
 
     free_point, //自由點數
 
@@ -283,6 +337,9 @@ const mapStateToProps = ({ player }) => {
     tableHead,
     tableData,
     resetCode,
+    showErrorModal,
+    errorText,
+    loading,
 
     free_point, //自由點數
 
@@ -303,5 +360,10 @@ const mapStateToProps = ({ player }) => {
 };
 
 export default connect(mapStateToProps, {
-  resetCodeChanged
+  resetCodeChanged,
+  skillJunior,
+  skillCollege,
+  resetCodeJunior,
+  resetCodeCollege,
+  errorModalType
 })(Skills);
