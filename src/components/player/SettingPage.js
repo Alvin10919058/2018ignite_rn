@@ -4,15 +4,20 @@ import {
   ScrollView,
   Image,
   AsyncStorage,
-  Dimensions
+  Dimensions,
+  TouchableOpacity
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Parse from 'parse/react-native';
-import { CardList } from '../common';
+import { CardList, InputModal } from '../common';
 import { Logo } from '../../images';
 
 const { height, width } = Dimensions.get('window');
 class SettingPage extends Component {
+
+  state = {
+    showModal: false
+  }
 
   logout() {
     Parse.User.logOut()
@@ -35,7 +40,16 @@ class SettingPage extends Component {
     return (
      
       <View style={container}>
-        <View style={{ flex: 0.5, justifyContent: 'center' }}>
+         <InputModal
+            titleText={'不要點我！\n(／‵Д′)／~ ╧╧'}
+            scrollable={false}
+            visible={this.state.showModal}
+            onPress={() => { this.setState({ showModal: false }); }}
+         />
+        <TouchableOpacity 
+          onPress={() => { this.setState({ showModal: true }); }} 
+          style={{ flex: 0.5, justifyContent: 'center' }}
+        >
           <Image
               style={{ 
                 height: width / 3,
@@ -46,7 +60,7 @@ class SettingPage extends Component {
               }}
               source={Logo}
           />
-        </View>
+        </TouchableOpacity>
         <ScrollView style={cardListStyle}>
             <CardList
               listCustomStyle={cardListCustom} 
