@@ -105,6 +105,8 @@ componentDidMount() {
   //value: 要給幾點, kinds: 哪種類別
   getTeam(batch, teamName, value, kinds, stage) {
     const params = {
+        include: 'career',
+        //limit: 1000,
         where: {
           batch,
           name: teamName
@@ -131,7 +133,9 @@ componentDidMount() {
           value, 
           kinds, 
           responseData.results[0][kinds],
-          stage
+          stage,
+          responseData.results[0].career.name,
+          responseData.results[0].team_total_score
         );
     })
     .catch((error) => {
@@ -144,9 +148,101 @@ componentDidMount() {
   }
 
   //value: 要給幾點, kinds: 哪種類別, originalValue: 原來類別的分數
-  putTeam(teamID, batch, value, kinds, originalValue, stage) {
+  putTeam(teamID, batch, value, kinds, originalValue, stage, career, score) {
+    let addScore = 0;
+
+    if (batch === '國高') {
+      if (career === '戰士') {
+        addScore = value;
+      } else if (career === '特勤部隊') {
+        if (kinds === 'strength') {
+          addScore = value * 2;
+        } else if (kinds === 'agility') {
+          addScore = value * 1.5;
+        } else {
+          addScore = value;
+        }
+      } else if (career === '急襲部隊') {
+        if (kinds === 'agility') {
+          addScore = value * 2;
+        } else if (kinds === 'strength') {
+          addScore = value * 1.5;
+        } else {
+          addScore = value;
+        }
+      } else if (career === '狙擊部隊') {
+        if (kinds === 'faith') {
+          addScore = value * 2;
+        } else if (kinds === 'vitality') {
+          addScore = value * 1.5;
+        } else {
+          addScore = value;
+        }
+      } else if (career === '防禦部隊') {
+        if (kinds === 'vitality') {
+          addScore = value * 2;
+        } else if (kinds === 'wisdom') {
+          addScore = value * 1.5;
+        } else {
+          addScore = value;
+        }
+      } else if (career === '生化小組') {
+        if (kinds === 'wisdom') {
+          addScore = value * 2;
+        } else if (kinds === 'faith') {
+          addScore = value * 1.5;
+        } else {
+          addScore = value;
+        }
+      } 
+    } else if (batch === '大專') {
+      if (career === '戰士') {
+        addScore = value;
+      } else if (career === '特勤部隊') {
+        if (kinds === 'passion') {
+          addScore = value * 2;
+        } else if (kinds === 'creativity') {
+          addScore = value * 1.5;
+        } else {
+          addScore = value;
+        }
+      } else if (career === '急襲部隊') {
+        if (kinds === 'creativity') {
+          addScore = value * 2;
+        } else if (kinds === 'passion') {
+          addScore = value * 1.5;
+        } else {
+          addScore = value;
+        }
+      } else if (career === '狙擊部隊') {
+        if (kinds === 'intelligence') {
+          addScore = value * 2;
+        } else if (kinds === 'patience') {
+          addScore = value * 1.5;
+        } else {
+          addScore = value;
+        }
+      } else if (career === '防禦部隊') {
+        if (kinds === 'patience') {
+          addScore = value * 2;
+        } else if (kinds === 'love') {
+          addScore = value * 1.5;
+        } else {
+          addScore = value;
+        }
+      } else if (career === '生化小組') {
+        if (kinds === 'love') {
+          addScore = value * 2;
+        } else if (kinds === 'intelligence') {
+          addScore = value * 1.5;
+        } else {
+          addScore = value;
+        }
+      } 
+    }
+
     const params = {
-        
+      team_total_score: score + addScore
     };
 
     params[kinds] = originalValue + value;
