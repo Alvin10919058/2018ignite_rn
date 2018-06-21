@@ -755,7 +755,7 @@ const checkResetCodeJunior = (
     })
     .catch((error) => {
         console.log(error);
-        resetCodeFailed(dispatch, '傳送時發生錯誤！\n點擊下方配點選單鍵重新整理再嘗試輸入');
+        resetCodeFailed(dispatch, '發生不可預期的錯誤！\n請截圖至群組並重試');
     });
 };
 
@@ -797,7 +797,7 @@ const resetJunior = async (
     })
     .catch((err) => {
       console.log(err);// error handling ..
-      resetCodeFailed(dispatch, '傳送時發生錯誤！\n點擊下方配點選單鍵重新整理再嘗試輸入');
+      resetCodeFailed(dispatch, '發生不可預期的錯誤！\n請截圖至群組並重試');
     });
 };
 
@@ -822,12 +822,154 @@ const resetCodeUsed = (resetCodeId) => {
     });
 };
 
+export const resetCodeCollege = (
+    resetCode,
+    freePoint,
+    passion, creativity, intelligence, love, patience,
+) => {
+    return async (dispatch) => {
+        dispatch({ type: RESET_CODE_COLLEGE });
+        const teamID = await AsyncStorage.getItem('teamID'); 
+
+        fetch(`${data.parseServerURL}/classes/Team/${teamID}`, {
+        method: 'GET',
+        headers: {
+            'X-Parse-Application-Id': data.parseAppId,
+            'X-Parse-REST-API-Key': data.paresApiKey
+        }
+        })
+        .then((response) => response.json())
+        .then((responseData) => {
+           console.log(responseData);
+           //判斷資料是不是一樣
+           if (
+            responseData.free_point === freePoint &&
+            responseData.passion === passion &&
+            responseData.creativity === creativity &&
+            responseData.intelligence === intelligence &&
+            responseData.love === love &&
+            responseData.patience === patience
+           ) {
+               //一樣就去檢查密碼是否正確
+               console.log('success');
+               checkResetCodeCollege(
+                   dispatch,
+                   resetCode,
+                   freePoint,
+                   passion, creativity, intelligence, love, patience,
+                );
+           } else {
+            resetCodeFailed(dispatch, '傳送時發生錯誤！\n點擊下方配點選單鍵重新整理再嘗試輸入');
+           }
+        })
+        .catch((error) => {
+            console.log(error);
+            resetCodeFailed(dispatch, '發生不可預期的錯誤！\n請截圖至群組並重試');
+        });
+    };
+};
+
+const checkResetCodeCollege = (
+    dispatch,
+    resetCode,
+    freePoint,
+    passion, creativity, intelligence, love, patience,
+) => {
+    const params = {
+        where: {
+            code: resetCode,
+            used: false
+        }
+    };
+    const esc = encodeURIComponent;
+    const query = Object.keys(params)
+        .map(k => `${esc(k)}=${esc(JSON.stringify(params[k]))}`)
+        .join('&');
+    fetch(`${data.parseServerURL}/classes/Reset?${query}`, {
+    method: 'GET',
+    headers: {
+        'X-Parse-Application-Id': data.parseAppId,
+        'X-Parse-REST-API-Key': data.paresApiKey
+    }
+    })
+    .then((response) => response.json())
+    .then((responseData) => {
+        console.log(responseData);
+        if (responseData.results[0] !== undefined) {
+            console.log('yes'); 
+            resetCollege(
+                dispatch,
+                freePoint,
+                passion, creativity, intelligence, love, patience,
+                responseData.results[0].objectId
+            );
+        } else {
+          resetCodeFailed(dispatch, '序號錯誤或已被使用過！');
+        }
+    })
+    .catch((error) => {
+        console.log(error);
+        resetCodeFailed(dispatch, '發生不可預期的錯誤！\n請截圖至群組並重試');
+    });
+};
+
+const resetCollege = async (
+    dispatch,
+    freePoint,
+    passion, creativity, intelligence, love, patience,
+    resetCodeId
+) => {
+    const teamID = await AsyncStorage.getItem('teamID');  
+ 
+    const params = {
+      free_point: freePoint + passion + creativity + intelligence + love + patience,
+      passion: 0,
+      creativity: 0,
+      intelligence: 0,
+      love: 0,
+      patience: 0,
+      team_total_score: freePoint + passion + creativity + intelligence + love + patience,
+    };
+
+    
+    fetch(`${data.parseServerURL}/classes/Team/${teamID}`, {
+    method: 'PUT',
+    headers: {
+        'X-Parse-Application-Id': data.parseAppId,
+        'X-Parse-REST-API-Key': data.paresApiKey
+    },
+    body: JSON.stringify(params)
+    })
+    .then((success) => {
+       console.log(success);
+       resetCodeUsed(resetCodeId);
+       resetCodeSuccessCollege(
+           dispatch, 
+           '能力值重置成功！',
+           freePoint + passion + creativity + intelligence + love + patience
+       );
+    })
+    .catch((err) => {
+      console.log(err);// error handling ..
+      resetCodeFailed(dispatch, '發生不可預期的錯誤！\n請截圖至群組並重試');
+    });
+};
+
 
 const resetCodeSuccessJunior = (
     dispatch, text, score
 ) => {
     dispatch({
       type: RESET_CODE_SUCCESS_JUNIOR,
+      payload: { text, score }
+    });
+};
+
+const resetCodeSuccessCollege = (
+    dispatch, text, score
+) => {
+    dispatch({
+      type: RESET_CODE_SUCCESS_COLLEGE,
       payload: { text, score }
     });
 };

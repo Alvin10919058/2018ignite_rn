@@ -349,6 +349,29 @@ import {
           ],
           resetCode: ''
         };
+      case RESET_CODE_SUCCESS_COLLEGE:
+        return { 
+          ...state, 
+          showErrorModal: true, 
+          errorText: action.payload.text, 
+          loading: false,
+          //能力值
+          team_total_score: action.payload.score,
+          free_point: action.payload.score,
+          passion: 0,
+          creativity: 0,
+          intelligence: 0,
+          love: 0,
+          patience: 0,
+          tableData: [[
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+        };
       default:
         return state;
     }

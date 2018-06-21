@@ -11,6 +11,7 @@ import {
   skillJunior,
   skillCollege,
   resetCodeJunior,
+  resetCodeCollege,
   errorModalType
 } from '../../actions';
 import { Button, SkillRow, InputModal, Spinner } from '../common';
@@ -154,6 +155,7 @@ class Skills extends Component {
                 this.setState({ showResetModal: false }); 
              } else {
               this.props.resetCodeCollege(
+                  this.props.resetCode,
                   this.props.free_point,
                   this.props.passion,
                   this.props.creativity,
@@ -362,5 +364,6 @@ export default connect(mapStateToProps, {
   skillJunior,
   skillCollege,
   resetCodeJunior,
+  resetCodeCollege,
   errorModalType
 })(Skills);
