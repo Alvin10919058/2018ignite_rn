@@ -399,7 +399,7 @@ render() {
      <View style={{ flex: 1, backgroundColor: '#fff' }}>
         <InputModal  
           titleText={this.state.InputModalSureText}
-          textCustomStyle={{ textAlign: 'left' }}
+          textCustomStyle={{ textAlign: 'left', paddingLeft: width * 0.25 }}
           visible={this.state.showSureModal}
           scrollable
           cancelButton
