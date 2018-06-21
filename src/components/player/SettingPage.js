@@ -9,7 +9,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import Parse from 'parse/react-native';
 import { CardList } from '../common';
-import { Logo, ChevronRight } from '../../images';
+import { Logo } from '../../images';
 
 const { height, width } = Dimensions.get('window');
 class SettingPage extends Component {
