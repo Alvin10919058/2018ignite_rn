@@ -37,10 +37,6 @@ class GiveScore extends React.Component {
       teams: PickerData.teamSelection,
       selectKinds: '',
       kinds: PickerData.T1teamSelection,
-      selectT1Kinds: '',
-      T1kinds: PickerData.T1teamSelection,
-      selectT2Kinds: '',
-      T2kinds: PickerData.T2teamSelection,
       selectNumber: 0,
       number: PickerData.numberSelection
     };
@@ -427,25 +423,33 @@ render() {
         <View style={styles.container}>
           <SwitchButton
             onValueChange={(val) => {
-              const T1tmp = this.state.selectT1Kinds;
-              const T2tmp = this.state.selectT2Kinds;
               if (val === 1) {
                 this.setState({ 
                   activeSwitch: val, 
                   selectBatch: '國高',
-                  selectKinds: T1tmp,
-                  kinds: PickerData.T1teamSelection
+                  selectStage: '',
+                  stage: PickerData.stageSelection,
+                  selectTeam: '',
+                  teams: PickerData.teamSelection,
+                  selectKinds: '',
+                  kinds: PickerData.T1teamSelection,
+                  selectNumber: 0,
+                  number: PickerData.numberSelection
                 });
               } else {
                 this.setState({ 
                   activeSwitch: val, 
                   selectBatch: '大專',
-                  selectKinds: T2tmp,
-                  kinds: PickerData.T2teamSelection
+                  selectStage: '',
+                  stage: PickerData.stageSelection,
+                  selectTeam: '',
+                  teams: PickerData.teamSelection,
+                  selectKinds: '',
+                  kinds: PickerData.T2teamSelection,
+                  selectNumber: 0,
+                  number: PickerData.numberSelection
                 });
               }
-              // Actions.pop();
-              // Actions.giveScore();
             }} 
             text1='國高'                      
             text2='大專'                      
@@ -464,7 +468,10 @@ render() {
 
           <View style={styles.pickerRowStyle}>
             <Text style={styles.labelStyle}>關卡</Text>
-            <RNPickerSelect
+            {
+              this.state.activeSwitch === 1
+              &&
+              <RNPickerSelect
                 placeholder={{
                     label: '請選擇關卡',
                     value: null,
@@ -483,12 +490,40 @@ render() {
                 ref={(el) => {
                     this.inputRefs.picker = el;
                 }}
-            />
+              />
+            }
+            {
+              this.state.activeSwitch === 2
+              &&
+              <RNPickerSelect
+                  placeholder={{
+                      label: '請選擇關卡',
+                      value: null,
+                  }}
+                  items={this.state.stage}
+                  onValueChange={(value) => {
+                      this.setState({
+                        selectStage: value,
+                      });
+                  }}
+                  onDownArrow={() => {
+                      this.inputRefs.picker2.togglePicker();
+                  }}
+                  style={{ ...pickerSelectStyles }}
+                  value={this.state.selectTeam}
+                  ref={(el) => {
+                      this.inputRefs.picker = el;
+                  }}
+              />
+            }
           </View>
 
           <View style={styles.pickerRowStyle}>
             <Text style={styles.labelStyle}>小隊</Text>
-            <RNPickerSelect
+            {
+              this.state.activeSwitch === 1
+              &&
+              <RNPickerSelect
                 placeholder={{
                     label: '請選擇小隊',
                     value: null,
@@ -510,11 +545,36 @@ render() {
                 ref={(el) => {
                     this.inputRefs.picker2 = el;
                 }}
-            />
+              />
+            }
+            {
+              this.state.activeSwitch === 2
+              &&
+              <RNPickerSelect
+                placeholder={{
+                    label: '請選擇小隊',
+                    value: null,
+                }}
+                items={this.state.teams}
+                onValueChange={(value) => {
+                    this.setState({
+                      selectTeam: value,
+                    });
+                }}
+                onUpArrow={() => {
+                  this.inputRefs.picker.togglePicker();
+                }}
+                onDownArrow={() => {
+                    this.inputRefs.picker3.togglePicker();
+                }}
+                style={{ ...pickerSelectStyles }}
+                value={this.state.selectTeam}
+                ref={(el) => {
+                    this.inputRefs.picker2 = el;
+                }}
+              />
+            }
           </View>
-
-            {console.log(this.state.selectKinds)}
-
           <View 
             style={{ 
               flexDirection: 'row', 
@@ -534,11 +594,10 @@ render() {
                         value: null,
                     }}
                     
-                    items={this.state.T1kinds}
-                    value={this.state.selectT1Kinds}
+                    items={this.state.kinds}
+                    value={this.state.selectKinds}
                     onValueChange={(value) => {
                         this.setState({
-                          selectT1Kinds: value,
                           selectKinds: value
                         });
                     }}
@@ -564,11 +623,10 @@ render() {
                         value: null,
                     }}
                     
-                    items={this.state.T2kinds}
-                    value={this.state.selectT2Kinds}
+                    items={this.state.kinds}
+                    value={this.state.selectKinds}
                     onValueChange={(value) => {
                         this.setState({
-                          selectT2Kinds: value,
                           selectKinds: value
                         });
                     }}
@@ -589,7 +647,10 @@ render() {
 
             <View style={styles.row3col}>
               <Text style={styles.labelStyle}>點數</Text>
-              <RNPickerSelect
+              {
+                this.state.activeSwitch === 1
+                &&
+                <RNPickerSelect
                   placeholder={{
                       label: '請選擇給予點數',
                       value: null,
@@ -609,7 +670,33 @@ render() {
                   ref={(el) => {
                       this.inputRefs.picker4 = el;
                   }}
-              />
+                />
+              }
+              {
+                this.state.activeSwitch === 2
+                &&
+                <RNPickerSelect
+                  placeholder={{
+                      label: '請選擇給予點數',
+                      value: null,
+                  }}
+                  items={this.state.number}
+                  onValueChange={(value) => {
+                      this.setState({
+                        selectNumber: value,
+                      });
+                  }}
+                  onUpArrow={() => {
+                      this.inputRefs.picker3.togglePicker();
+                  }}
+                  
+                  style={{ ...pickerSelectStyles }}
+                  value={this.state.selectNumber}
+                  ref={(el) => {
+                      this.inputRefs.picker4 = el;
+                  }}
+                />
+              }           
             </View>
           </View> 
           {this.renderButton()}
