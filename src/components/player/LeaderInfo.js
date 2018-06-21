@@ -5,7 +5,8 @@ import {
   Dimensions,
   Image,
   WebView,
-  Linking
+  Linking,
+  Platform
 } from 'react-native';
 import { connect } from 'react-redux';
 import { 
@@ -16,6 +17,7 @@ import {
 } from '../../actions';
 import { BackgroundImage, InputModal, Spinner } from '../common';
 import { Biochemical, Defense, Sniper, Special, Soldier, Assault } from '../../images';
+import { ifIphoneX } from '../IphoneXDetector';
 //import data from '../../Setting.json';
 
 const { height, width } = Dimensions.get('window');
@@ -250,9 +252,25 @@ const styles = {
     backgroundColor: 'white'
   },
   careerStyle: {
-    height: height / 1.1,
-    width: width / 1.1,
-    resizeMode: Image.resizeMode.contain
+    ...Platform.select({
+      ios: {
+        ...ifIphoneX({
+          height: height / 1.5,
+          width: width / 1.5,
+          resizeMode: Image.resizeMode.contain
+        },
+        {
+          height: height / 1.1,
+          width: width / 1.1,
+          resizeMode: Image.resizeMode.contain
+        })
+      },
+      android: {
+        height: height / 1.1,
+        width: width / 1.1,
+        resizeMode: Image.resizeMode.contain
+      }
+    })
   },
   infoStyle: {
     position: 'absolute',
