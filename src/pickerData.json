@@ -4,8 +4,12 @@
             "value": "開場"
         },
         {
-            "label": "MP",
-            "value": "MP"
+            "label": "MissionPOP",
+            "value": "Mission\nPOP"
+        },
+        {
+            "label": "SceneRiddle",
+            "value": "Scene\nRiddle"
         },
         {
             "label": "大地",
