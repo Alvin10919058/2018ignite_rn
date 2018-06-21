@@ -15,7 +15,10 @@ import {
     RESET_CODE_CHANGED,
     SKILL_JUNIOR,
     SKILL_JUNIOR_FAILED,
-    SKILL_JUNIOR_SUCCESS
+    SKILL_JUNIOR_SUCCESS,
+    SKILL_COLLEGE,
+    SKILL_COLLEGE_FAILED,
+    SKILL_COLLEGE_SUCCESS
   } from '../actions/types';
   
   const INITIAL_STATE = {
@@ -273,6 +276,38 @@ import {
             ]
           ],
         };
+      case SKILL_COLLEGE:
+       return { ...state, loading: true };
+      case SKILL_COLLEGE_FAILED:
+        return { 
+          ...state, 
+          showErrorModal: true, 
+          errorText: action.payload, 
+          loading: false 
+        };
+      case SKILL_COLLEGE_SUCCESS:
+      return { 
+        ...state, 
+        showErrorModal: true, 
+        errorText: action.payload.text, 
+        loading: false,
+        //能力值
+        team_total_score: action.payload.score,
+        free_point: action.payload.freePoint,
+        passion: action.payload.passion,
+        creativity: action.payload.creativity,
+        intelligence: action.payload.intelligence,
+        love: action.payload.love,
+        patience: action.payload.patience,
+        tableData: [[
+          action.payload.passion,
+          action.payload.creativity,
+          action.payload.intelligence,
+          action.payload.love,
+          action.payload.patience
+          ]
+        ],
+      };
       default:
         return state;
     }

@@ -29,4 +29,7 @@ export const RESET_CODE_CHANGED = 'reset_code_changed';
 export const SKILL_JUNIOR = 'skill_junior';
 export const SKILL_JUNIOR_FAILED = 'skill_junior_failed';
 export const SKILL_JUNIOR_SUCCESS = 'skill_junior_success';
+export const SKILL_COLLEGE = 'skill_college';
+export const SKILL_COLLEGE_FAILED = 'skill_college_failed';
+export const SKILL_COLLEGE_SUCCESS = 'skill_college_success';
 

@@ -17,7 +17,10 @@ import {
     RESET_CODE_CHANGED,
     SKILL_JUNIOR,
     SKILL_JUNIOR_FAILED,
-    SKILL_JUNIOR_SUCCESS
+    SKILL_JUNIOR_SUCCESS,
+    SKILL_COLLEGE,
+    SKILL_COLLEGE_FAILED,
+    SKILL_COLLEGE_SUCCESS
   } from './types';
 
 export const errorModalType = (type, text) => {
@@ -409,7 +412,7 @@ export const skillJunior = (
            ) {
                //一樣就去加分數
                console.log('success');
-               countScore(
+               countScoreJunior(
                    dispatch,
                    freePoint,
                    strength, wisdom, vitality, faith, agility,
@@ -427,7 +430,7 @@ export const skillJunior = (
     };
 };
 
-const countScore = async (
+const countScoreJunior = async (
     dispatch,
     freePoint,
     strength, wisdom, vitality, faith, agility,
@@ -516,5 +519,147 @@ const skillJuniorSuccess = (
     dispatch({
       type: SKILL_JUNIOR_SUCCESS,
       payload: { text, freePoint, strength, wisdom, vitality, faith, agility, score }
+    });
+};
+
+export const skillCollege = (
+    freePoint,
+    passion, creativity, intelligence, love, patience,
+    career,
+    temp1, temp2, temp3, temp4, temp5
+) => {
+    return async (dispatch) => {
+        dispatch({ type: SKILL_COLLEGE });
+        const teamID = await AsyncStorage.getItem('teamID'); 
+
+        fetch(`${data.parseServerURL}/classes/Team/${teamID}`, {
+        method: 'GET',
+        headers: {
+            'X-Parse-Application-Id': data.parseAppId,
+            'X-Parse-REST-API-Key': data.paresApiKey
+        }
+        })
+        .then((response) => response.json())
+        .then((responseData) => {
+           console.log(responseData);
+           //判斷資料是不是一樣
+           if (
+            responseData.free_point === freePoint &&
+            responseData.passion === passion &&
+            responseData.creativity === creativity &&
+            responseData.intelligence === intelligence &&
+            responseData.love === love &&
+            responseData.patience === patience
+           ) {
+               //一樣就去加分數
+               console.log('success');
+               countScoreCollege(
+                   dispatch,
+                   freePoint,
+                   passion, creativity, intelligence, love, patience,
+                   career,
+                   temp1, temp2, temp3, temp4, temp5
+                );
+           } else {
+            skillCollegeFailed(dispatch, '傳送時發生錯誤！\n點擊下方配點選單鍵重新整理再嘗試輸入');
+           }
+        })
+        .catch((error) => {
+            console.log(error);
+            skillCollegeFailed(dispatch, '發生不可預期的錯誤！\n請截圖至群組並重試');
+        });
+    };
+};
+
+const countScoreCollege = async (
+    dispatch,
+    freePoint,
+    passion, creativity, intelligence, love, patience,
+    career,
+    temp1, temp2, temp3, temp4, temp5
+) => {
+    const teamID = await AsyncStorage.getItem('teamID');  
+ 
+    let score = 0;
+
+    if (career.name === '戰士') {
+       score = freePoint + passion + creativity + intelligence + love + patience;
+    } else if (career.name === '特勤部隊') {
+       score = (passion + temp1) * 2 + (creativity + temp2) * 1.5 + (intelligence + temp3) + 
+       (love + temp4) + (patience + temp5) + (freePoint - temp1 - temp2 - temp3 - temp4 - temp5);
+       console.log(score);
+    } else if (career.name === '急襲部隊') {
+       score = (passion + temp1) * 1.5 + (creativity + temp2) * 2 + (intelligence + temp3) + 
+       (love + temp4) + (patience + temp5) + (freePoint - temp1 - temp2 - temp3 - temp4 - temp5);
+       console.log(score);
+    } else if (career.name === '狙擊部隊') {
+        score = (passion + temp1) + (creativity + temp2) + (intelligence + temp3) * 2 + 
+        (love + temp4) + (patience + temp5) * 1.5 + (freePoint - temp1 - temp2 - temp3 - temp4 - temp5);
+       console.log(score);
+    } else if (career.name === '防禦部隊') {
+        score = (passion + temp1) + (creativity + temp2) + (intelligence + temp3) + 
+        (love + temp4) * 1.5 + (patience + temp5) * 2 + (freePoint - temp1 - temp2 - temp3 - temp4 - temp5);
+       console.log(score);
+    } else if (career.name === '生化小組') {
+        score = (passion + temp1) + (creativity + temp2) + (intelligence + temp3) * 1.5 + 
+        (love + temp4) * 2 + (patience + temp5) + (freePoint - temp1 - temp2 - temp3 - temp4 - temp5);
+       console.log(score);
+    } 
+   
+
+    const params = {
+      free_point: freePoint - temp1 - temp2 - temp3 - temp4 - temp5,
+      passion: passion + temp1,
+      creativity: creativity + temp2,
+      intelligence: intelligence + temp3,
+      love: love + temp4,
+      patience: patience + temp5,
+      team_total_score: score
+    };
+
+    
+    fetch(`${data.parseServerURL}/classes/Team/${teamID}`, {
+    method: 'PUT',
+    headers: {
+        'X-Parse-Application-Id': data.parseAppId,
+        'X-Parse-REST-API-Key': data.paresApiKey
+    },
+    body: JSON.stringify(params)
+    })
+    .then((success) => {
+       console.log(success);
+       skillCollegeSuccess(
+           dispatch, '配點成功！',
+           freePoint - temp1 - temp2 - temp3 - temp4 - temp5,
+           passion + temp1,
+           creativity + temp2,
+           intelligence + temp3,
+           love + temp4,
+           patience + temp5,
+           score
+       );
+    })
+    .catch((err) => {
+      console.log(err);// error handling ..
+      skillCollegeFailed(dispatch, '發生不可預期的錯誤！\n請截圖至群組並重試');
+    });
+};
+
+
+const skillCollegeFailed = (dispatch, text) => {
+    dispatch({
+      type: SKILL_COLLEGE_FAILED,
+      payload: text
+    });
+};
+
+
+const skillCollegeSuccess = (
+    dispatch, text, 
+    freePoint, passion, creativity, intelligence, love, patience, score
+) => {
+    dispatch({
+      type: SKILL_COLLEGE_SUCCESS,
+      payload: { text, freePoint, passion, creativity, intelligence, love, patience, score }
     });
 };

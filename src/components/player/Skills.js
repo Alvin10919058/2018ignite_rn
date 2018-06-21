@@ -9,6 +9,7 @@ import { Table, Row, Rows } from 'react-native-table-component';
 import { 
   resetCodeChanged,
   skillJunior,
+  skillCollege,
   errorModalType
 } from '../../actions';
 import { Button, SkillRow, InputModal, Spinner } from '../common';
@@ -345,5 +346,6 @@ const mapStateToProps = ({ player }) => {
 export default connect(mapStateToProps, {
   resetCodeChanged,
   skillJunior,
+  skillCollege,
   errorModalType
 })(Skills);
