@@ -222,6 +222,86 @@ componentDidMount() {
     });
   }
 
+renderButton() {
+  return (
+    <Button 
+    btnCustomStyle={{ 
+       backgroundColor: '#69aeb2',
+       borderColor: '#69aeb2',
+       marginTop: height * 0.031,
+       marginBottom: height * 0.027
+     }}
+   onPress={() => {
+     if (
+        this.state.selectBatch && 
+        this.state.selectTeam && 
+        this.state.selectNumber && 
+        this.state.selectKinds && 1 !== null) {
+        const textTmp = '請檢查資料是否正確:\n\n梯次：'
+          + this.state.selectBatch + '\n關卡：' 
+          + this.state.selectStage + '\n小隊:'
+          + this.state.selectTeam + '\n種類:'
+          + this.state.selectKinds + '\n點數:' 
+          + this.state.selectNumber + '\n';
+          this.setState({ 
+            InputModalSureText: textTmp,
+            showSureModal: true,
+          });
+        } else {
+          console.log('here');
+          this.setState({ 
+            InputModalAlertText: '您還有未輸入的欄位哦！',
+            showAlertModal: true,
+          });
+        }
+        console.log(
+          this.state.selectBatch, 
+          this.state.selectStage, 
+          this.state.selectTeam, 
+          this.state.selectNumber, 
+          this.state.selectKinds
+        );
+      }}
+    >
+      送出
+   </Button>
+  );
+}
+
+renderHistory() {
+  const { head, row, headText, text, dataWrapper, tableContainer } = styles;
+  return (
+    <View style={tableContainer}>
+      <Table borderStyle={{ borderWidth: 2, borderColor: '#ffffff' }}>
+        <Row 
+          data={this.state.tableHead} 
+          widthArr={this.state.widthArr} 
+          style={head} 
+          textStyle={headText} 
+        />
+      </Table>
+    
+      <ScrollView style={dataWrapper}>
+        <Table 
+          borderStyle={{ borderWidth: 2, borderColor: '#ffffff' }}
+        >
+          {
+            this.state.tableData.map((rowData, index) => (
+              <Row
+                key={index}
+                data={rowData}
+                widthArr={this.state.widthArr}
+                style={[row, index % 2 && { backgroundColor: '#bbc3dc' }]}
+                textStyle={text}
+              />
+            ))
+          }
+        </Table>
+      </ScrollView>
+    </View>
+  );
+}
+
 render() {
     return (
      <View style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -435,64 +515,10 @@ render() {
                   }}
               />
             </View>
-          </View>
-             
-            <Button 
-               btnCustomStyle={{ 
-                  backgroundColor: '#69aeb2',
-                  borderColor: '#69aeb2',
-                  marginTop: height * 0.031,
-                  marginBottom: height * 0.027
-                }}
-              onPress={() => {
-                if (this.state.selectBatch && this.state.selectTeam && this.state.selectNumber && this.state.selectKinds && 1 !== null) {
-                const textTmp = '請檢查資料是否正確:\n\n梯次：' + this.state.selectBatch + '\n關卡：' + this.state.selectStage + '\n小隊:' + this.state.selectTeam + '\n種類:' + this.state.selectKinds + '\n點數:' + this.state.selectNumber + '\n';
-                  this.setState({ 
-                    InputModalSureText: textTmp,
-                    showSureModal: true,
-                  });
-                } else {
-                  console.log('here');
-                  this.setState({ 
-                    InputModalAlertText: '您還有未輸入的欄位哦！',
-                    showAlertModal: true,
-                  });
-                }
-                console.log(this.state.selectBatch, this.state.selectStage, this.state.selectTeam, this.state.selectNumber, this.state.selectKinds);
-              }} 
-            >
-              送出
-            </Button>
+          </View> 
+          {this.renderButton()}
         </View>
-         
-        <View style={{ marginLeft: width * 0.02, marginRight: width * 0.02, flex: 1 }}>
-          <Table borderStyle={{ borderWidth: 2, borderColor: '#ffffff' }}>
-            <Row 
-              data={this.state.tableHead} 
-              widthArr={this.state.widthArr} 
-              style={styles.head} 
-              textStyle={styles.headText} 
-            />
-          </Table>
-        
-          <ScrollView style={styles.dataWrapper}>
-            <Table 
-              borderStyle={{ borderWidth: 2, borderColor: '#ffffff' }}
-            >
-              {
-                this.state.tableData.map((rowData, index) => (
-                  <Row
-                    key={index}
-                    data={rowData}
-                    widthArr={this.state.widthArr}
-                    style={[styles.row, index % 2 && { backgroundColor: '#bbc3dc' }]}
-                    textStyle={styles.text}
-                  />
-                ))
-              }
-            </Table>
-          </ScrollView>
-        </View>
+        {this.renderHistory()}
     </View>
     );
   }
@@ -525,6 +551,11 @@ const styles = StyleSheet.create({
   },
   dataWrapper: { 
     marginTop: -1 
+  },
+  tableContainer: {
+    marginLeft: width * 0.02, 
+    marginRight: width * 0.02, 
+    flex: 1
   },
   row: { 
     height: 40, 
