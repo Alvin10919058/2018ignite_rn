@@ -126,7 +126,7 @@
             "value": "24"
         }
     ],
-    "T1teamSelection": [
+    "T2teamSelection": [
         {
             "label": "自由點數",
             "value": "free_point"
@@ -152,7 +152,7 @@
             "value": "vitality"
         }
     ],
-    "T2teamSelection": [
+    "T1teamSelection": [
         {
             "label": "自由點數",
             "value": "free_point"
