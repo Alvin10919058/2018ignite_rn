@@ -3,7 +3,7 @@ import { Text, StyleSheet, View, ScrollView, AsyncStorage, Dimensions } from 're
 import { Actions } from 'react-native-router-flux';
 import RNPickerSelect from 'react-native-picker-select';
 import { Table, Row } from 'react-native-table-component';
-import { Button, InputModal } from '../common';
+import { Button, InputModal, Spinner } from '../common';
 import SwitchButton from '../common/SwitchButton';
 import data from '../../Setting.json';
 import PickerData from '../../pickerData.json';
@@ -37,7 +37,8 @@ class GiveScore extends React.Component {
       selectKinds: '',
       kinds: PickerData.T2teamSelection,
       selectNumber: 0,
-      number: PickerData.numberSelection
+      number: PickerData.numberSelection,
+      loading: false
     };
   }
 componentDidMount() {
@@ -301,7 +302,8 @@ componentDidMount() {
     })
     .then((success) => {
     console.log(success);
-    // Actions.pop();
+     this.setState({ loading: false });
+     Actions.pop();
      Actions.giveScore();
     })
     .catch((err) => {
@@ -394,6 +396,12 @@ renderHistory() {
 }
 
 render() {
+    if (this.state.loading) {
+      return (
+        <Spinner />
+      );
+    } 
+
     return (
      <View style={{ flex: 1, backgroundColor: '#fff' }}>
         <InputModal  
@@ -404,7 +412,7 @@ render() {
           cancelButton
           cancel={() => { this.setState({ showSureModal: false }); }}
           onPress={() => { 
-            this.setState({ showSureModal: false });
+            this.setState({ showSureModal: false, loading: true });
             this.getTeam(
               this.state.selectBatch, 
               this.state.selectTeam, 
