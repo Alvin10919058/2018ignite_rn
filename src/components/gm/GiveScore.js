@@ -28,8 +28,7 @@ class GiveScore extends React.Component {
       TeamData: {},
       tableHead: ['梯次', '關卡', '小隊', '種類', '點數'],
       tableData: [],
-      //widthArr: [width * 0.205, width * 0.215, width * 0.32, width * 0.215],
-      widthArr: [width * 0.160, width * 0.180, width * 0.160, width * 0.27, width * 0.185],
+      widthArr: [width * 0.160, width * 0.200, width * 0.150, width * 0.275, width * 0.170],
       //Picker setting data
       selectStage: '',
       stage: PickerData.stageSelection,
