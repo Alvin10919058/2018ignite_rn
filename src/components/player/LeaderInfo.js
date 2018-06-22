@@ -224,10 +224,10 @@ class LeaderInfo extends Component {
           />
           <InputModal
             titleText={this.props.errorText}
-            textCustomStyle={
-              (this.props.career.name === '戰士') 
-              ? { textAlign: 'center' } : { textAlign: 'left' }
-            }
+            // textCustomStyle={
+            //   (this.props.career.name === '戰士') 
+            //   ? { textAlign: 'center' } : { textAlign: 'left' }
+            // }
             scrollable={(this.props.career.name !== '戰士')}
             visible={this.props.showErrorModal}
             onPress={() => { this.props.errorModalType(false, ''); }}

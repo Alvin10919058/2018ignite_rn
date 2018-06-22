@@ -28,15 +28,14 @@ class GiveScore extends React.Component {
       TeamData: {},
       tableHead: ['梯次', '關卡', '小隊', '種類', '點數'],
       tableData: [],
-      //widthArr: [width * 0.205, width * 0.215, width * 0.32, width * 0.215],
-      widthArr: [width * 0.160, width * 0.180, width * 0.160, width * 0.27, width * 0.185],
+      widthArr: [width * 0.160, width * 0.200, width * 0.150, width * 0.27, width * 0.170],
       //Picker setting data
       selectStage: '',
       stage: PickerData.stageSelection,
       selectTeam: '',
       teams: PickerData.teamSelection,
       selectKinds: '',
-      kinds: PickerData.T1teamSelection,
+      kinds: PickerData.T2teamSelection,
       selectNumber: 0,
       number: PickerData.numberSelection
     };
@@ -302,8 +301,8 @@ componentDidMount() {
     })
     .then((success) => {
     console.log(success);
-    Actions.pop();
-    Actions.giveScore();
+    // Actions.pop();
+     Actions.giveScore();
     })
     .catch((err) => {
         console.log(err);// error handling ..
@@ -399,7 +398,7 @@ render() {
      <View style={{ flex: 1, backgroundColor: '#fff' }}>
         <InputModal  
           titleText={this.state.InputModalSureText}
-          textCustomStyle={{ textAlign: 'left' }}
+          textCustomStyle={{ textAlign: 'left', paddingLeft: width * 0.25 }}
           visible={this.state.showSureModal}
           scrollable
           cancelButton
@@ -432,7 +431,7 @@ render() {
                   selectTeam: '',
                   teams: PickerData.teamSelection,
                   selectKinds: '',
-                  kinds: PickerData.T1teamSelection,
+                  kinds: PickerData.T2teamSelection,
                   selectNumber: 0,
                   number: PickerData.numberSelection
                 });
@@ -445,7 +444,7 @@ render() {
                   selectTeam: '',
                   teams: PickerData.teamSelection,
                   selectKinds: '',
-                  kinds: PickerData.T2teamSelection,
+                  kinds: PickerData.T1teamSelection,
                   selectNumber: 0,
                   number: PickerData.numberSelection
                 });
