@@ -6,7 +6,6 @@ import {
     GET_TEAM_DATA_JUNIOR_SUCCESS,
     GET_TEAM_DATA_COLLEGE_SUCCESS,
     CAREER_CODE_CHANGED,
-    ERROR_MODAL_TYPE,
     CAREER_GROW_UP,
     CAREER_GROW_UP_FINISHED,
     CAREER_GROW_UP_SUCCESS,
@@ -25,12 +24,29 @@ import {
     RESET_CODE_COLLEGE,
     RESET_CODE_FAILED,
     RESET_CODE_SUCCESS_JUNIOR,
-    RESET_CODE_SUCCESS_COLLEGE
+    RESET_CODE_SUCCESS_COLLEGE,
+    ERROR_MODAL_INFO_TYPE,
+    ERROR_MODAL_MISSION_TYPE,
+    ERROR_MODAL_SKILL_TYPE
   } from './types';
 
-export const errorModalType = (type, text) => {
+export const errorModalInfoType = (type, text) => {
     return {
-        type: ERROR_MODAL_TYPE,
+        type: ERROR_MODAL_INFO_TYPE,
+        payload: { type, text }
+    };
+};
+
+export const errorModalMissionType = (type, text) => {
+    return {
+        type: ERROR_MODAL_MISSION_TYPE,
+        payload: { type, text }
+    };
+};
+
+export const errorModalSkillType = (type, text) => {
+    return {
+        type: ERROR_MODAL_SKILL_TYPE,
         payload: { type, text }
     };
 };

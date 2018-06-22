@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { 
-  errorModalType,
+  errorModalMissionType,
   missionCodeChanged,
   missionCoding
 } from '../../actions';
@@ -95,10 +95,10 @@ class Mission extends Component {
            onChangeText={(text) => { this.onMissionCodeChange(text); }}
          />
          <InputModal
-           titleText={this.props.errorText}
+           titleText={this.props.errorMissionText}
            scrollable={false}
-           visible={this.props.showErrorModal}
-           onPress={() => { this.props.errorModalType(false, ''); }}
+           visible={this.props.showErrorMissionModal}
+           onPress={() => { this.props.errorModalMissionType(false, ''); }}
          />
         <View style={listContainer}>
           <ScrollView style={{ paddingTop: 10 }}>
@@ -140,8 +140,8 @@ const mapStateToProps = ({ player }) => {
     done_submission, //完成幾個支線任務
     completed, //是否完成支線任務
     loading,
-    showErrorModal,
-    errorText,
+    showErrorMissionModal,
+    errorMissionText,
     mission,
     missionCode
    } = player;
@@ -150,15 +150,15 @@ const mapStateToProps = ({ player }) => {
     done_submission, //完成幾個支線任務
     completed, //是否完成支線任務
     loading,
-    showErrorModal,
-    errorText,
+    showErrorMissionModal,
+    errorMissionText,
     mission,
     missionCode
   };
 };
 
 export default connect(mapStateToProps, { 
-  errorModalType,
+  errorModalMissionType,
   missionCodeChanged,
   missionCoding
 })(Mission);
