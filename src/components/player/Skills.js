@@ -12,7 +12,7 @@ import {
   skillCollege,
   resetCodeJunior,
   resetCodeCollege,
-  errorModalType
+  errorModalSkillType
 } from '../../actions';
 import { Button, SkillRow, InputModal, Spinner } from '../common';
 
@@ -215,10 +215,10 @@ class Skills extends Component {
            }}
         />
         <InputModal
-          titleText={this.props.errorText}
+          titleText={this.props.errorSkillText}
           scrollable={false}
-          visible={this.props.showErrorModal}
-          onPress={() => { this.props.errorModalType(false, ''); }}
+          visible={this.props.showErrorSkillModal}
+          onPress={() => { this.props.errorModalSkillType(false, ''); }}
         />
         <View style={freePointContainer}>
           <Text style={freePointTextStyle}>自由點數</Text>
@@ -309,8 +309,8 @@ const mapStateToProps = ({ player }) => {
     tableHead,
     tableData,
     resetCode,
-    showErrorModal,
-    errorText,
+    showErrorSkillModal,
+    errorSkillText,
     loading,
 
     free_point, //自由點數
@@ -337,8 +337,8 @@ const mapStateToProps = ({ player }) => {
     tableHead,
     tableData,
     resetCode,
-    showErrorModal,
-    errorText,
+    showErrorSkillModal,
+    errorSkillText,
     loading,
 
     free_point, //自由點數
@@ -365,5 +365,5 @@ export default connect(mapStateToProps, {
   skillCollege,
   resetCodeJunior,
   resetCodeCollege,
-  errorModalType
+  errorModalSkillType
 })(Skills);

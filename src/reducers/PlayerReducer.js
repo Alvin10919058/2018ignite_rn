@@ -4,7 +4,6 @@ import {
     GET_TEAM_DATA_JUNIOR_SUCCESS,
     GET_TEAM_DATA_COLLEGE_SUCCESS,
     CAREER_CODE_CHANGED,
-    ERROR_MODAL_TYPE,
     CAREER_GROW_UP,
     CAREER_GROW_UP_FINISHED,
     CAREER_GROW_UP_SUCCESS,
@@ -23,7 +22,10 @@ import {
     RESET_CODE_COLLEGE,
     RESET_CODE_FAILED,
     RESET_CODE_SUCCESS_JUNIOR,
-    RESET_CODE_SUCCESS_COLLEGE
+    RESET_CODE_SUCCESS_COLLEGE,
+    ERROR_MODAL_INFO_TYPE,
+    ERROR_MODAL_MISSION_TYPE,
+    ERROR_MODAL_SKILL_TYPE
   } from '../actions/types';
   
   const INITIAL_STATE = {
@@ -52,8 +54,12 @@ import {
 
     //
     careerCode: '',
-    showErrorModal: false,
-    errorText: '',
+    showErrorInfoModal: false,
+    errorInfoText: '',
+    showErrorSkillModal: false,
+    errorSkillText: '',
+    showErrorMissionModal: false,
+    errorMissionText: '',
     loading: true,
     mission: [], //紀錄支線任務內容
     missionCode: '',
@@ -195,11 +201,23 @@ import {
               }
             ] 
         };
-      case ERROR_MODAL_TYPE:
+      case ERROR_MODAL_INFO_TYPE:
         return { 
           ...state, 
-          showErrorModal: action.payload.type, 
-          errorText: action.payload.text
+          showErrorInfoModal: action.payload.type, 
+          errorInfoText: action.payload.text
+        };
+      case ERROR_MODAL_MISSION_TYPE:
+        return { 
+          ...state, 
+          showErrorMissionModal: action.payload.type, 
+          errorMissionText: action.payload.text
+        };
+      case ERROR_MODAL_SKILL_TYPE:
+        return { 
+          ...state, 
+          showErrorSkillModal: action.payload.type, 
+          errorSkillText: action.payload.text
         };
       case CAREER_CODE_CHANGED:
         return { ...state, careerCode: action.payload };
@@ -208,8 +226,8 @@ import {
       case CAREER_GROW_UP_FINISHED:
         return { 
           ...state, 
-          showErrorModal: true, 
-          errorText: action.payload, 
+          showErrorInfoModal: true, 
+          errorInfoText: action.payload, 
           careerCode: '', 
           missionCode: '', 
           loading: false 
@@ -217,8 +235,8 @@ import {
       case CAREER_GROW_UP_SUCCESS:
         return { 
           ...state, 
-          showErrorModal: true, 
-          errorText: action.payload.text, 
+          showErrorInfoModal: true, 
+          errorInfoText: action.payload.text, 
           career: action.payload.responseData,
           careerCode: '', 
           missionCode: '', 
@@ -231,8 +249,8 @@ import {
       case MISSION_CODE_FINISHED:
         return { 
           ...state, 
-          showErrorModal: true, 
-          errorText: action.payload.text, 
+          showErrorMissionModal: true, 
+          errorMissionText: action.payload.text, 
           mission: action.payload.mission,
           careerCode: '',
           missionCode: '', 
@@ -241,8 +259,8 @@ import {
       case MISSION_CODE_FAILED:
         return { 
           ...state, 
-          showErrorModal: true, 
-          errorText: action.payload, 
+          showErrorMissionModal: true, 
+          errorMissionText: action.payload, 
           careerCode: '',
           missionCode: '', 
           loading: false 
@@ -254,15 +272,15 @@ import {
       case SKILL_JUNIOR_FAILED:
         return { 
           ...state, 
-          showErrorModal: true, 
-          errorText: action.payload, 
+          showErrorSkillModal: true, 
+          errorSkillText: action.payload, 
           loading: false 
         };
       case SKILL_JUNIOR_SUCCESS:
         return { 
           ...state, 
-          showErrorModal: true, 
-          errorText: action.payload.text, 
+          showErrorSkillModal: true, 
+          errorSkillText: action.payload.text, 
           loading: false,
           //能力值
           team_total_score: action.payload.score,
@@ -286,15 +304,15 @@ import {
       case SKILL_COLLEGE_FAILED:
         return { 
           ...state, 
-          showErrorModal: true, 
-          errorText: action.payload, 
+          showErrorSkillModal: true, 
+          errorSkillText: action.payload, 
           loading: false 
         };
       case SKILL_COLLEGE_SUCCESS:
       return { 
         ...state, 
-        showErrorModal: true, 
-        errorText: action.payload.text, 
+        showErrorSkillModal: true, 
+        errorSkillText: action.payload.text, 
         loading: false,
         //能力值
         team_total_score: action.payload.score,
@@ -320,16 +338,16 @@ import {
       case RESET_CODE_FAILED:
         return { 
           ...state, 
-          showErrorModal: true, 
-          errorText: action.payload, 
+          showErrorSkillModal: true, 
+          errorSkillText: action.payload, 
           loading: false,
           resetCode: ''
         };
       case RESET_CODE_SUCCESS_JUNIOR:
         return { 
           ...state, 
-          showErrorModal: true, 
-          errorText: action.payload.text, 
+          showErrorSkillModal: true, 
+          errorSkillText: action.payload.text, 
           loading: false,
           //能力值
           team_total_score: action.payload.score,
@@ -352,8 +370,8 @@ import {
       case RESET_CODE_SUCCESS_COLLEGE:
         return { 
           ...state, 
-          showErrorModal: true, 
-          errorText: action.payload.text, 
+          showErrorSkillModal: true, 
+          errorSkillText: action.payload.text, 
           loading: false,
           //能力值
           team_total_score: action.payload.score,

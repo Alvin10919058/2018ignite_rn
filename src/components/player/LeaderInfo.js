@@ -12,8 +12,8 @@ import { connect } from 'react-redux';
 import { 
   getTeamData, 
   careerCodeChanged, 
-  careerGrowUp, 
-  errorModalType 
+  careerGrowUp,
+  errorModalInfoType
 } from '../../actions';
 import { BackgroundImage, InputModal, Spinner } from '../common';
 import { Biochemical, Defense, Sniper, Special, Soldier, Assault } from '../../images';
@@ -144,7 +144,7 @@ class LeaderInfo extends Component {
         <View style={circleContainerStyle}>
           <View style={circle}>
             <Text 
-              onPress={() => { this.props.errorModalType(true, this.props.career.description); }} 
+              onPress={() => { this.props.errorModalInfoType(true, this.props.career.description); }} 
               style={careerTextStyle}
             >
               職業介紹
@@ -223,14 +223,14 @@ class LeaderInfo extends Component {
             onChangeText={(text) => { this.onCareerCodeChange(text); }}
           />
           <InputModal
-            titleText={this.props.errorText}
-            // textCustomStyle={
-            //   (this.props.career.name === '戰士') 
-            //   ? { textAlign: 'center' } : { textAlign: 'left' }
-            // }
+            titleText={this.props.errorInfoText}
+            textCustomStyle={
+              (this.props.career.name === '戰士') 
+               ? { textAlign: 'center' } : { textAlign: 'left' }
+            }
             scrollable={(this.props.career.name !== '戰士')}
-            visible={this.props.showErrorModal}
-            onPress={() => { this.props.errorModalType(false, ''); }}
+            visible={this.props.showErrorInfoModal}
+            onPress={() => { this.props.errorModalInfoType(false, ''); }}
           />
           <View style={{ flex: 1 }}>
             {this.renderCareer()}
@@ -338,8 +338,8 @@ const mapStateToProps = ({ player }) => {
 
     //
     careerCode,
-    showErrorModal,
-    errorText,
+    showErrorInfoModal,
+    errorInfoText,
     loading
    } = player;
 
@@ -366,8 +366,8 @@ const mapStateToProps = ({ player }) => {
 
     //
     careerCode,
-    showErrorModal,
-    errorText,
+    showErrorInfoModal,
+    errorInfoText,
     loading
   };
 };
@@ -376,5 +376,5 @@ export default connect(mapStateToProps, {
   getTeamData,
   careerCodeChanged,
   careerGrowUp,
-  errorModalType
+  errorModalInfoType
 })(LeaderInfo);
