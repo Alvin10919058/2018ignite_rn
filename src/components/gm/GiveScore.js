@@ -301,8 +301,8 @@ componentDidMount() {
     })
     .then((success) => {
     console.log(success);
-    Actions.pop();
-    Actions.giveScore();
+    // Actions.pop();
+     Actions.giveScore();
     })
     .catch((err) => {
         console.log(err);// error handling ..
