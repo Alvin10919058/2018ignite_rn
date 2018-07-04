@@ -47,7 +47,6 @@ class Rank extends Component {
     }
     query.find()
       .then((response) => {
-      console.log(response);
       //將取得的物件資料複製一份到obj
       const CopyRes = [...response];
       //將此物件依據小隊總分由大到小(b-a)的順序來排序
@@ -57,8 +56,10 @@ class Rank extends Component {
         const finalDataAry = [];
         let rank = 1;
         CopyRes.map((teamdata) => {
-          finalDataAry.push([rank, teamdata.attributes.name, teamdata.attributes.career.attributes.name, teamdata.attributes.team_total_score]);
-          rank++;
+          if (rank < 17) {
+            finalDataAry.push([rank, teamdata.attributes.name, teamdata.attributes.career.attributes.name, teamdata.attributes.team_total_score]);
+            rank++;
+          }
           return true;
         });
         this.setState({ tableData: finalDataAry });
