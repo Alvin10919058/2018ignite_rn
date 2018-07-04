@@ -101,8 +101,8 @@ android {
         applicationId "com.torch.ignite"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 03
-        versionName "1.2"
+        versionCode 05
+        versionName "1.4"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
