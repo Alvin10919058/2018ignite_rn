@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, StyleSheet, View, ScrollView, AsyncStorage, Dimensions } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import RNPickerSelect from 'react-native-picker-select';
 import { Table, Row } from 'react-native-table-component';
 import { Button, InputModal, Spinner } from '../common';
@@ -303,8 +302,7 @@ componentDidMount() {
     .then((success) => {
     console.log(success);
      this.setState({ loading: false });
-     Actions.pop();
-     Actions.giveScore();
+     this.getGMdata();
     })
     .catch((err) => {
         console.log(err);// error handling ..
@@ -316,6 +314,11 @@ componentDidMount() {
   }
 
 renderButton() {
+  if (this.state.loading) {
+    return (
+      null
+    );
+  } 
   return (
     <Button 
     btnCustomStyle={{ 
@@ -363,6 +366,11 @@ renderButton() {
 
 renderHistory() {
   const { head, row, headText, text, dataWrapper, tableContainer } = styles;
+  if (this.state.loading) {
+    return (
+      <Spinner />
+    );
+  } 
   return (
     <View style={tableContainer}>
       <Table borderStyle={{ borderWidth: 2, borderColor: '#ffffff' }}>
@@ -396,12 +404,6 @@ renderHistory() {
 }
 
 render() {
-    if (this.state.loading) {
-      return (
-        <Spinner />
-      );
-    } 
-
     return (
      <View style={{ flex: 1, backgroundColor: '#fff' }}>
         <InputModal  
