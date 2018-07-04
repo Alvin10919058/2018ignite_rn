@@ -45,7 +45,6 @@ class Rank extends Component {
       //GM專屬
       query.equalTo('batch', batch);
     }
-    query.limit(16);
     query.find()
       .then((response) => {
       console.log(response);
